@@ -89,3 +89,9 @@ Requisitos No Funcionales
 8.	Interoperabilidad:
 - Diseñar la plataforma para que pueda integrarse con otros sistemas de información sanitaria y bases de datos externas, facilitando el intercambio de información.
 
+
+# Base de datos
+
+![Farmacia 3_3 - Página 2](https://github.com/user-attachments/assets/1e817ab0-124f-4884-8267-0d558882c051)
+
+
