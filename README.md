@@ -92,6 +92,7 @@ Requisitos No Funcionales
 
 # Base de datos
 
-![Farmacia 3_3 - Página 2](https://github.com/user-attachments/assets/1e817ab0-124f-4884-8267-0d558882c051)
+![Farmacia 3_3 - Página 2 (1)](https://github.com/user-attachments/assets/d2598146-8497-4110-a875-2cf09a89525f)
+
 
 
