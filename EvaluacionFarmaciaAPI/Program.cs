@@ -1,8 +1,18 @@
+using EvaluacionFarmaciaAPI.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Obtener la cadena de conexión desde appsettings.json
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Registrar el DbContext con la cadena de conexión
+builder.Services.AddDbContext<PharmacyEvaluationDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
