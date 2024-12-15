@@ -6,46 +6,55 @@ namespace EvaluacionFarmaciaAPI.Models;
 
 public partial class PharmacyEvaluationDbContext : DbContext
 {
-    public PharmacyEvaluationDbContext()
-    {
-    }
+    private readonly IConfiguration _configuration;
 
-    public PharmacyEvaluationDbContext(DbContextOptions<PharmacyEvaluationDbContext> options)
+    //public PharmacyEvaluationDbContext()
+    //{
+    //}
+
+    public PharmacyEvaluationDbContext(DbContextOptions<PharmacyEvaluationDbContext> options, IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
-    public virtual DbSet<Address> Addresses { get; set; }
+    public virtual required DbSet<Address> Addresses { get; set; }
 
-    public virtual DbSet<DrugStore> DrugStores { get; set; }
+    public virtual required DbSet<DrugStore> DrugStores { get; set; }
 
-    public virtual DbSet<GeographicLocation> GeographicLocations { get; set; }
+    public virtual required DbSet<GeographicLocation> GeographicLocations { get; set; }
 
-    public virtual DbSet<Inspection> Inspections { get; set; }
+    public virtual required DbSet<Inspection> Inspections { get; set; }
 
-    public virtual DbSet<License> Licenses { get; set; }
+    public virtual required DbSet<License> Licenses { get; set; }
 
-    public virtual DbSet<Municipio> Municipios { get; set; }
+    public virtual required DbSet<Municipio> Municipios { get; set; }
 
-    public virtual DbSet<Owner> Owners { get; set; }
+    public virtual required DbSet<Owner> Owners { get; set; }
 
-    public virtual DbSet<PersonType> PersonTypes { get; set; }
+    public virtual required DbSet<PersonType> PersonTypes { get; set; }
 
-    public virtual DbSet<Provincium> Provincia { get; set; }
+    public virtual required DbSet<Provincium> Provincia { get; set; }
 
-    public virtual DbSet<Request> Requests { get; set; }
+    public virtual required DbSet<Request> Requests { get; set; }
 
-    public virtual DbSet<RequestType> RequestTypes { get; set; }
+    public virtual required DbSet<RequestType> RequestTypes { get; set; }
 
-    public virtual DbSet<TechnicalDirector> TechnicalDirectors { get; set; }
+    public virtual required DbSet<TechnicalDirector> TechnicalDirectors { get; set; }
 
-    public virtual DbSet<UserAccount> UserAccounts { get; set; }
+    public virtual required DbSet<UserAccount> UserAccounts { get; set; }
 
-    public virtual DbSet<UserInspection> UserInspections { get; set; }
+    public virtual required DbSet<UserInspection> UserInspections { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=PharmacyEvaluationDB;Trusted_Connection=True;TrustServerCertificate=True;");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            // Obtén la cadena de conexión desde el archivo appsettings.json
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseSqlServer(connectionString);
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
