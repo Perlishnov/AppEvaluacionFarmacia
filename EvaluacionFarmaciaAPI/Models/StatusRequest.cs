@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace EvaluacionFarmaciaAPI.Models;
 
-public partial class RequestType
+public partial class StatusRequest
 {
-    public int RequestTypeId { get; set; }
+    public int StatusReqId { get; set; }
 
-    public string RequestType1 { get; set; } = null!;
+    public string StatusReq { get; set; } = null!;
 
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 }

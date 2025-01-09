@@ -7,15 +7,19 @@ public partial class Owner
 {
     public int OwnerId { get; set; }
 
-    public string RncCedula { get; set; } = null!;
+    public int DocumentTypeId { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string DocumentOwner { get; set; } = null!;
 
-    public string LastName { get; set; } = null!;
+    public string NameOwner { get; set; } = null!;
 
-    public string Email { get; set; } = null!;
+    public string LastNameOwner { get; set; } = null!;
 
-    public string Phone { get; set; } = null!;
+    public string EmailOwner { get; set; } = null!;
+
+    public string PhoneOwner { get; set; } = null!;
+
+    public virtual DocumentType DocumentType { get; set; } = null!;
 
     public virtual ICollection<DrugStore> DrugStores { get; set; } = new List<DrugStore>();
 }

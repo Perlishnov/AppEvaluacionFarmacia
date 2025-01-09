@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 namespace EvaluacionFarmaciaAPI.Models;
 
-public partial class GeographicLocation
+public partial class DrugStoreType
 {
-    public int LocationId { get; set; }
+    public int DrugStoreTypeId { get; set; }
 
-    public decimal Longitude { get; set; }
-
-    public decimal Altitude { get; set; }
+    public string TypeDrugstore { get; set; } = null!;
 
     public virtual ICollection<DrugStore> DrugStores { get; set; } = new List<DrugStore>();
 }

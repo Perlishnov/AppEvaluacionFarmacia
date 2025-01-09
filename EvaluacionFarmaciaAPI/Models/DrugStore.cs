@@ -7,21 +7,27 @@ public partial class DrugStore
 {
     public int DrugStoreId { get; set; }
 
-    public string Rnc { get; set; } = null!;
+    public string DocumentDs { get; set; } = null!;
 
-    public string Name { get; set; } = null!;
+    public string NameDs { get; set; } = null!;
 
-    public string? Type { get; set; }
+    public string PhoneDs { get; set; } = null!;
 
-    public string Phone { get; set; } = null!;
+    public string Address { get; set; } = null!;
 
     public string ShortName { get; set; } = null!;
 
-    public int RegistrationName { get; set; }
+    public double Altitude { get; set; }
 
-    public int AddressId { get; set; }
+    public double Longitude { get; set; }
 
-    public int LocationId { get; set; }
+    public DateOnly RegistrationDate { get; set; }
+
+    public int DrugStoreTypeId { get; set; }
+
+    public int DocumentTypeId { get; set; }
+
+    public int MunicipioId { get; set; }
 
     public int LicenseId { get; set; }
 
@@ -29,15 +35,17 @@ public partial class DrugStore
 
     public int OwnerId { get; set; }
 
-    public virtual Address Address { get; set; } = null!;
-
     public virtual TechnicalDirector Director { get; set; } = null!;
+
+    public virtual DocumentType DocumentType { get; set; } = null!;
+
+    public virtual DrugStoreType DrugStoreType { get; set; } = null!;
 
     public virtual ICollection<Inspection> Inspections { get; set; } = new List<Inspection>();
 
     public virtual License License { get; set; } = null!;
 
-    public virtual GeographicLocation Location { get; set; } = null!;
+    public virtual Municipio Municipio { get; set; } = null!;
 
     public virtual Owner Owner { get; set; } = null!;
 

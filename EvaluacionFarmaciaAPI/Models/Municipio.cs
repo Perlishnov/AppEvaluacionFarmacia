@@ -7,11 +7,11 @@ public partial class Municipio
 {
     public int MunicipioId { get; set; }
 
-    public string Nombre { get; set; } = null!;
+    public string NameMun { get; set; } = null!;
 
     public int ProvinciaId { get; set; }
 
-    public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
+    public virtual ICollection<DrugStore> DrugStores { get; set; } = new List<DrugStore>();
 
     public virtual Provincium Provincia { get; set; } = null!;
 }

@@ -4,3 +4,8 @@ GET {{EvaluacionFarmaciaAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+GET {{{{EvaluacionFarmaciaAPI_HostAddress}}}}/api/DrugStores HTTP/1.1
+Accept: application/json
+
+
+

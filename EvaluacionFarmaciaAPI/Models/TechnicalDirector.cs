@@ -7,21 +7,25 @@ public partial class TechnicalDirector
 {
     public int DirectorId { get; set; }
 
-    public string Cedula { get; set; } = null!;
+    public int DocumentTypeId { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string DocumentTd { get; set; } = null!;
 
-    public string LastName { get; set; } = null!;
+    public string NameTd { get; set; } = null!;
+
+    public string LastNameTd { get; set; } = null!;
 
     public string Profession { get; set; } = null!;
 
-    public string Email { get; set; } = null!;
+    public string EmailTd { get; set; } = null!;
 
-    public string Phone { get; set; } = null!;
+    public string PhoneTd { get; set; } = null!;
 
-    public string Exequatur { get; set; } = null!;
+    public string? Exequatur { get; set; }
 
-    public DateTime IssueDate { get; set; }
+    public DateTime? IssueDate { get; set; }
+
+    public virtual DocumentType DocumentType { get; set; } = null!;
 
     public virtual ICollection<DrugStore> DrugStores { get; set; } = new List<DrugStore>();
 }

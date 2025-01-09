@@ -7,7 +7,9 @@ public partial class PersonType
 {
     public int PersonTypeId { get; set; }
 
-    public string Type { get; set; } = null!;
+    public string TypePerson { get; set; } = null!;
 
     public virtual ICollection<UserAccount> UserAccounts { get; set; } = new List<UserAccount>();
+
+    public virtual ICollection<Permission> Permissions { get; set; } = new List<Permission>();
 }

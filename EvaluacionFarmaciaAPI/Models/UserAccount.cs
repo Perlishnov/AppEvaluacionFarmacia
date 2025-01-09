@@ -7,17 +7,21 @@ public partial class UserAccount
 {
     public int UserId { get; set; }
 
-    public string Cedula { get; set; } = null!;
+    public string DocumentUser { get; set; } = null!;
 
-    public string Name { get; set; } = null!;
+    public string NameUser { get; set; } = null!;
 
-    public string LastName { get; set; } = null!;
+    public string LastNameUser { get; set; } = null!;
 
-    public string Email { get; set; } = null!;
+    public string EmailUser { get; set; } = null!;
 
-    public string Password { get; set; } = null!;
+    public string PasswordUser { get; set; } = null!;
+
+    public int DocumentTypeId { get; set; }
 
     public int PersonTypeId { get; set; }
+
+    public virtual DocumentType DocumentType { get; set; } = null!;
 
     public virtual PersonType PersonType { get; set; } = null!;
 
