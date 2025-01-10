@@ -153,3 +153,6 @@ C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\obj\Debug
 C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\obj\Debug\net9.0\EvaluacionFarmaciaAPI.pdb
 C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\obj\Debug\net9.0\EvaluacionFarmaciaAPI.genruntimeconfig.cache
 C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\obj\Debug\net9.0\ref\EvaluacionFarmaciaAPI.dll
+C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
