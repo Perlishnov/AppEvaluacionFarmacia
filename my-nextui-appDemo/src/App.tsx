@@ -5,12 +5,12 @@ import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 // Layouts
-import OwnerLayout from "./layouts/OwnerLayout";
-import EvaluatorLayout from "./layouts/EvaluatorLayout";
-import AdminLayout from "./layouts/AdminLayout";
+import PropietarioLayout from "./layouts/PropietarioLayout";
+import EvaluadorLayout from "./layouts/EvaluadorLayout";
+import AdministradorLayout from "./layouts/AdministradorLayout";
 
 // Owner Pages
-import OwnerDashboard from "./pages/owner/OwnerDashboard";
+import PropietarioDashboard from "./pages/Propietario/dashboard";
 import RegisterFarmacia from "./pages/owner/RegisterFarmacia";
 import MyRequests from "./pages/owner/MyRequests";
 import RequestDetails from "./pages/owner/RequestDetails";
@@ -32,6 +32,7 @@ function App() {
     <Routes>
       <Route element={<IndexPage />} path="/" />
       <Route element={<LoginPage />} path="/login" />
+      <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
 
     </Routes>
   );
