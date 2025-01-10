@@ -41,7 +41,7 @@ public partial class PharmacyEvaluationDbContext : DbContext
 
     public virtual DbSet<Result> Results { get; set; }
 
-    public virtual DbSet<StatusInspection> StatusInspections { get; set; }
+    public virtual DbSet<StatuSinspection> StatuSinspections { get; set; }
 
     public virtual DbSet<StatusRequest> StatusRequests { get; set; }
 
@@ -172,15 +172,15 @@ public partial class PharmacyEvaluationDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("scheduledDate");
-            entity.Property(e => e.StatusInsp).HasColumnName("statusInsp");
+            entity.Property(e => e.StatusInspId).HasColumnName("statusInspID");
 
             entity.HasOne(d => d.DrugStore).WithMany(p => p.Inspections)
                 .HasForeignKey(d => d.DrugStoreId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Inspectio__drugS__778AC167");
 
-            entity.HasOne(d => d.StatusInspNavigation).WithMany(p => p.Inspections)
-                .HasForeignKey(d => d.StatusInsp)
+            entity.HasOne(d => d.StatusInsp).WithMany(p => p.Inspections)
+                .HasForeignKey(d => d.StatusInspId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Inspection_StatuSInspection");
         });
@@ -404,11 +404,11 @@ public partial class PharmacyEvaluationDbContext : DbContext
                 .HasConstraintName("FK__Results__inspect__07C12930");
         });
 
-        modelBuilder.Entity<StatusInspection>(entity =>
+        modelBuilder.Entity<StatuSinspection>(entity =>
         {
             entity.HasKey(e => e.StatusInspId).HasName("PK__StatuSIn__F029CFDA2AEE2023");
 
-            entity.ToTable("StatusInspection");
+            entity.ToTable("StatuSInspection");
 
             entity.Property(e => e.StatusInspId).HasColumnName("statusInspID");
             entity.Property(e => e.StatusInsp)

@@ -11,7 +11,7 @@ public partial class Inspection
 
     public DateTime ModifiedDate { get; set; }
 
-    public int StatusInsp { get; set; }
+    public int StatusInspId { get; set; }
 
     public int DrugStoreId { get; set; }
 
@@ -19,7 +19,7 @@ public partial class Inspection
 
     public virtual ICollection<Result> Results { get; set; } = new List<Result>();
 
-    public virtual StatusInspection StatusInspNavigation { get; set; } = null!;
+    public virtual StatuSinspection StatusInsp { get; set; } = null!;
 
     public virtual ICollection<UserInspection> UserInspections { get; set; } = new List<UserInspection>();
 }
