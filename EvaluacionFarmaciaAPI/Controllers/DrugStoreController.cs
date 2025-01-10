@@ -10,9 +10,9 @@ namespace EvaluacionFarmaciaAPI.Controllers
     [ApiController]
     public class DrugStoresController : ControllerBase
     {
-        private readonly PharmacyEvaluationDbContext _context;
+        private readonly FarmaciaDesarrolloWebContext _context;
 
-        public DrugStoresController(PharmacyEvaluationDbContext context)
+        public DrugStoresController(FarmaciaDesarrolloWebContext context)
         {
             _context = context;
         }
