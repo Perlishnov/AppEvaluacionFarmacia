@@ -2,6 +2,7 @@ import Layout from "./LayoutGenerico";
 
 export default function PropietarioLayout({ children }: { children: React.ReactNode }) {
   const menuItems = [
+    { title: "Inicio", path: "/propietario/dashboard" },
     { title: "Cuenta", path: "/propietario/cuenta" },
     { title: "Mis Farmacias", path: "/propietario/farmacias" },
   ];

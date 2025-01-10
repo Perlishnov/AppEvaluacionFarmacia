@@ -11,7 +11,7 @@ import AdministradorLayout from "./layouts/AdministradorLayout";
 
 // Owner Pages
 import PropietarioDashboard from "./pages/Propietario/dashboard";
-import RegisterFarmacia from "./pages/owner/RegisterFarmacia";
+import PropietarioMisFarmacias from "./pages/Propietario/MyPharmacies";
 import MyRequests from "./pages/owner/MyRequests";
 import RequestDetails from "./pages/owner/RequestDetails";
 
@@ -33,6 +33,7 @@ function App() {
       <Route element={<IndexPage />} path="/" />
       <Route element={<LoginPage />} path="/login" />
       <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
+      <Route element={<PropietarioMisFarmacias />} path="/propietario/farmacias" />
 
     </Routes>
   );
