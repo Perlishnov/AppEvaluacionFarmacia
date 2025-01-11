@@ -9,7 +9,7 @@ namespace EvaluacionFarmaciaAPI.DTOs
         public int ProvinciaId { get; set; }
         public string NameProv {get; set; }
 
-        static public ProvinciaDTO FromModel (Provincium provincium) => new ProvinciaDTO
+        public static ProvinciaDTO FromModel (Provincium provincium) => new ProvinciaDTO
         {
             ProvinciaId = provincium.ProvinciaId,
             NameProv = provincium.NameProv
