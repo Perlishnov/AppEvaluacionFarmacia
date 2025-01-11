@@ -21,7 +21,7 @@ namespace EvaluacionFarmaciaAPI.DTOs
         public int DirectorId { get; set; }
         public int OwnerId { get; set; }
 
-        static public DrugStoreDTO FromModel (DrugStore drugstore)
+        public static DrugStoreDTO FromModel (DrugStore drugstore)
         {
             return new DrugStoreDTO
             {
