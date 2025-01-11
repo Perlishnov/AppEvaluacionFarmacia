@@ -1,7 +1,7 @@
 using System;
 using EvaluacionFarmaciaAPI.Models;
 
-namespace EvaluacionFarmaciaAPI.Models.DTOs
+namespace EvaluacionFarmaciaAPI.DTOs
 {
     public class DrugStoreDTO
     {
