@@ -4,5 +4,8 @@ using EvaluacionFarmaciaAPI.Models;
 
 namespace EvaluacionFarmaciaAPI.DTOs
 {
-    
+    public class DocumentTypeDTO
+    {
+        
+    }
 }
