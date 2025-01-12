@@ -22,20 +22,43 @@ import EvaluationDetails from "./pages/evaluator/EvaluationDetails";
 import AssignEvaluation from "./pages/evaluator/AssignEvaluation";
 
 // Admin Pages
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import ManageUsers from "./pages/admin/ManageUsers";
+import AdminDashboard from "./pages/Administrador/adminDashboard";
+import ManageUsers from "./pages/Administrador/userManagement";
 import UserDetails from "./pages/admin/UserDetails";
 import ViewEvaluations from "./pages/admin/ViewEvaluations";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<IndexPage />} path="/" />
-      <Route element={<LoginPage />} path="/login" />
-      <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
-      <Route element={<PropietarioMisFarmacias />} path="/propietario/farmacias" />
+    <Router>
+      <Routes>
+        {/* Página principal y login */}
+        <Route path="/" element={<IndexPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
-    </Routes>
+        {/* Rutas del Propietario */}
+        <Route element={<PropietarioLayout />}>
+          <Route path="/propietario/dashboard" element={<PropietarioDashboard />} />
+          <Route path="/propietario/farmacias" element={<PropietarioMisFarmacias />} />
+        </Route>
+
+        {/* Rutas del Evaluador */}
+        <Route element={<EvaluadorLayout />}>
+          <Route path="/evaluador/dashboard" element={<EvaluatorDashboard />} />
+          <Route path="/evaluador/evaluaciones" element={<EvaluationsList />} />
+          <Route path="/evaluador/evaluacion/:id" element={<EvaluationDetails />} />
+        </Route>
+
+        {/* Rutas del Administrador */}
+        <Route element={<AdministradorLayout />}>
+          <Route path="/administrador/adminDashboard" element={<AdminDashboard/>} />
+          <Route path="/administrador/userManagement" element={<ManageUsers />} />
+        </Route>
+
+        {/* Página 404 */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Router>
   );
 }
 
