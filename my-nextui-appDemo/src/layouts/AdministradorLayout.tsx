@@ -2,8 +2,9 @@ import Layout from "./LayoutGenerico";
 
 export default function AdministradorLayout({ children }: { children: React.ReactNode }) {
   const menuItems = [
-    { title: "Gestionar Usuarios", path: "/administrador/gestionar-usuarios" },
-    { title: "Mi Cuenta", path: "/administrador/mi-cuenta" },
+    { title: "Dashboard", path: "/administrador/adminDashboard" },
+    { title: "Gestionar Usuarios", path: "/administrador/userManagement" },
+    { title: "Solicitudes", path: "/administrador/solicitudes" },
   ];
 
   return (
