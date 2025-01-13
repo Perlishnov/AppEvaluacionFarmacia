@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Layout({ children, menuItems, role }: { 
-  children: React.ReactNode; 
-  menuItems: { title: string; path: string }[]; 
+const LayoutGenerico = ({
+  children,
+  menuItems,
+  role,
+}: {
+  children: React.ReactNode;
+  menuItems: { title: string; path: string }[];
   role: string;
-}) {
+}) => {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -25,9 +29,9 @@ export default function Layout({ children, menuItems, role }: {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 bg-gray-50">
-        {children}
-      </main>
+      <main className="flex-1 p-6 bg-gray-50">{children}</main>
     </div>
   );
-}
+};
+
+export default LayoutGenerico;
