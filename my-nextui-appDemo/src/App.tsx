@@ -4,16 +4,10 @@ import LoginPage from "./pages/login";
 import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
-// Layouts
-import PropietarioLayout from "./layouts/PropietarioLayout";
-import EvaluadorLayout from "./layouts/EvaluadorLayout";
-import AdministradorLayout from "./layouts/AdministradorLayout";
 
 // Owner Pages
 import PropietarioDashboard from "./pages/Propietario/dashboard";
 import PropietarioMisFarmacias from "./pages/Propietario/MyPharmacies";
-import MyRequests from "./pages/owner/MyRequests";
-import RequestDetails from "./pages/owner/RequestDetails";
 
 // Evaluator Pages
 import EvaluatorDashboard from "./pages/evaluator/EvaluatorDashboard";
@@ -32,6 +26,7 @@ function App() {
     <Routes>
       <Route element={<IndexPage />} path="/" />
       <Route element={<LoginPage />} path="/login" />
+      <Route element={<RegisterPage />} path="/Register" />
       <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
       <Route element={<PropietarioMisFarmacias />} path="/propietario/farmacias" />
 
