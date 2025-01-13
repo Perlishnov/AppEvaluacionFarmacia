@@ -22,4 +22,5 @@ public partial class Inspection
     public virtual StatuSinspection StatusInsp { get; set; } = null!;
 
     public virtual ICollection<UserInspection> UserInspections { get; set; } = new List<UserInspection>();
+    
 }
