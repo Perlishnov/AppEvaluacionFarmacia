@@ -14,7 +14,7 @@ public class MappingProfile : Profile
         /* CreateMap<Inspection, InspectionGetDTO>()
             .ForMember(dest => dest.DrugStoreName, opt => opt.MapFrom(src => src.DrugStore.NameDs))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Stat.StatusInsp)); */
-        CreateMap<InspectionDTO, Inspection>();
+        //CreateMap<InspectionDTO, Inspection>();
 
 
     }

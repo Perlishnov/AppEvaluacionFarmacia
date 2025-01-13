@@ -41,7 +41,7 @@ public partial class FarmaciaDesarrolloWebContext : DbContext
 
     public virtual DbSet<Result> Results { get; set; }
 
-    public virtual DbSet<StatuSinspection> StatuSinspections { get; set; }
+    public virtual DbSet<StatusInspection> StatusInspections { get; set; }
 
     public virtual DbSet<StatusRequest> StatusRequests { get; set; }
 
@@ -377,10 +377,10 @@ public partial class FarmaciaDesarrolloWebContext : DbContext
             entity.ToTable("RequestType");
 
             entity.Property(e => e.RequestTypeId).HasColumnName("requestTypeID");
-            entity.Property(e => e.RequestType1)
+            entity.Property(e => e.TypeReq)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("requestType");
+                .HasColumnName("typeReq");
         });
 
         modelBuilder.Entity<Result>(entity =>
@@ -404,11 +404,11 @@ public partial class FarmaciaDesarrolloWebContext : DbContext
                 .HasConstraintName("FK__Results__inspect__07C12930");
         });
 
-        modelBuilder.Entity<StatuSinspection>(entity =>
+        modelBuilder.Entity<StatusInspection>(entity =>
         {
             entity.HasKey(e => e.StatusInspId).HasName("PK__StatuSIn__F029CFDA2AEE2023");
 
-            entity.ToTable("StatuSInspection");
+            entity.ToTable("StatusInspection");
 
             entity.Property(e => e.StatusInspId).HasColumnName("statusInspID");
             entity.Property(e => e.StatusInsp)

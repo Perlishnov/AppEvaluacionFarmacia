@@ -19,8 +19,7 @@ public partial class Inspection
 
     public virtual ICollection<Result> Results { get; set; } = new List<Result>();
 
-    public virtual StatuSinspection StatusInsp { get; set; } = null!;
+    public virtual StatusInspection StatusInsp { get; set; } = null!;
 
     public virtual ICollection<UserInspection> UserInspections { get; set; } = new List<UserInspection>();
-    
 }

@@ -1,4 +1,4 @@
-using AutoMapper;
+/* using AutoMapper;
 using EvaluacionFarmaciaAPI.DTOs;
 using EvaluacionFarmaciaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -73,3 +73,4 @@ namespace EvaluacionFarmaciaAPI.Controllers
 
     }
 }
+ */
