@@ -1,126 +1,109 @@
-using Microsoft.AspNetCore.Mvc;
-using EvaluacionFarmaciaAPI.Models;
+using AutoMapper;
 using EvaluacionFarmaciaAPI.DTOs;
+using EvaluacionFarmaciaAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace EvaluacionFarmaciaAPI.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class UserAccountsController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserAccountsController : ControllerBase
+    private readonly FarmaciaDesarrolloWebContext _context;
+    private readonly IMapper _mapper;
+
+    public UserAccountsController(FarmaciaDesarrolloWebContext context, IMapper mapper)
     {
-        private readonly FarmaciaDesarrolloWebContext _context;
+        _context = context;
+        _mapper = mapper;
+    }
 
-        public UserAccountsController(FarmaciaDesarrolloWebContext context)
+    // GET: api/UserAccounts
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserAccountDTO>>> GetUserAccounts()
+    {
+        var userAccounts = await _context.UserAccounts.ToListAsync();
+        var userAccountDtos = _mapper.Map<IEnumerable<UserAccountDTO>>(userAccounts);
+        return Ok(userAccountDtos);
+    }
+
+    // GET: api/UserAccounts/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<UserAccountDTO>> GetUserAccount(int id)
+    {
+        var userAccount = await _context.UserAccounts.FindAsync(id);
+
+        if (userAccount == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        // GET: api/UserAccounts
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserAccountDTO>>> GetUserAccounts()
+        var userAccountDto = _mapper.Map<UserAccountDTO>(userAccount);
+        return Ok(userAccountDto);
+    }
+
+    // POST: api/UserAccounts
+    [HttpPost]
+    public async Task<ActionResult<UserAccountDTO>> PostUserAccount(UserAccountDTO userAccountDto)
+    {
+        var userAccount = _mapper.Map<UserAccount>(userAccountDto);
+
+        _context.UserAccounts.Add(userAccount);
+        await _context.SaveChangesAsync();
+
+        userAccountDto.UserId = userAccount.UserId; // Asignar el ID generado al DTO
+        return CreatedAtAction(nameof(GetUserAccount), new { id = userAccount.UserId }, userAccountDto);
+    }
+
+    // PUT: api/UserAccounts/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutUserAccount(int id, UserAccountDTO userAccountDto)
+    {
+        if (id != userAccountDto.UserId)
         {
-            var userAccounts = await _context.UserAccounts.ToListAsync();
-            var userAccountDTOs = userAccounts.Select(ua => UserAccountDTO.FromModel(ua)).ToList();
-            return Ok(userAccountDTOs);
+            return BadRequest("El ID en la URL no coincide con el ID del cuerpo de la solicitud.");
         }
 
-        // GET: api/UserAccounts/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserAccountDTO>> GetUserAccount(int id)
+        var userAccount = await _context.UserAccounts.FindAsync(id);
+        if (userAccount == null)
         {
-            var userAccount = await _context.UserAccounts.FindAsync(id);
-
-            if (userAccount == null)
-            {
-                return NotFound();
-            }
-
-            return UserAccountDTO.FromModel(userAccount);
+            return NotFound();
         }
 
-        // PUT: api/UserAccounts/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserAccount(int id, UserAccountDTO userAccountDTO)
+        // Actualizar el modelo usando el DTO
+        _mapper.Map(userAccountDto, userAccount);
+
+        try
         {
-            if (id != userAccountDTO.UserId)
-            {
-                return BadRequest();
-            }
-
-            var userAccount = await _context.UserAccounts.FindAsync(id);
-            if (userAccount == null)
-            {
-                return NotFound();
-            }
-
-            userAccount.DocumentUser = userAccountDTO.DocumentUser;
-            userAccount.NameUser = userAccountDTO.NameUser;
-            userAccount.LastNameUser = userAccountDTO.LastNameUser;
-            userAccount.EmailUser = userAccountDTO.EmailUser;
-            userAccount.PasswordUser = userAccountDTO.PasswordUser;
-            userAccount.DocumentTypeId = userAccountDTO.DocumentTypeId;
-            userAccount.PersonTypeId = userAccountDTO.PersonTypeId;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserAccountExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/UserAccounts
-        [HttpPost]
-        public async Task<ActionResult<UserAccountDTO>> PostUserAccount(UserAccountDTO userAccountDTO)
-        {
-            var userAccount = new UserAccount
-            {
-                DocumentUser = userAccountDTO.DocumentUser,
-                NameUser = userAccountDTO.NameUser,
-                LastNameUser = userAccountDTO.LastNameUser,
-                EmailUser = userAccountDTO.EmailUser,
-                PasswordUser = userAccountDTO.PasswordUser,
-                DocumentTypeId = userAccountDTO.DocumentTypeId,
-                PersonTypeId = userAccountDTO.PersonTypeId
-            };
-
-            _context.UserAccounts.Add(userAccount);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetUserAccount), new { id = userAccount.UserId }, UserAccountDTO.FromModel(userAccount));
         }
-
-        // DELETE: api/UserAccounts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserAccount(int id)
+        catch (DbUpdateConcurrencyException)
         {
-            var userAccount = await _context.UserAccounts.FindAsync(id);
-            if (userAccount == null)
+            if (!_context.UserAccounts.Any(e => e.UserId == id))
             {
                 return NotFound();
             }
-
-            _context.UserAccounts.Remove(userAccount);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            else
+            {
+                throw;
+            }
         }
 
-        private bool UserAccountExists(int id)
+        return NoContent();
+    }
+
+    // DELETE: api/UserAccounts/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUserAccount(int id)
+    {
+        var userAccount = await _context.UserAccounts.FindAsync(id);
+        if (userAccount == null)
         {
-            return _context.UserAccounts.Any(e => e.UserId == id);
+            return NotFound();
         }
+
+        _context.UserAccounts.Remove(userAccount);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }

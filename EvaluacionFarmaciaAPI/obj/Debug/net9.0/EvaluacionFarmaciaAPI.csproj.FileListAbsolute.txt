@@ -156,3 +156,5 @@ C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\obj\Debug
 C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\AutoMapper.dll
+C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

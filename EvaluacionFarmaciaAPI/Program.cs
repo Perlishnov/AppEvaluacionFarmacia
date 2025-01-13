@@ -4,8 +4,11 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Añadir servicios al contenedor.
 builder.Services.AddControllers();
+
+// Agregar AutoMapper al contenedor de servicios
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Configurar Swagger
 builder.Services.AddSwaggerGen(c =>
