@@ -7,7 +7,7 @@ namespace EvaluacionFarmaciaAPI.DTOs
     public class RequestTypeDTO
     {
         public int RequestTypeId { get; set; }
-        public string TypeReq { get; set; }
+        public required string TypeReq { get; set; }
         
         public static RequestTypeDTO FromModel (RequestType requestType)
         {

@@ -158,3 +158,5 @@ C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug
 C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\AutoMapper.dll
 C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Users\Operador\Projects\AppEvaluacionFarmacia\EvaluacionFarmaciaAPI\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
