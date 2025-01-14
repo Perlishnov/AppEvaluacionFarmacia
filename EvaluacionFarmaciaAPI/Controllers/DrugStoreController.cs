@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using EvaluacionFarmaciaAPI.DTOs;
+using AutoMapper;
 
 namespace EvaluacionFarmaciaAPI.Controllers
 {
@@ -13,116 +14,131 @@ namespace EvaluacionFarmaciaAPI.Controllers
     public class DrugStoresController : ControllerBase
     {
         private readonly FarmaciaDesarrolloWebContext _context;
+        private readonly IMapper _mapper;
 
-        public DrugStoresController(FarmaciaDesarrolloWebContext context)
+        public DrugStoresController(FarmaciaDesarrolloWebContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/DrugStores
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DrugStore>>> GetDrugStores()
+        public async Task<ActionResult<IEnumerable<DrugStoreDTO>>> GetDrugStores()
         {
-            return await _context.DrugStores.ToListAsync();
-        }
+            var drugStores = await _context.DrugStores.ToListAsync();
 
-        //GET: api/DrugStores/sp
-        [HttpGet("sp")]
-        public async Task<ActionResult<IEnumerable<DrugStore>>> GetDrugStoresSP()
-        {
-            var drugStores = await _context.DrugStores
-                .FromSqlRaw("EXEC sp_GetDrugStores")
-                .ToListAsync();
+            // Mapear a DTO
+            var drugStoreDtos = _mapper.Map<IEnumerable<DrugStoreDTO>>(drugStores);
 
-            return Ok(drugStores);
+            return Ok(drugStoreDtos);
         }
 
         // GET: api/DrugStore/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<DrugStore>> GetDrugStore(int id)
+        public async Task<ActionResult<DrugStoreDTO>> GetDrugStore(int id)
         {
-            // Buscar el DrugStore por ID
             var drugStore = await _context.DrugStores
                 .Where(ds => ds.DrugStoreId == id)
                 .FirstOrDefaultAsync();
 
             if (drugStore == null)
             {
-                // Si no se encuentra el DrugStore, devolver 404 Not Found
                 return NotFound();
             }
 
-            // Si se encuentra, devolver el DrugStore
-            return Ok(drugStore);
+            // Mapear a DTO
+            var drugStoreDto = _mapper.Map<DrugStoreDTO>(drugStore);
+
+            return Ok(drugStoreDto);
         }
 
-        // POST: api/DrugStore
+        
+        // POST: api/DrugStores
         [HttpPost]
-        public async Task<ActionResult<DrugStore>> PostDrugStore([FromBody] DrugStore newDrugStore)
+        public async Task<ActionResult> PostDrugStore([FromBody] DrugStoreDTO drugStoreDto)
         {
-            if (newDrugStore == null)
+            if (drugStoreDto == null)
             {
                 return BadRequest("DrugStore data is required.");
             }
 
-            // Agregar el nuevo DrugStore al contexto
-            _context.DrugStores.Add(newDrugStore);
+            // Mapear DTO al modelo
+            var drugStore = _mapper.Map<DrugStore>(drugStoreDto);
+
+            _context.DrugStores.Add(drugStore);
 
             try
             {
-                // Guardar los cambios en la base de datos
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(500, "Error al insertar el DrugStore.");
-            }
-
-            // Devolver una respuesta 201 (creado) con la información del nuevo DrugStore
-            return CreatedAtAction(nameof(GetDrugStores), new { id = newDrugStore.DrugStoreId }, newDrugStore);
-        }
-
-
-        // POST: api/DrugStore
-        [HttpPost("sp")]
-        public async Task<ActionResult> PostDrugStoreSP([FromBody] DrugStore newDrugStore)
-        {
-            if (newDrugStore == null)
-            {
-                return BadRequest("DrugStore data is required.");
-            }
-
-            try
-            {
-                // Ejecutar el stored procedure
-                var parameters = new[]
-                {
-                    new SqlParameter("@DocumentDS", newDrugStore.DocumentDs),
-                    new SqlParameter("@NameDS", newDrugStore.NameDs),
-                    new SqlParameter("@PhoneDS", newDrugStore.PhoneDs),
-                    new SqlParameter("@Address", newDrugStore.Address),
-                    new SqlParameter("@ShortName", newDrugStore.ShortName),
-                    new SqlParameter("@Altitude", newDrugStore.Altitude),
-                    new SqlParameter("@Longitude", newDrugStore.Longitude),
-                    new SqlParameter("@RegistrationDate", newDrugStore.RegistrationDate),
-                    new SqlParameter("@DrugStoreTypeID", newDrugStore.DrugStoreTypeId),
-                    new SqlParameter("@DocumentTypeID", newDrugStore.DocumentTypeId),
-                    new SqlParameter("@MunicipioID", newDrugStore.MunicipioId),
-                    new SqlParameter("@LicenseID", newDrugStore.LicenseId),
-                    new SqlParameter("@DirectorID", newDrugStore.DirectorId),
-                    new SqlParameter("@OwnerID", newDrugStore.OwnerId)
-                };
-
-                // Llamar al stored procedure
-                await _context.Database.ExecuteSqlRawAsync("EXEC sp_InsertDrugStore @DocumentDS, @NameDS, @PhoneDS, @Address, @ShortName, @Altitude, @Longitude, @RegistrationDate, @DrugStoreTypeID, @DocumentTypeID, @MunicipioID, @LicenseID, @DirectorID, @OwnerID", parameters);
-
-                return StatusCode(201); // HTTP 201 Created
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Error al guardar la farmacia: {ex.Message}");
             }
+
+            return CreatedAtAction(nameof(GetDrugStore), new { id = drugStore.DrugStoreId }, drugStore);
         }
+
+
+        // PUT: api/DrugStore/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutDrugStore(int id, [FromBody] DrugStoreDTO drugStoreDto)
+        {
+            if (drugStoreDto == null)
+            {
+                return BadRequest("DrugStore data is required.");
+            }
+
+            // Buscar el DrugStore existente en la base de datos
+            var existingDrugStore = await _context.DrugStores.FindAsync(id);
+            if (existingDrugStore == null)
+            {
+                return NotFound($"DrugStore with ID {id} not found.");
+            }
+
+            // Mapear los datos del DTO al modelo existente
+            _mapper.Map(drugStoreDto, existingDrugStore);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, $"Error updating the DrugStore: {ex.Message}");
+            }
+
+            return NoContent(); // 204 No Content
+        }
+
+
+        //DELETE: api/DrugStore/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteDrugStore(int id)
+        {
+            // Buscar el DrugStore existente
+            var drugStore = await _context.DrugStores.FindAsync(id);
+            if (drugStore == null)
+            {
+                return NotFound($"DrugStore with ID {id} not found.");
+            }
+
+            // Eliminar el DrugStore
+            _context.DrugStores.Remove(drugStore);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, $"Error deleting the DrugStore: {ex.Message}");
+            }
+
+            return NoContent(); // 204 No Content
+        }
+
 
         
     }

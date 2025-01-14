@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EvaluacionFarmaciaAPI.Models;
 
-public partial class StatuSinspection
+public partial class StatusInspection
 {
     public int StatusInspId { get; set; }
 
