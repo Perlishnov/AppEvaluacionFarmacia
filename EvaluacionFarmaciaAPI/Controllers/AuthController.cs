@@ -33,7 +33,7 @@ public class AuthController : ControllerBase
 
         if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordUser))
         {
-            return Unauthorized(new { message = "Credenciales inválidas" });
+            return Unauthorized(new { message = "Credenciales invalidas" });
         }
 
         var token = GenerateJwtToken(user);
@@ -59,12 +59,12 @@ public class AuthController : ControllerBase
         return StatusCode(201, new { message = "El usuario se ha registrado correctamente" });
     }
 
-    //Sumamente inutil a menos que queramos añadir una lógica de logout
+    //Sumamente inutil a menos que queramos anadir una logica de logout
     // POST: /auth/logout
     [HttpPost("logout")]
     public IActionResult Logout()
     {
-        return Ok(new { message = "Sesión cerrada correctamente" });
+        return Ok(new { message = "Sesion cerrada correctamente" });
     }
 
     // POST: /auth/refresh
@@ -142,4 +142,5 @@ public class AuthController : ControllerBase
 
         return null;
     }
-}
+    
+} 

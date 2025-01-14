@@ -15,6 +15,19 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 // Añadir servicios al contenedor.
 builder.Services.AddControllers();
 
+// Configuración de CORS
+string corsPolicyName = "FrontendPolicy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicyName, policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // URL del frontend
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 // Agregar autenticación
 string jwtKey = builder.Configuration["Jwt:Key"] 
     ?? throw new InvalidOperationException("Jwt:Key no está configurado en appsettings.json.");
@@ -75,7 +88,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<FarmaciaDesarrolloWebContext>(options =>
     options.UseSqlServer(connectionString));
 
+//Build del proyecto
 var app = builder.Build();
+
+
+// Habilitar CORS
+app.UseCors(corsPolicyName);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
