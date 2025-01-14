@@ -59,7 +59,7 @@ public class AuthController : ControllerBase
         return StatusCode(201, new { message = "El usuario se ha registrado correctamente" });
     }
 
-
+    //Sumamente inutil a menos que queramos añadir una lógica de logout
     // POST: /auth/logout
     [HttpPost("logout")]
     public IActionResult Logout()
