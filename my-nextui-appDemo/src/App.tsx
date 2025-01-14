@@ -1,35 +1,50 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
+// Páginas principales
 import IndexPage from "./pages/index";
 import LoginPage from "./pages/login";
-import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import DetallesFarmacia from "./pages/Inspector/DetallesFarmacia"; // Importar el componente
+import InspectorCuenta from "./pages/Inspector/InspectorCuenta"; // Importar el componente
 
-
-// Owner Pages
+// Propietario
 import PropietarioDashboard from "./pages/Propietario/dashboard";
-import PropietarioMisFarmacias from "./pages/Propietario/MyPharmacies";
+import PropietarioMyPharmacies from "./pages/Propietario/MyPharmacies";
 
-// Evaluator Pages
-import EvaluatorDashboard from "./pages/evaluator/EvaluatorDashboard";
-import EvaluationsList from "./pages/evaluator/EvaluationsList";
-import EvaluationDetails from "./pages/evaluator/EvaluationDetails";
-import AssignEvaluation from "./pages/evaluator/AssignEvaluation";
+// Inspector
+import DashboardInspector from "./pages/Inspector/dashboardIns";
+import EvaluationsList from "./pages/Inspector/EvaluationsList";
 
-// Admin Pages
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import ManageUsers from "./pages/admin/ManageUsers";
-import UserDetails from "./pages/admin/UserDetails";
-import ViewEvaluations from "./pages/admin/ViewEvaluations";
+// Admin
+import AdminDashboardPage from "./pages/Admin/adminDashboard";
+import InspectionHistoryPage from "./pages/Admin/inspectionHistory";
+import PharmaciesManagementPage from "./pages/Admin/pharmaciesManagement";
+import UserManagementPage from "./pages/Admin/userManagement";
 
 function App() {
   return (
     <Routes>
+      {/* Rutas principales */}
       <Route element={<IndexPage />} path="/" />
       <Route element={<LoginPage />} path="/login" />
-      <Route element={<RegisterPage />} path="/Register" />
-      <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
-      <Route element={<PropietarioMisFarmacias />} path="/propietario/farmacias" />
 
+      {/* Inspector */}
+      <Route element={<DashboardInspector />} path="/inspector/dashboard" />
+      <Route element={<EvaluationsList />} path="/inspector/evaluations" />
+      <Route element={<DetallesFarmacia />} path="/inspector/farmacia/:farmaciaId" />
+      <Route element={<InspectorCuenta />} path="/inspector/account" /> 
+      { /* Propietario */}
+      <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
+      <Route element={<PropietarioMyPharmacies />} path="/propietario/farmacias" />
+
+      { /* Admin */}
+      <Route element={<AdminDashboardPage />} path="/admin/dashboard" />
+      <Route element={<InspectionHistoryPage />} path="/admin/inspectionshistory" />
+      <Route element={<PharmaciesManagementPage />} path="/admin/pharmacies" />
+      <Route element={<UserManagementPage />} path="/admin/users" />
+
+      {/* Página 404 */}
+      <Route element={<NotFoundPage />} path="*" />
     </Routes>
   );
 }

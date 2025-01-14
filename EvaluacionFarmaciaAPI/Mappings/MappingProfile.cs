@@ -10,6 +10,8 @@ public class MappingProfile : Profile
         CreateMap<DrugStoreDTO, DrugStore>();
         CreateMap<DrugStore, DrugStoreDTO>();
         CreateMap<UserAccount, UserAccountDTO>().ReverseMap();
+        CreateMap<Owner, OwnerDTO>().ReverseMap();
+        CreateMap<TechnicalDirector, TechnicalDirectorDTO>();
         //Mapeo Inspecciones de un inspector
         /* CreateMap<Inspection, InspectionGetDTO>()
             .ForMember(dest => dest.DrugStoreName, opt => opt.MapFrom(src => src.DrugStore.NameDs))

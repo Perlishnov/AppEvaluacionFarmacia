@@ -1,11 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-export default function Layout({ children, menuItems, role }: { 
-  children: React.ReactNode; 
-  menuItems: { title: string; path: string }[]; 
+type MenuItem = {
+  title: string;
+  path: string;
+};
+
+type LayoutGenericoProps = {
+  children: React.ReactNode;
   role: string;
-}) {
+  menuItems: MenuItem[];
+};
+
+export default function LayoutGenerico({ children, role, menuItems }: LayoutGenericoProps) {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -13,21 +19,19 @@ export default function Layout({ children, menuItems, role }: {
         <h2 className="text-xl font-bold mb-4">{role}</h2>
         <nav>
           {menuItems.map((item, index) => (
-            <Link
+            <a
               key={index}
-              to={item.path}
+              href={item.path}
               className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded"
             >
               {item.title}
-            </Link>
+            </a>
           ))}
         </nav>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 bg-gray-50">
-        {children}
-      </main>
+      <main className="flex-1 p-6 bg-gray-50">{children}</main>
     </div>
   );
 }
