@@ -15,6 +15,12 @@ import PropietarioMyPharmacies from "./pages/Propietario/MyPharmacies";
 import DashboardInspector from "./pages/Inspector/dashboardIns";
 import EvaluationsList from "./pages/Inspector/EvaluationsList";
 
+// Admin
+import AdminDashboardPage from "./pages/Admin/adminDashboard";
+import InspectionHistoryPage from "./pages/Admin/inspectionHistory";
+import PharmaciesManagementPage from "./pages/Admin/pharmaciesManagement";
+import UserManagementPage from "./pages/Admin/userManagement";
+
 function App() {
   return (
     <Routes>
@@ -31,8 +37,10 @@ function App() {
       <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
       <Route element={<PropietarioMyPharmacies />} path="/propietario/farmacias" />
 
-      { /* Administrador */}
-      <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
+      { /* Admin */}
+      <Route element={<AdminDashboardPage />} path="/admin/dashboard" />
+      <Route element={<InspectionHistoryPage />} path="/admin/" />
+      <Route element={<PharmaciesManagementPage />} path="/propietario/farmacias" />
       <Route element={<PropietarioMyPharmacies />} path="/propietario/farmacias" />
 
       {/* Página 404 */}
