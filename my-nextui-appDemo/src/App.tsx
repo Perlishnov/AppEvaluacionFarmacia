@@ -5,6 +5,7 @@ import IndexPage from "./pages/index";
 import LoginPage from "./pages/login";
 import NotFoundPage from "./pages/NotFoundPage";
 import DetallesFarmacia from "./pages/Inspector/DetallesFarmacia"; // Importar el componente
+import InspectorCuenta from "./pages/Inspector/InspectorCuenta"; // Importar el componente
 
 // Inspector
 import DashboardInspector from "./pages/Inspector/dashboardIns";
@@ -20,7 +21,8 @@ function App() {
       {/* Inspector */}
       <Route element={<DashboardInspector />} path="/inspector/dashboard" />
       <Route element={<EvaluationsList />} path="/inspector/evaluations" />
-      <Route element={<DetallesFarmacia />} path="/inspector/farmacia/:farmaciaId" /> {/* Aquí está la ruta */}
+      <Route element={<DetallesFarmacia />} path="/inspector/farmacia/:farmaciaId" />
+      <Route element={<InspectorCuenta />} path="/inspector/account" /> {/* Nueva ruta */}
 
       {/* Página 404 */}
       <Route element={<NotFoundPage />} path="*" />

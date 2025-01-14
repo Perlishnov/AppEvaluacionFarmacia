@@ -1,15 +1,11 @@
-import Layout from "./LayoutGenerico";
+import React from "react";
+import LayoutGenerico from "./LayoutGenerico";
 
 export default function EvaluadorLayout({ children }: { children: React.ReactNode }) {
   const menuItems = [
-    { title: "Mis Evaluaciones", path: "/evaluador/mis-evaluaciones" },
-    { title: "Asignar Evaluaciones", path: "/evaluador/asignar-evaluaciones" },
-    { title: "Mi Cuenta", path: "/evaluador/mi-cuenta" },
+    { title: "Dashboard", path: "/inspector/dashboard" },
+    { title: "Mi Cuenta", path: "/inspector/account" },
   ];
 
-  return (
-    <Layout role="Evaluador" menuItems={menuItems}>
-      {children}
-    </Layout>
-  );
+  return <LayoutGenerico role="Inspector" menuItems={menuItems}>{children}</LayoutGenerico>;
 }
