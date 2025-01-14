@@ -32,16 +32,16 @@ function App() {
       <Route element={<DashboardInspector />} path="/inspector/dashboard" />
       <Route element={<EvaluationsList />} path="/inspector/evaluations" />
       <Route element={<DetallesFarmacia />} path="/inspector/farmacia/:farmaciaId" />
-      <Route element={<InspectorCuenta />} path="/inspector/account" /> {/* Nueva ruta */}
+      <Route element={<InspectorCuenta />} path="/inspector/account" /> 
       { /* Propietario */}
       <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
       <Route element={<PropietarioMyPharmacies />} path="/propietario/farmacias" />
 
       { /* Admin */}
       <Route element={<AdminDashboardPage />} path="/admin/dashboard" />
-      <Route element={<InspectionHistoryPage />} path="/admin/" />
-      <Route element={<PharmaciesManagementPage />} path="/propietario/farmacias" />
-      <Route element={<PropietarioMyPharmacies />} path="/propietario/farmacias" />
+      <Route element={<InspectionHistoryPage />} path="/inspectionshistory" />
+      <Route element={<PharmaciesManagementPage />} path="/admin/pharmacies" />
+      <Route element={<UserManagementPage />} path="/admin/users" />
 
       {/* Página 404 */}
       <Route element={<NotFoundPage />} path="*" />
