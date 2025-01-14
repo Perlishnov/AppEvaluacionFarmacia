@@ -29,13 +29,7 @@ const InspectorCuenta = () => {
   };
 
   return (
-    <EvaluadorLayout
-      menuItems={[
-        { title: "Dashboard", path: "/inspector/dashboard" },
-        { title: "Cuenta", path: "/inspector/account" },
-      ]}
-      role="Inspector"
-    >
+    <EvaluadorLayout>
       <div className="p-6 space-y-6">
         <h1 className="text-2xl font-bold">Mi Cuenta</h1>
         <div className="bg-gray-100 p-6 rounded-lg border shadow flex items-center gap-6">
