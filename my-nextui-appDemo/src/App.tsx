@@ -31,6 +31,10 @@ function App() {
       <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
       <Route element={<PropietarioMyPharmacies />} path="/propietario/farmacias" />
 
+      { /* Administrador */}
+      <Route element={<PropietarioDashboard />} path="/propietario/dashboard" />
+      <Route element={<PropietarioMyPharmacies />} path="/propietario/farmacias" />
+
       {/* Página 404 */}
       <Route element={<NotFoundPage />} path="*" />
     </Routes>
