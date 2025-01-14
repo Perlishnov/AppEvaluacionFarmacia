@@ -9,7 +9,7 @@ namespace EvaluacionFarmaciaAPI.DTOs
         public int StatusInspId { get; set; }
         public string? StatusInsp { get; set; }
 
-        public static StatusInspectionDTO FromModel (StatuSinspection statuSinspection)
+        public static StatusInspectionDTO FromModel (StatusInspection statuSinspection)
         {
             return new StatusInspectionDTO
             {
