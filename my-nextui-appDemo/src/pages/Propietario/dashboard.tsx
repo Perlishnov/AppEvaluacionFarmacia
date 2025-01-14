@@ -124,7 +124,7 @@ function RequestFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
   };
 
   const renderOwnerSection = () => (
-    <Tab title="Datos del Propietario">
+    <Tab title="Datos del Propietario" className="flex-col">
       <Input
         label="Nombre o Razón Social"
         name="ownerName"
@@ -299,7 +299,7 @@ function RequestFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
             </Tab>
             {operation && renderTabsContent()}
           </Tabs>
-          <Button type="submit" className="mt-4">
+          <Button type="submit" className="mt-4" color="primary">
             Enviar
           </Button>
         </ModalBody>
