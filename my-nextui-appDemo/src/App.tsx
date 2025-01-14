@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 // Páginas principales
 import IndexPage from "./pages/index";
 import LoginPage from "./pages/login";
+import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import DetallesFarmacia from "./pages/Inspector/DetallesFarmacia"; // Importar el componente
 import InspectorCuenta from "./pages/Inspector/InspectorCuenta"; // Importar el componente
@@ -27,6 +28,7 @@ function App() {
       {/* Rutas principales */}
       <Route element={<IndexPage />} path="/" />
       <Route element={<LoginPage />} path="/login" />
+      <Route element={<RegisterPage />} path="/register" />
 
       {/* Inspector */}
       <Route element={<DashboardInspector />} path="/inspector/dashboard" />

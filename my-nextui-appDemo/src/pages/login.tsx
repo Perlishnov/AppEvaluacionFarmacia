@@ -4,9 +4,47 @@ import { Input, Button, Checkbox } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMessage("");
+
+    const loginData = { email, password };
+
+    try {
+      const response = await fetch("http://localhost:5041/api/Auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Invalid email or password");
+      }
+
+      const data = await response.json();
+      console.log("Login successful:", data);
+
+      // Handle successful login, e.g., save JWT token
+      localStorage.setItem("token", data.token);
+      window.location.href = "/dashboard"; // Redirect to dashboard or appropriate route
+    } catch (error: any) {
+      console.error("Login failed:", error);
+      setErrorMessage("Correo o contraseña incorrectos.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex h-screen">
@@ -14,38 +52,44 @@ export default function LoginPage() {
       <div
         className="w-1/2 flex flex-col justify-center items-center bg-cover bg-center bg-no-repeat px-10"
         style={{
-        backgroundImage: 'url("https://picsum.photos/200/300")', 
+          backgroundImage: 'url("https://picsum.photos/800/600")',
         }}
-        >
-            <div className="bg-white/70 p-8 rounded-lg shadow-lg">
-                <h1 className="text-4xl font-bold text-primary">Bienvenido a Nuestra App</h1>
-                <h2 className="text-xl text-gray-600 mt-4">Tu plataforma de farmacia digital</h2>
-                <p className="text-gray-500 mt-2 text-center">
+      >
+        <div className="bg-white/70 p-8 rounded-lg shadow-lg">
+          <h1 className="text-4xl font-bold text-primary">Bienvenido a Nuestra App</h1>
+          <h2 className="text-xl text-gray-600 mt-4">
+            Tu plataforma de farmacia digital
+          </h2>
+          <p className="text-gray-500 mt-2 text-center">
             Administra tus compras, recetas y más en un solo lugar con facilidad y seguridad.
-                </p>
-            </div>
+          </p>
         </div>
+      </div>
 
       {/* Right Column */}
       <div className="w-1/2 flex flex-col justify-center items-center px-10">
         <h2 className="text-2xl font-semibold text-gray-800">Iniciar sesión</h2>
-        <form className="w-full max-w-md mt-6 space-y-4">
-          {/* Email Input */}
+        <form onSubmit={handleLogin} className="w-full max-w-md mt-6 space-y-4">
           <Input
             label="Correo Electrónico"
             placeholder="Ingresa tu correo"
             type="email"
             fullWidth
             variant="bordered"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
 
-          {/* Password Input */}
           <Input
             label="Contraseña"
             placeholder="Ingresa tu contraseña"
             type={isPasswordVisible ? "text" : "password"}
             fullWidth
             variant="bordered"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
             endContent={
               <button
                 aria-label="toggle password visibility"
@@ -74,24 +118,16 @@ export default function LoginPage() {
             }
           />
 
-          {/* Terms & Conditions */}
           <Checkbox size="sm" color="primary" defaultSelected>
             Acepto los <Link to="/terms">términos y condiciones</Link>
           </Checkbox>
 
-          {/* Login Button */}
-          <Button color="primary" className="w-full">
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
+          <Button type="submit" color="primary" className="w-full" isLoading={loading}>
             Iniciar Sesión
           </Button>
         </form>
-
-        {/* Register Prompt */}
-        <p className="mt-6 text-sm text-gray-600">
-          ¿No tienes cuenta?{" "}
-          <Link color="primary" to="/register">
-            Crea una
-          </Link>
-        </p>
       </div>
     </div>
   );

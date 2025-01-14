@@ -18,15 +18,24 @@ export default function IndexPage() {
             Registra, gestiona y haz seguimiento de tus solicitudes y evaluaciones
             con facilidad.
           </p>
-          <Button
+            <Button
             as={Link}
-            href="/register"
+            className="mt-6"
             color="primary"
             radius="full"
+            to="/register"
+            >
+            Crear una Cuenta ·
+            </Button>
+            <Button
+            as={Link}
             className="mt-6"
-          >
-            Crear una Cuenta
-          </Button>
+            color="secondary"
+            radius="full"
+            to="/login"
+            >
+            Iniciar sesion
+            </Button>
         </div>
       </section>
 
