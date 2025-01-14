@@ -39,7 +39,7 @@ function App() {
 
       { /* Admin */}
       <Route element={<AdminDashboardPage />} path="/admin/dashboard" />
-      <Route element={<InspectionHistoryPage />} path="/inspectionshistory" />
+      <Route element={<InspectionHistoryPage />} path="/admin/inspectionshistory" />
       <Route element={<PharmaciesManagementPage />} path="/admin/pharmacies" />
       <Route element={<UserManagementPage />} path="/admin/users" />
 
