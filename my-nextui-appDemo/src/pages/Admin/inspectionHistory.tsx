@@ -8,7 +8,7 @@ import { Eye, Pencil, Trash } from "lucide-react";
 const InspectionHistoryPage: React.FC = () => {
   const columns = [
     { key: "pharmacyName", label: "Nombre" },
-    { key: "location", label: "Ubicación" },
+    { key: "location", label: "Ubicaciï¿½n" },
     { key: "ownerName", label: "Propietario" },
     { key: "status", label: "Estado" },
     { key: "submissionDate", label: "Fecha de Solicitud" },
@@ -20,7 +20,7 @@ const InspectionHistoryPage: React.FC = () => {
       key: "1",
       pharmacyName: "Farmacia Central",
       location: "Calle Principal 123",
-      ownerName: "Juan Pérez",
+      ownerName: "Juan Pï¿½rez",
       status: "Pendiente",
       submissionDate: "2023-05-01",
     },
@@ -28,7 +28,7 @@ const InspectionHistoryPage: React.FC = () => {
       key: "2",
       pharmacyName: "Farmacia del Hospital",
       location: "Av. Salud 456",
-      ownerName: "María García",
+      ownerName: "Marï¿½a Garcï¿½a",
       status: "Aprobada",
       submissionDate: "2023-05-02",
     },
@@ -36,15 +36,15 @@ const InspectionHistoryPage: React.FC = () => {
       key: "3",
       pharmacyName: "Farmacia Norte",
       location: "Calle Norte 789",
-      ownerName: "Pedro Sánchez",
-      status: "En Inspección",
+      ownerName: "Pedro Sï¿½nchez",
+      status: "En Inspecciï¿½n",
       submissionDate: "2023-05-03",
     },
     {
       key: "4",
       pharmacyName: "Farmacia Sur",
       location: "Calle Sur 101",
-      ownerName: "Ana López",
+      ownerName: "Ana Lï¿½pez",
       status: "Rechazada",
       submissionDate: "2023-05-04",
     },
@@ -61,7 +61,7 @@ const InspectionHistoryPage: React.FC = () => {
                 ? "text-green-500"
                 : cellValue === "Pendiente"
                 ? "text-yellow-500"
-                : cellValue === "En Inspección"
+                : cellValue === "En Inspecciï¿½n"
                 ? "text-blue-500"
                 : "text-red-500"
             }`}
@@ -105,7 +105,7 @@ const InspectionHistoryPage: React.FC = () => {
         {/* Tabla */}
         <Table 
           aria-label="Inspection History Table"
-          css={{ height: "auto", minWidth: "100%" }}
+          style={{ height: "auto", minWidth: "100%" }}
         >
           <TableHeader>
             {columns.map((column) => (
