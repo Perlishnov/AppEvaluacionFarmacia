@@ -11,48 +11,48 @@ export default function IndexPage() {
     <DefaultLayout>
       {/* Hero Section */}
       <section
-  className="relative w-screen h-[70vh] flex items-center justify-start bg-cover bg-center"
-  style={{
-    backgroundImage:
-      'url("https://www.pkf.com.au/uploads/Insights/Health-AdobeStock_527209943-Pharmacy-60-day-dispensing.jpg")',
-  }}
->
-  <div className="absolute inset-0 bg-black/50" />
-  <div className="relative z-10 px-6 w-full max-w-[1200px] mx-auto">
-    <div className="max-w-lg">
-      <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
-        Simplifica la gestión de tu farmacia
-      </h1>
-      <p className="text-lg text-white/90 mb-6">
-        Registra, gestiona y haz seguimiento de tus solicitudes y evaluaciones con facilidad.
-      </p>
-      <div className="flex flex-col sm:flex-row gap-4">
-        <Button
-          as={Link}
-          to="/register"
-          color="primary"
-          size="lg"
-          radius="full"
-          className="bg-white text-blue-600 hover:bg-blue-100 transition-colors"
-        >
-          Crear una Cuenta
-          <ArrowRight className="ml-2" />
-        </Button>
-        <Button
-          as={Link}
-          to="/login"
-          color="secondary"
-          size="lg"
-          radius="full"
-          variant="bordered"
-          className="border-white text-white hover:bg-white hover:text-blue-600 transition-colors"
-        >
-          Iniciar sesión
-        </Button>
-      </div>
-    </div>
-  </div>
-</section>
+        className="relative w-screen h-[70vh] flex items-center justify-start bg-cover bg-center"
+        style={{
+          backgroundImage:
+            'url("https://www.pkf.com.au/uploads/Insights/Health-AdobeStock_527209943-Pharmacy-60-day-dispensing.jpg")',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 px-6 w-full max-w-[1200px] mx-auto">
+          <div className="max-w-lg">
+            <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+              Simplifica la gestión de tu farmacia
+            </h1>
+            <p className="text-lg text-white/90 mb-6">
+              Registra, gestiona y haz seguimiento de tus solicitudes y evaluaciones con facilidad.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                as={Link}
+                to="/register"
+                color="primary"
+                size="lg"
+                radius="full"
+                className="bg-blue-600 text-white hover:bg-blue-100 hover:text-blue-600 transition-colors flex items-center justify-center space-x-2"
+              >
+                <span>Crear una Cuenta</span>
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+              <Button
+                as={Link}
+                to="/login"
+                color="secondary"
+                size="lg"
+                radius="full"
+                variant="bordered"
+                className="bg-white text-blue-600 hover:bg-blue-100 transition-colors flex items-center justify-center space-x-2"
+              >
+                Iniciar sesión
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Features Section */}
       <section className="py-16">
@@ -88,6 +88,12 @@ export default function IndexPage() {
                   "Recibe alertas sobre cambios en tus solicitudes o evaluaciones.",
                 icon: "🔔",
               },
+              {
+                title: "Reportes Detallados",
+                description:
+                  "Genera reportes personalizados para el análisis de datos de tus farmacias.",
+                icon: "📑",
+              },
             ].map((feature, index) => (
               <Card
                 key={index}
@@ -102,6 +108,72 @@ export default function IndexPage() {
                 </CardBody>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-16 bg-blue-50">
+        <div className="container mx-auto max-w-7xl px-6">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+            ¿Por qué elegirnos?
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Eficiencia Garantizada",
+                description:
+                  "Optimiza la gestión de tus farmacias ahorrando tiempo y recursos.",
+                icon: "⚡",
+              },
+              {
+                title: "Seguridad y Privacidad",
+                description:
+                  "Protegemos tus datos con los más altos estándares de seguridad.",
+                icon: "🔒",
+              },
+              {
+                title: "Soporte Dedicado",
+                description:
+                  "Nuestro equipo está siempre disponible para ayudarte.",
+                icon: "💬",
+              },
+            ].map((benefit, index) => (
+              <Card
+                key={index}
+                className="shadow-md hover:shadow-lg transition-shadow"
+              >
+                <CardHeader className="flex gap-3">
+                  <div className="text-3xl">{benefit.icon}</div>
+                  <h3 className="text-xl font-bold">{benefit.title}</h3>
+                </CardHeader>
+                <CardBody>
+                  <p className="text-gray-600">{benefit.description}</p>
+                </CardBody>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Secondary Call to Action Section */}
+      <section className="py-16 bg-gray-800 text-white">
+        <div className="container mx-auto max-w-7xl px-6">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold mb-4">¡Comienza ahora mismo!</h2>
+            <p className="text-lg mb-8">
+              Únete a cientos de farmacias que ya están simplificando sus
+              operaciones.
+            </p>
+            <Button
+              as={Link}
+              to="/register"
+              size="lg"
+              radius="full"
+              className="bg-blue-600 hover:bg-blue-700 transition-colors"
+            >
+              Regístrate Gratis
+            </Button>
           </div>
         </div>
       </section>
