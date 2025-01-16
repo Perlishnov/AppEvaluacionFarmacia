@@ -1,0 +1,7 @@
+﻿################################################################################
+# Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/WebFarmacia/FileContentIndex/35385110-ed62-4817-915e-cbf3c8a01d3c.vsidx
+/EvaluacionFarmaciaAPI
+/.vs
