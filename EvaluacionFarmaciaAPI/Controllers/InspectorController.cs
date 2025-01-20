@@ -1,4 +1,4 @@
-/* using AutoMapper;
+using AutoMapper;
 using EvaluacionFarmaciaAPI.DTOs;
 using EvaluacionFarmaciaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +54,7 @@ namespace EvaluacionFarmaciaAPI.Controllers
         }
 
         // GET: api/inspectors/dashboard
-        [HttpGet("dashboard")]
+        /* [HttpGet("dashboard")]
         public async Task<ActionResult<InspectorDashboardDTO>> GetInspectorDashboard([FromQuery] int inspectorId)
         {
             var parameters = new[] { new SqlParameter("@InspectorId", inspectorId) };
@@ -69,8 +69,7 @@ namespace EvaluacionFarmaciaAPI.Controllers
             }
 
             return Ok(dashboard);
-        }
+        } */
 
     }
 }
- */

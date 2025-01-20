@@ -1,4 +1,4 @@
-/* using System;
+using System;
 using System.Collections.Generic;
 using EvaluacionFarmaciaAPI.Models;
 
@@ -19,10 +19,10 @@ namespace EvaluacionFarmaciaAPI.DTOs
                 InspectionId = inspection.InspectionId,
                 ScheduledDate = inspection.ScheduledDate,
                 ModifiedDate = inspection.ModifiedDate,
-                StatusInspId = inspection.StatusInsp,
-                DrugStoreId = inspection.DrugStore
+                StatusInspId = inspection.StatusInspId,
+                DrugStoreId = inspection.DrugStoreId
             };
         }
 
     }
-} */
+}
