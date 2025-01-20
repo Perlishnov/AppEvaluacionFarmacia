@@ -53,23 +53,5 @@ namespace EvaluacionFarmaciaAPI.Controllers
             return NoContent();
         }
 
-        // GET: api/inspectors/dashboard
-        /* [HttpGet("dashboard")]
-        public async Task<ActionResult<InspectorDashboardDTO>> GetInspectorDashboard([FromQuery] int inspectorId)
-        {
-            var parameters = new[] { new SqlParameter("@InspectorId", inspectorId) };
-            var dashboard = await _context.Set<InspectorDashboardDTO>()
-                .FromSqlRaw("EXEC GetInspectorDashboard @InspectorId", parameters)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
-
-            if (dashboard == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(dashboard);
-        } */
-
     }
 }

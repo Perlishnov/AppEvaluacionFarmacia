@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EvaluacionFarmaciaAPI.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using EvaluacionFarmaciaAPI.DTOs;
 using AutoMapper;

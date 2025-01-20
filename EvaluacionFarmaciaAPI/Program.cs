@@ -47,7 +47,9 @@ builder.Services.AddAuthentication("Bearer")
 
 
 // Agregar AutoMapper al contenedor de servicios
-builder.Services.AddAutoMapper(typeof(Program));
+//builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
 // Configurar Swagger
 builder.Services.AddSwaggerGen(c =>

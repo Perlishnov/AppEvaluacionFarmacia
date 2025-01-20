@@ -23,5 +23,13 @@ public class MappingProfile : Profile
         CreateMap<UserAccountDTO, UserAccount>()
             .ForMember(dest => dest.PasswordUser, opt => opt.MapFrom(src => BCrypt.Net.BCrypt.HashPassword(src.PasswordUser)));
 
+        //Mapeos de FilterController
+        CreateMap<Provincium, ProvinciaDTO>();
+        CreateMap<Municipio, MunicipioDTO>();
+        CreateMap<DocumentType, DocumentTypeDTO>();
+        CreateMap<PersonType, PersonTypeDTO>();
+        CreateMap<RequestType, RequestTypeDTO>();
+        CreateMap<DrugStoreType, DrugStoreTypeDTO>();
+
     }
 }

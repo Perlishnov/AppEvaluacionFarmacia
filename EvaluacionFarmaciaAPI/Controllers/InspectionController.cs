@@ -29,7 +29,7 @@ public class InspectionController : ControllerBase
         _context.Inspections.Add(inspection);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetInspectionById), new { id = inspection.InspectionID }, inspectionDtoInspectionDTO);
+        return CreatedAtAction(nameof(GetInspectionById), new { id = inspection.InspectionId }, inspectionDtoInspectionDTO);
     }
 
     // GET: /inspections
@@ -38,7 +38,7 @@ public class InspectionController : ControllerBase
     {
         var inspectionsQuery = _context.Inspections
             .Include(i => i.DrugStore)
-            .Include(i => i.StatuSInspection)
+            .Include(i => i.StatusInspection)
             .AsQueryable();
 
         if (!string.IsNullOrEmpty(status))
