@@ -5078,23 +5078,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Operador\\.nuget\\packages\\": {},
+    "C:\\Users\\Dell\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Operador\\Projects\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Dell\\Documents\\GitHub\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj",
       "projectName": "EvaluacionFarmaciaAPI",
-      "projectPath": "C:\\Users\\Operador\\Projects\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj",
-      "packagesPath": "C:\\Users\\Operador\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Operador\\Projects\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\obj\\",
+      "projectPath": "C:\\Users\\Dell\\Documents\\GitHub\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj",
+      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Dell\\Documents\\GitHub\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Operador\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
