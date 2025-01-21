@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "@nextui-org/react";
-
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
@@ -12,7 +11,9 @@ export default function IndexPage() {
   return (
     <DefaultLayout>
       {/* Hero Section */}
+      
       <section
+      id="hero"
         className="relative w-screen h-[70vh] flex items-center justify-start bg-cover bg-center"
         style={{
           backgroundImage:
@@ -57,7 +58,7 @@ export default function IndexPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16">
+      <section id="features" className="py-16">
         <div className="container mx-auto max-w-7xl px-6">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
             ¿Qué puedes hacer con nuestra plataforma?
@@ -115,7 +116,7 @@ export default function IndexPage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 bg-blue-50">
+      <section id="benefits" className="py-16 bg-blue-50">
         <div className="container mx-auto max-w-7xl px-6">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
             ¿Por qué elegirnos?
@@ -172,7 +173,7 @@ export default function IndexPage() {
               to="/register"
               size="lg"
               radius="full"
-              className="bg-blue-600 hover:bg-blue-700 transition-colors"
+              className="bg-blue-600 hover:bg-blue-700 transition-colors text-white"
             >
               Regístrate Gratis
             </Button>
@@ -181,7 +182,7 @@ export default function IndexPage() {
       </section>
 
       {/* Opinions Section */}
-      <section className="bg-gray-50 py-16">
+      <section id="opinions" className="bg-gray-50 py-16">
         <div className="container mx-auto max-w-7xl px-6">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
             Lo que dicen nuestros usuarios
