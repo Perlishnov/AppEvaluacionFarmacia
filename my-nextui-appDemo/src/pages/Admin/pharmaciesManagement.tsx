@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AdministradorLayout from "../../layouts/AdministradorLayout";
 
-// NextUI v2 (aseg˙rate de tener las versiones correctas)
+// NextUI v2 (aseg√∫rate de tener las versiones correctas)
 import {
   Table,
   TableHeader,
@@ -22,25 +22,25 @@ import { Eye, Pencil, Trash } from "lucide-react";
 
 /** Interfaz (tipo) para cada Farmacia */
 interface Farmacia {
-  key: string;             // Se usar· como ID
+  key: string;             // Se usar√° como ID
   name: string;            // Nombre Actual
-  location: string;        // DirecciÛn
+  location: string;        // Direcci√≥n
   owner: string;           // Propietario
-  lastInspection: string;  // ⁄ltima InspecciÛn
+  lastInspection: string;  // √öltima Inspecci√≥n
   type: string;            // Tipo (Retail, Hospitalaria, etc.)
   status: string;          // Estado (Aprobada, Pendiente, etc.)
   active: boolean;         // Para manejar soft-delete
 
   /** Campos extendidos para Detalle (ejemplo de "Apertura") */
   // Datos del Propietario
-  ownerName: string;        // Nombre o RazÛn Social
-  ownerDocument: string;    // RNC/CÈdula
-  ownerAddress: string;     // DirecciÛn
-  ownerPhone: string;       // TelÈfono
+  ownerName: string;        // Nombre o Raz√≥n Social
+  ownerDocument: string;    // RNC/C√©dula
+  ownerAddress: string;     // Direcci√≥n
+  ownerPhone: string;       // Tel√©fono
   ownerEmail: string;       // Correo
-  ownerMobile: string;      // MÛvil
+  ownerMobile: string;      // M√≥vil
 
-  // Datos del Director TÈcnico
+  // Datos del Director T√©cnico
   directorName: string;
   directorLastName: string;
   directorDocument: string;
@@ -51,13 +51,13 @@ interface Farmacia {
   // Datos del Establecimiento
   pharmacyType: string;      // Tipo de Establecimiento
   activityType: string;      // Tipo de Actividad
-  pharmacyAddress: string;   // DirecciÛn Completa
+  pharmacyAddress: string;   // Direcci√≥n Completa
   pharmacyProvince: string;  // Provincia
   pharmacyMunicipality: string; // Municipio
 }
 
 const PharmaciesManagementPage: React.FC = () => {
-  // Estado de b˙squeda
+  // Estado de b√∫squeda
   const [searchTerm, setSearchTerm] = useState("");
 
   // Estado principal: listado de farmacias
@@ -66,23 +66,23 @@ const PharmaciesManagementPage: React.FC = () => {
       key: "1",
       name: "Farmacia Central",
       location: "Calle Principal 123",
-      owner: "Juan PÈrez",
+      owner: "Juan P√©rez",
       lastInspection: "2023-05-01",
       type: "Retail",
       status: "Aprobada",
       active: true,
       // Datos del Propietario (simulados)
-      ownerName: "Juan PÈrez",
+      ownerName: "Juan P√©rez",
       ownerDocument: "123456789",
       ownerAddress: "Calle Principal 123",
       ownerPhone: "809-555-1234",
       ownerEmail: "juan@example.com",
       ownerMobile: "809-555-5678",
-      // Director TÈcnico
+      // Director T√©cnico
       directorName: "Pedro",
-      directorLastName: "LÛpez",
+      directorLastName: "L√≥pez",
       directorDocument: "987654321",
-      directorProfession: "FarmacÈutico",
+      directorProfession: "Farmac√©utico",
       directorExequatur: "34567",
       directorIssueDate: "2022-01-01",
       // Establecimiento
@@ -96,23 +96,23 @@ const PharmaciesManagementPage: React.FC = () => {
       key: "2",
       name: "Farmacia Hospital General",
       location: "Av. Salud 456",
-      owner: "MarÌa GarcÌa",
+      owner: "Mar√≠a Garc√≠a",
       lastInspection: "2023-04-15",
       type: "Hospitalaria",
       status: "Pendiente",
       active: true,
       // Propietario
-      ownerName: "MarÌa GarcÌa",
+      ownerName: "Mar√≠a Garc√≠a",
       ownerDocument: "789456123",
       ownerAddress: "Av. Salud 456",
       ownerPhone: "809-555-2222",
       ownerEmail: "maria@example.com",
       ownerMobile: "809-555-3333",
-      // Director TÈcnico
+      // Director T√©cnico
       directorName: "Ana",
       directorLastName: "Torres",
       directorDocument: "222333444",
-      directorProfession: "FarmacÈutica",
+      directorProfession: "Farmac√©utica",
       directorExequatur: "45678",
       directorIssueDate: "2023-02-10",
       // Establecimiento
@@ -126,23 +126,23 @@ const PharmaciesManagementPage: React.FC = () => {
       key: "3",
       name: "Farmacia Norte",
       location: "Calle Norte 789",
-      owner: "Pedro S·nchez",
+      owner: "Pedro S√°nchez",
       lastInspection: "2023-03-20",
       type: "Retail",
-      status: "En InspecciÛn",
+      status: "En Inspecci√≥n",
       active: true,
       // Propietario
-      ownerName: "Pedro S·nchez",
+      ownerName: "Pedro S√°nchez",
       ownerDocument: "147258369",
       ownerAddress: "Calle Norte 789",
       ownerPhone: "809-444-1111",
       ownerEmail: "pedro@example.com",
       ownerMobile: "809-444-2222",
-      // Director TÈcnico
+      // Director T√©cnico
       directorName: "Laura",
-      directorLastName: "GÛmez",
+      directorLastName: "G√≥mez",
       directorDocument: "111222333",
-      directorProfession: "FarmacÈutica",
+      directorProfession: "Farmac√©utica",
       directorExequatur: "56789",
       directorIssueDate: "2021-12-01",
       // Establecimiento
@@ -156,23 +156,23 @@ const PharmaciesManagementPage: React.FC = () => {
       key: "4",
       name: "Farmacia Sur",
       location: "Calle Sur 101",
-      owner: "Ana LÛpez",
+      owner: "Ana L√≥pez",
       lastInspection: "2023-02-10",
       type: "Retail",
       status: "Rechazada",
       active: true,
       // Propietario
-      ownerName: "Ana LÛpez",
+      ownerName: "Ana L√≥pez",
       ownerDocument: "753951456",
       ownerAddress: "Calle Sur 101",
       ownerPhone: "809-555-8888",
       ownerEmail: "ana@example.com",
       ownerMobile: "809-555-9999",
-      // Director TÈcnico
+      // Director T√©cnico
       directorName: "Carlos",
-      directorLastName: "MartÌnez",
+      directorLastName: "Mart√≠nez",
       directorDocument: "999888777",
-      directorProfession: "FarmacÈutico",
+      directorProfession: "Farmac√©utico",
       directorExequatur: "67890",
       directorIssueDate: "2020-07-15",
       // Establecimiento
@@ -184,8 +184,8 @@ const PharmaciesManagementPage: React.FC = () => {
     },
   ]);
 
-  // Filtrado por nombre o ID (aquÌ "key")
-  // COMENTARIO: En la vida real, se harÌa una llamada a la API
+  // Filtrado por nombre o ID (aqu√≠ "key")
+  // COMENTARIO: En la vida real, se har√≠a una llamada a la API
   //            (por ejemplo: fetch o axios.get("/api/farmacias?search=..."))
   //            en cada cambio de searchTerm.
   const filteredPharmacies = farmacias.filter((farmacia) => {
@@ -199,9 +199,9 @@ const PharmaciesManagementPage: React.FC = () => {
   // Columnas para la tabla
   const columns = [
     { key: "name", label: "Nombre" },
-    { key: "location", label: "UbicaciÛn" },
+    { key: "location", label: "Ubicaci√≥n" },
     { key: "owner", label: "Propietario" },
-    { key: "lastInspection", label: "⁄ltima InspecciÛn" },
+    { key: "lastInspection", label: "√öltima Inspecci√≥n" },
     { key: "type", label: "Tipo" },
     { key: "status", label: "Estado" },
     { key: "actions", label: "Acciones" },
@@ -217,10 +217,10 @@ const PharmaciesManagementPage: React.FC = () => {
     null
   );
 
-  // Estado para manejar la ediciÛn
+  // Estado para manejar la edici√≥n
   const [editData, setEditData] = useState<Farmacia | null>(null);
 
-  // Estado para manejar la adiciÛn (nueva farmacia)
+  // Estado para manejar la adici√≥n (nueva farmacia)
   const [newPharmacyData, setNewPharmacyData] = useState<Farmacia>({
     key: "",
     name: "",
@@ -238,7 +238,7 @@ const PharmaciesManagementPage: React.FC = () => {
     ownerPhone: "",
     ownerEmail: "",
     ownerMobile: "",
-    // Director TÈcnico
+    // Director T√©cnico
     directorName: "",
     directorLastName: "",
     directorDocument: "",
@@ -254,7 +254,7 @@ const PharmaciesManagementPage: React.FC = () => {
   });
 
   /** 
-   * BotÛn Ojo: Ver Detalle 
+   * Bot√≥n Ojo: Ver Detalle 
    * Muestra en un modal toda la info (propietario, director, establecimiento).
    */
   const handleOpenDetail = (farmacia: Farmacia) => {
@@ -263,7 +263,7 @@ const PharmaciesManagementPage: React.FC = () => {
   };
 
   /**
-   * BotÛn L·piz: Editar
+   * Bot√≥n L√°piz: Editar
    * Copia la info al estado editData y abre modal.
    */
   const handleOpenEdit = (farmacia: Farmacia) => {
@@ -273,10 +273,10 @@ const PharmaciesManagementPage: React.FC = () => {
   };
 
   /**
-   * BotÛn Basura: Desactivar (soft delete)
+   * Bot√≥n Basura: Desactivar (soft delete)
    */
   const handleDeletePharmacy = (farmacia: Farmacia) => {
-    // COMENTARIO: AquÌ llamarÌas a tu API para "desactivar" la farmacia en la base de datos
+    // COMENTARIO: Aqu√≠ llamar√≠as a tu API para "desactivar" la farmacia en la base de datos
     // e.g. axios.put(`/api/farmacias/${farmacia.key}/desactivar`)
 
     // Actualizamos en local
@@ -288,11 +288,11 @@ const PharmaciesManagementPage: React.FC = () => {
   };
 
   /**
-   * Guardar cambios de ediciÛn (modal de EdiciÛn)
+   * Guardar cambios de edici√≥n (modal de Edici√≥n)
    */
   const handleSaveEdit = () => {
     if (!editData) return;
-    // COMENTARIO: AquÌ irÌa la llamada a la API 
+    // COMENTARIO: Aqu√≠ ir√≠a la llamada a la API 
     // e.g. axios.put(`/api/farmacias/${editData.key}`, editData)
 
     const updated = farmacias.map((f) =>
@@ -312,7 +312,7 @@ const PharmaciesManagementPage: React.FC = () => {
       return;
     }
 
-    // COMENTARIO: AquÌ llamada a la API
+    // COMENTARIO: Aqu√≠ llamada a la API
     // e.g. axios.post("/api/farmacias", newPharmacyData)
 
     setFarmacias([...farmacias, newPharmacyData]);
@@ -368,7 +368,7 @@ const PharmaciesManagementPage: React.FC = () => {
                 ? "text-green-500"
                 : cellValue === "Pendiente"
                 ? "text-yellow-500"
-                : cellValue === "En InspecciÛn"
+                : cellValue === "En Inspecci√≥n"
                 ? "text-blue-500"
                 : "text-red-500"
             }`}
@@ -388,7 +388,7 @@ const PharmaciesManagementPage: React.FC = () => {
             >
               <Eye className="h-4 w-4" />
             </Button>
-            {/* L¡PIZ (Editar) */}
+            {/* L√ÅPIZ (Editar) */}
             <Button
               isIconOnly
               variant="light"
@@ -410,7 +410,7 @@ const PharmaciesManagementPage: React.FC = () => {
           </div>
         );
       default:
-        // Si est· inactiva, lo mostramos con estilo "inactivo"
+        // Si est√° inactiva, lo mostramos con estilo "inactivo"
         if (!farmacia.active && (columnKey === "name" || columnKey === "owner")) {
           return (
             <span className="text-gray-400 line-through">
@@ -425,7 +425,7 @@ const PharmaciesManagementPage: React.FC = () => {
   return (
     <AdministradorLayout>
       <div>
-        <h1 className="text-3xl font-semibold mb-6">GestiÛn de Farmacias</h1>
+        <h1 className="text-3xl font-semibold mb-6">Gesti√≥n de Farmacias</h1>
 
         {/* Buscador */}
         <div className="flex justify-between items-center mb-4">
@@ -479,23 +479,23 @@ const PharmaciesManagementPage: React.FC = () => {
                 {/* Datos del Propietario */}
                 <div className="border-b pb-2">
                   <h3 className="font-semibold">Datos del Propietario</h3>
-                  <p><strong>Nombre/RazÛn Social:</strong> {selectedPharmacy.ownerName}</p>
-                  <p><strong>RNC/CÈdula:</strong> {selectedPharmacy.ownerDocument}</p>
-                  <p><strong>DirecciÛn:</strong> {selectedPharmacy.ownerAddress}</p>
-                  <p><strong>TelÈfono:</strong> {selectedPharmacy.ownerPhone}</p>
+                  <p><strong>Nombre/Raz√≥n Social:</strong> {selectedPharmacy.ownerName}</p>
+                  <p><strong>RNC/C√©dula:</strong> {selectedPharmacy.ownerDocument}</p>
+                  <p><strong>Direcci√≥n:</strong> {selectedPharmacy.ownerAddress}</p>
+                  <p><strong>Tel√©fono:</strong> {selectedPharmacy.ownerPhone}</p>
                   <p><strong>Correo:</strong> {selectedPharmacy.ownerEmail}</p>
-                  <p><strong>Tel. MÛvil:</strong> {selectedPharmacy.ownerMobile}</p>
+                  <p><strong>Tel. M√≥vil:</strong> {selectedPharmacy.ownerMobile}</p>
                 </div>
 
-                {/* Datos del Director TÈcnico */}
+                {/* Datos del Director T√©cnico */}
                 <div className="border-b pb-2">
-                  <h3 className="font-semibold">Datos del Director TÈcnico</h3>
+                  <h3 className="font-semibold">Datos del Director T√©cnico</h3>
                   <p><strong>Nombre:</strong> {selectedPharmacy.directorName}</p>
                   <p><strong>Apellidos:</strong> {selectedPharmacy.directorLastName}</p>
-                  <p><strong>No. CÈdula:</strong> {selectedPharmacy.directorDocument}</p>
-                  <p><strong>ProfesiÛn:</strong> {selectedPharmacy.directorProfession}</p>
+                  <p><strong>No. C√©dula:</strong> {selectedPharmacy.directorDocument}</p>
+                  <p><strong>Profesi√≥n:</strong> {selectedPharmacy.directorProfession}</p>
                   <p><strong>No. Exequatur:</strong> {selectedPharmacy.directorExequatur}</p>
-                  <p><strong>Fecha de EmisiÛn:</strong> {selectedPharmacy.directorIssueDate}</p>
+                  <p><strong>Fecha de Emisi√≥n:</strong> {selectedPharmacy.directorIssueDate}</p>
                 </div>
 
                 {/* Datos del Establecimiento */}
@@ -503,7 +503,7 @@ const PharmaciesManagementPage: React.FC = () => {
                   <h3 className="font-semibold">Datos del Establecimiento</h3>
                   <p><strong>Tipo de Establecimiento:</strong> {selectedPharmacy.pharmacyType}</p>
                   <p><strong>Tipo de Actividad:</strong> {selectedPharmacy.activityType}</p>
-                  <p><strong>DirecciÛn Completa:</strong> {selectedPharmacy.pharmacyAddress}</p>
+                  <p><strong>Direcci√≥n Completa:</strong> {selectedPharmacy.pharmacyAddress}</p>
                   <p><strong>Provincia:</strong> {selectedPharmacy.pharmacyProvince}</p>
                   <p><strong>Municipio:</strong> {selectedPharmacy.pharmacyMunicipality}</p>
                 </div>
@@ -518,7 +518,7 @@ const PharmaciesManagementPage: React.FC = () => {
         </ModalContent>
       </Modal>
 
-      {/* MODAL DE EDICI”N (L·piz) */}
+      {/* MODAL DE EDICI√ìN (L√°piz) */}
       <Modal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
@@ -530,8 +530,8 @@ const PharmaciesManagementPage: React.FC = () => {
           <ModalBody>
             {editData && (
               <div className="space-y-4">
-                {/* AquÌ solo pongo algunos campos a modo de ejemplo.
-                    Agrega o quita campos seg˙n necesites. */}
+                {/* Aqu√≠ solo pongo algunos campos a modo de ejemplo.
+                    Agrega o quita campos seg√∫n necesites. */}
                 <Input
                   label="ID (key) - Solo lectura"
                   value={editData.key}
@@ -545,7 +545,7 @@ const PharmaciesManagementPage: React.FC = () => {
                   }
                 />
                 <Input
-                  label="UbicaciÛn"
+                  label="Ubicaci√≥n"
                   value={editData.location}
                   onValueChange={(val) =>
                     setEditData((prev) => prev && { ...prev, location: val })
@@ -559,7 +559,7 @@ const PharmaciesManagementPage: React.FC = () => {
                   }
                 />
                 <Input
-                  label="⁄ltima InspecciÛn"
+                  label="√öltima Inspecci√≥n"
                   type="date"
                   value={editData.lastInspection}
                   onValueChange={(val) =>
@@ -583,7 +583,7 @@ const PharmaciesManagementPage: React.FC = () => {
                 >
                   <SelectItem key="Aprobada">Aprobada</SelectItem>
                   <SelectItem key="Pendiente">Pendiente</SelectItem>
-                  <SelectItem key="En InspecciÛn">En InspecciÛn</SelectItem>
+                  <SelectItem key="En Inspecci√≥n">En Inspecci√≥n</SelectItem>
                   <SelectItem key="Rechazada">Rechazada</SelectItem>
                 </Select>
               </div>
@@ -600,7 +600,7 @@ const PharmaciesManagementPage: React.FC = () => {
         </ModalContent>
       </Modal>
 
-      {/* MODAL DE AGREGAR (BotÛn "Agregar Farmacia") */}
+      {/* MODAL DE AGREGAR (Bot√≥n "Agregar Farmacia") */}
       <Modal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
@@ -627,7 +627,7 @@ const PharmaciesManagementPage: React.FC = () => {
                 }
               />
               <Input
-                label="UbicaciÛn"
+                label="Ubicaci√≥n"
                 value={newPharmacyData.location}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({ ...prev, location: val }))
@@ -641,7 +641,7 @@ const PharmaciesManagementPage: React.FC = () => {
                 }
               />
               <Input
-                label="⁄ltima InspecciÛn"
+                label="√öltima Inspecci√≥n"
                 type="date"
                 value={newPharmacyData.lastInspection}
                 onValueChange={(val) =>
@@ -669,7 +669,7 @@ const PharmaciesManagementPage: React.FC = () => {
               >
                 <SelectItem key="Aprobada">Aprobada</SelectItem>
                 <SelectItem key="Pendiente">Pendiente</SelectItem>
-                <SelectItem key="En InspecciÛn">En InspecciÛn</SelectItem>
+                <SelectItem key="En Inspecci√≥n">En Inspecci√≥n</SelectItem>
                 <SelectItem key="Rechazada">Rechazada</SelectItem>
               </Select>
 
@@ -677,51 +677,51 @@ const PharmaciesManagementPage: React.FC = () => {
               <hr />
               <h3 className="font-semibold">Datos del Propietario</h3>
               <Input
-                label="Nombre/RazÛn Social"
+                label="Nombre/Raz√≥n Social"
                 value={newPharmacyData.ownerName}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({ ...prev, ownerName: val }))
                 }
               />
               <Input
-                label="RNC/CÈdula"
+                label="RNC/C√©dula"
                 value={newPharmacyData.ownerDocument}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({ ...prev, ownerDocument: val }))
                 }
               />
               <Input
-                label="DirecciÛn"
+                label="Direcci√≥n"
                 value={newPharmacyData.ownerAddress}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({ ...prev, ownerAddress: val }))
                 }
               />
               <Input
-                label="TelÈfono"
+                label="Tel√©fono"
                 value={newPharmacyData.ownerPhone}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({ ...prev, ownerPhone: val }))
                 }
               />
               <Input
-                label="Correo ElectrÛnico"
+                label="Correo Electr√≥nico"
                 value={newPharmacyData.ownerEmail}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({ ...prev, ownerEmail: val }))
                 }
               />
               <Input
-                label="Tel. MÛvil"
+                label="Tel. M√≥vil"
                 value={newPharmacyData.ownerMobile}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({ ...prev, ownerMobile: val }))
                 }
               />
 
-              {/* DATOS DEL DIRECTOR T…CNICO */}
+              {/* DATOS DEL DIRECTOR T√âCNICO */}
               <hr />
-              <h3 className="font-semibold">Datos del Director TÈcnico</h3>
+              <h3 className="font-semibold">Datos del Director T√©cnico</h3>
               <Input
                 label="Nombre"
                 value={newPharmacyData.directorName}
@@ -740,7 +740,7 @@ const PharmaciesManagementPage: React.FC = () => {
                 }
               />
               <Input
-                label="No. CÈdula"
+                label="No. C√©dula"
                 value={newPharmacyData.directorDocument}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({
@@ -750,7 +750,7 @@ const PharmaciesManagementPage: React.FC = () => {
                 }
               />
               <Input
-                label="ProfesiÛn"
+                label="Profesi√≥n"
                 value={newPharmacyData.directorProfession}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({
@@ -770,7 +770,7 @@ const PharmaciesManagementPage: React.FC = () => {
                 }
               />
               <Input
-                label="Fecha de EmisiÛn"
+                label="Fecha de Emisi√≥n"
                 type="date"
                 value={newPharmacyData.directorIssueDate}
                 onValueChange={(val) =>
@@ -805,7 +805,7 @@ const PharmaciesManagementPage: React.FC = () => {
                 }
               />
               <Input
-                label="DirecciÛn Completa"
+                label="Direcci√≥n Completa"
                 value={newPharmacyData.pharmacyAddress}
                 onValueChange={(val) =>
                   setNewPharmacyData((prev) => ({
