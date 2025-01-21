@@ -14,10 +14,11 @@ export default function IndexPage() {
       
       <section
       id="hero"
-        className="relative w-screen h-[70vh] flex items-center justify-start bg-cover bg-center"
+        className="absolute top-12 left-0 w-screen h-[70vh] flex items-center justify-start bg-cover bg-center"
         style={{
           backgroundImage:
             'url("https://www.pkf.com.au/uploads/Insights/Health-AdobeStock_527209943-Pharmacy-60-day-dispensing.jpg")',
+            
         }}
       >
         <div className="absolute inset-0 bg-black/50" />
@@ -57,63 +58,64 @@ export default function IndexPage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-16">
-        <div className="container mx-auto max-w-7xl px-6">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-            ¿Qué puedes hacer con nuestra plataforma?
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Registro de Farmacias",
-                description: "Facilita el registro de farmacias y documentación.",
-                icon: "📋",
-              },
-              {
-                title: "Seguimiento de Solicitudes",
-                description: "Consulta el estado de tus solicitudes en tiempo real.",
-                icon: "🔍",
-              },
-              {
-                title: "Evaluaciones Rápidas",
-                description: "Acceso eficiente a los resultados de evaluaciones.",
-                icon: "📊",
-              },
-              {
-                title: "Gestión Centralizada",
-                description: "Administra todo desde un panel fácil de usar.",
-                icon: "🖥️",
-              },
-              {
-                title: "Notificaciones Inteligentes",
-                description:
-                  "Recibe alertas sobre cambios en tus solicitudes o evaluaciones.",
-                icon: "🔔",
-              },
-              {
-                title: "Reportes Detallados",
-                description:
-                  "Genera reportes personalizados para el análisis de datos de tus farmacias.",
-                icon: "📑",
-              },
-            ].map((feature, index) => (
-              <Card
-                key={index}
-                className="shadow-md hover:shadow-lg transition-shadow"
-              >
-                <CardHeader className="flex gap-3">
-                  <div className="text-3xl">{feature.icon}</div>
-                  <h3 className="text-xl font-bold">{feature.title}</h3>
-                </CardHeader>
-                <CardBody>
-                  <p className="text-gray-600">{feature.description}</p>
-                </CardBody>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+{/* Features Section */}
+<section id="features" className="mt-[60vh] py-16">
+  <div className="container mx-auto max-w-7xl px-6">
+    <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+      ¿Qué puedes hacer con nuestra plataforma?
+    </h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[
+        {
+          title: "Registro de Farmacias",
+          description: "Facilita el registro de farmacias y documentación.",
+          icon: "📋",
+        },
+        {
+          title: "Seguimiento de Solicitudes",
+          description: "Consulta el estado de tus solicitudes en tiempo real.",
+          icon: "🔍",
+        },
+        {
+          title: "Evaluaciones Rápidas",
+          description: "Acceso eficiente a los resultados de evaluaciones.",
+          icon: "📊",
+        },
+        {
+          title: "Gestión Centralizada",
+          description: "Administra todo desde un panel fácil de usar.",
+          icon: "🖥️",
+        },
+        {
+          title: "Notificaciones Inteligentes",
+          description:
+            "Recibe alertas sobre cambios en tus solicitudes o evaluaciones.",
+          icon: "🔔",
+        },
+        {
+          title: "Reportes Detallados",
+          description:
+            "Genera reportes personalizados para el análisis de datos de tus farmacias.",
+          icon: "📑",
+        },
+      ].map((feature, index) => (
+        <Card
+          key={index}
+          className="shadow-md hover:shadow-lg transition-shadow"
+        >
+          <CardHeader className="flex gap-3">
+            <div className="text-3xl">{feature.icon}</div>
+            <h3 className="text-xl font-bold">{feature.title}</h3>
+          </CardHeader>
+          <CardBody>
+            <p className="text-gray-600">{feature.description}</p>
+          </CardBody>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* Benefits Section */}
       <section id="benefits" className="py-16 bg-blue-50">

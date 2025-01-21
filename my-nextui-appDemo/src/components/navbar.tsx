@@ -108,7 +108,7 @@ export const Navbar = () => {
             color="secondary"
             className="px-6 py-2 text-sm font-semibold bg-gray-600 text-white rounded-full shadow-md transition-all duration-200 transform hover:scale-105 hover:bg-gray-700 hover:shadow-lg"
           >
-            Iniciar Sesion
+            Logearse
           </Button>
         </NavbarItem>
       </NavbarContent>
