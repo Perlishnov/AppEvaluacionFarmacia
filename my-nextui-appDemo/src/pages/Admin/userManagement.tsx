@@ -8,15 +8,15 @@ import { Eye, Pencil, Trash } from "lucide-react";
 const UserManagementPage: React.FC = () => {
   const columns = [
     { key: "name", label: "Nombre" },
-    { key: "email", label: "Correo Electrónico" },
+    { key: "email", label: "Correo Electrï¿½nico" },
     { key: "role", label: "Rol" },
     { key: "actions", label: "Acciones" },
   ];
 
   const rows = [
-    { key: "1", name: "Juan Pérez", email: "juan@example.com", role: "Inspector" },
-    { key: "2", name: "María García", email: "maria@example.com", role: "Propietario" },
-    { key: "3", name: "Carlos Rodríguez", email: "carlos@example.com", role: "Inspector" },
+    { key: "1", name: "Juan Pï¿½rez", email: "juan@example.com", role: "Inspector" },
+    { key: "2", name: "Marï¿½a Garcï¿½a", email: "maria@example.com", role: "Propietario" },
+    { key: "3", name: "Carlos Rodrï¿½guez", email: "carlos@example.com", role: "Inspector" },
   ];
 
   const renderCell = (user: any, columnKey: string) => {
@@ -44,9 +44,9 @@ const UserManagementPage: React.FC = () => {
   return (
     <AdministradorLayout>
       <div>
-        <h1 className="text-3xl font-semibold mb-6">Gestión de Usuarios</h1>
+        <h1 className="text-3xl font-semibold mb-6">Gestiï¿½n de Usuarios</h1>
 
-        {/* Buscador y Botón de Agregar Usuario */}
+        {/* Buscador y Botï¿½n de Agregar Usuario */}
         <div className="flex justify-between items-center mb-4">
           <Input 
             placeholder="Buscar usuarios..." 
@@ -60,7 +60,7 @@ const UserManagementPage: React.FC = () => {
         {/* Tabla */}
         <Table 
           aria-label="Tabla de usuarios"
-          css={{ height: "auto", minWidth: "100%" }}
+          style={{ height: "auto", minWidth: "100%" }}
         >
           <TableHeader>
             {columns.map((column) => (

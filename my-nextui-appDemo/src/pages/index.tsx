@@ -1,8 +1,10 @@
 import React from "react";
 import { Button } from "@nextui-org/react";
+
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import '../styles/globals.css';
 
 import DefaultLayout from "@/layouts/default";
 

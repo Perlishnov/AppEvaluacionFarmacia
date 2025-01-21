@@ -9,9 +9,9 @@ import { Eye, Pencil, Trash } from "lucide-react";
 const PharmaciesManagementPage: React.FC = () => {
   const columns = [
     { key: "name", label: "Nombre" },
-    { key: "location", label: "Ubicación" },
+    { key: "location", label: "Ubicaciï¿½n" },
     { key: "owner", label: "Propietario" },
-    { key: "lastInspection", label: "Última Inspección" },
+    { key: "lastInspection", label: "ï¿½ltima Inspecciï¿½n" },
     { key: "type", label: "Tipo" },
     { key: "status", label: "Estado" },
     { key: "actions", label: "Acciones" },
@@ -22,7 +22,7 @@ const PharmaciesManagementPage: React.FC = () => {
       key: "1",
       name: "Farmacia Central",
       location: "Calle Principal 123",
-      owner: "Juan Pérez",
+      owner: "Juan Pï¿½rez",
       lastInspection: "2023-05-01",
       type: "Retail",
       status: "Aprobada",
@@ -31,7 +31,7 @@ const PharmaciesManagementPage: React.FC = () => {
       key: "2",
       name: "Farmacia Hospital General",
       location: "Av. Salud 456",
-      owner: "María García",
+      owner: "Marï¿½a Garcï¿½a",
       lastInspection: "2023-04-15",
       type: "Hospitalaria",
       status: "Pendiente",
@@ -40,16 +40,16 @@ const PharmaciesManagementPage: React.FC = () => {
       key: "3",
       name: "Farmacia Norte",
       location: "Calle Norte 789",
-      owner: "Pedro Sánchez",
+      owner: "Pedro Sï¿½nchez",
       lastInspection: "2023-03-20",
       type: "Retail",
-      status: "En Inspección",
+      status: "En Inspecciï¿½n",
     },
     {
       key: "4",
       name: "Farmacia Sur",
       location: "Calle Sur 101",
-      owner: "Ana López",
+      owner: "Ana Lï¿½pez",
       lastInspection: "2023-02-10",
       type: "Retail",
       status: "Rechazada",
@@ -67,7 +67,7 @@ const PharmaciesManagementPage: React.FC = () => {
                 ? "text-green-500"
                 : cellValue === "Pendiente"
                 ? "text-yellow-500"
-                : cellValue === "En Inspección"
+                : cellValue === "En Inspecciï¿½n"
                 ? "text-blue-500"
                 : "text-red-500"
             }`}
@@ -97,7 +97,7 @@ const PharmaciesManagementPage: React.FC = () => {
   return (
     <AdministradorLayout>
       <div>
-        <h1 className="text-3xl font-semibold mb-6">Gestión de Farmacias</h1>
+        <h1 className="text-3xl font-semibold mb-6">Gestiï¿½n de Farmacias</h1>
 
         {/* Buscador */}
         <div className="flex justify-between items-center mb-4">
@@ -113,7 +113,7 @@ const PharmaciesManagementPage: React.FC = () => {
         {/* Tabla y boton agregar farmacia*/}
         <Table 
           aria-label="Tabla de farmacias"
-          css={{ height: "auto", minWidth: "100%" }}
+          style={{ height: "auto", minWidth: "100%" }}
         >
           <TableHeader>
             {columns.map((column) => (
