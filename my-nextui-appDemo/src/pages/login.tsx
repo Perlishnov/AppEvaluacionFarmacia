@@ -1,7 +1,8 @@
-/* eslint-disable prettier/prettier */
 import React, { useState } from "react";
 import { Input, Button, Checkbox } from "@nextui-org/react";
-import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import {Link} from "react-router-dom"
+import pictureRegister from "../../assets/loginPagePicture.jpg"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -33,11 +34,30 @@ export default function LoginPage() {
       }
 
       const data = await response.json();
-      console.log("Login successful:", data);
 
-      // Handle successful login, e.g., save JWT token
-      localStorage.setItem("token", data.token);
-      window.location.href = "/dashboard"; // Redirect to dashboard or appropriate route
+      // Save the token in local storage
+      const token = data.token;
+      localStorage.setItem("token", token);
+
+      // Decode the token to get user details
+      const decodedToken: any = jwtDecode(token);
+      const userRole = decodedToken.personType;
+
+      // Redirect based on the user's role
+      switch (userRole) {
+        case "1":
+          window.location.href = "/admin/dashboard"; // Admin dashboard
+          break;
+        case "3":
+          window.location.href = "/propietario/dashboard"; // Owner dashboard
+          break;
+        case "2":
+          window.location.href = "/inspector/dashboard"; // Inspector dashboard
+          break;
+        default:
+          window.location.href = "/"; // Default route if role is unknown
+          break;
+      }
     } catch (error: any) {
       console.error("Login failed:", error);
       setErrorMessage("Correo o contraseña incorrectos.");
@@ -52,7 +72,7 @@ export default function LoginPage() {
       <div
         className="w-1/2 flex flex-col justify-center items-center bg-cover bg-center bg-no-repeat px-10"
         style={{
-          backgroundImage: 'url("https://picsum.photos/800/600")',
+          backgroundImage: `url(${pictureRegister})`,
         }}
       >
         <div className="bg-white/70 p-8 rounded-lg shadow-lg">
@@ -98,19 +118,11 @@ export default function LoginPage() {
                 onClick={togglePasswordVisibility}
               >
                 {isPasswordVisible ? (
-                  <svg
-                    className="text-2xl text-default-400 pointer-events-none"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
+                  <svg className="text-2xl text-default-400 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 5C7.5 5 3.7 8.2 2 12c1.7 3.8 5.5 7 10 7s8.3-3.2 10-7c-1.7-3.8-5.5-7-10-7zm0 12c-2.8 0-5.2-2.4-5.2-5.2S9.2 6.6 12 6.6s5.2 2.4 5.2 5.2S14.8 17 12 17z" />
                   </svg>
                 ) : (
-                  <svg
-                    className="text-2xl text-default-400 pointer-events-none"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
+                  <svg className="text-2xl text-default-400 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 5C7.5 5 3.7 8.2 2 12c1.7 3.8 5.5 7 10 7s8.3-3.2 10-7c-1.7-3.8-5.5-7-10-7zm0 12c-2.8 0-5.2-2.4-5.2-5.2S9.2 6.6 12 6.6s5.2 2.4 5.2 5.2S14.8 17 12 17z" />
                   </svg>
                 )}

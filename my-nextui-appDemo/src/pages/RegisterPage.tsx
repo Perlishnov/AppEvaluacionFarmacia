@@ -7,6 +7,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { useState } from "react";
+import { UserCircle2 } from "lucide-react";
 
 export default function DocsPage() {
   const [formData, setFormData] = useState({
@@ -66,6 +67,7 @@ export default function DocsPage() {
   return (
     <DefaultLayout>
       <div className="max-w-3xl mx-auto p-6">
+        <UserCircle2 size={48} className="mx-auto mb-4" />
         <h1 className="text-2xl font-bold mb-4 text-center">Formulario de Usuario</h1>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
@@ -147,3 +149,5 @@ export default function DocsPage() {
     </DefaultLayout>
   );
 }
+
+
