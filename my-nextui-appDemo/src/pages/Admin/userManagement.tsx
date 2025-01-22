@@ -26,7 +26,7 @@ import { Eye, Pencil, Trash } from "lucide-react";
 
 /** Interfaz para cada usuario */
 interface Usuario {
-  id: string;          // O number, según tu DB
+  id: string;          // O number, segÃºn tu DB
   nombre: string;
   email: string;
   rol: string;
@@ -35,38 +35,38 @@ interface Usuario {
 
 export default function UserManagementPage() {
   /**
-   * 1. Para evitar problemas de caracteres extraños (tildes):
-   *    - Asegúrate de que este archivo esté guardado en UTF-8.
+   * 1. Para evitar problemas de caracteres extraÃ±os (tildes):
+   *    - AsegÃºrate de que este archivo estÃ© guardado en UTF-8.
    *    - Si tu entorno soporta "React Strict Mode" con UTF-8, 
-   *      debería verse bien "María", "José", etc.
+   *      deberÃ­a verse bien "MarÃ­a", "JosÃ©", etc.
    */
 
   // Estado para la lista de usuarios (simulada inicialmente)
   const [usuarios, setUsuarios] = useState<Usuario[]>([
     {
       id: "1",
-      nombre: "Juan Pérez",
+      nombre: "Juan PÃ©rez",
       email: "juan@example.com",
       rol: "Inspector",
       activo: true,
     },
     {
       id: "2",
-      nombre: "María García",
+      nombre: "MarÃ­a GarcÃ­a",
       email: "maria@example.com",
       rol: "Propietario",
       activo: true,
     },
     {
       id: "3",
-      nombre: "Carlos Rodríguez",
+      nombre: "Carlos RodrÃ­guez",
       email: "carlos@example.com",
       rol: "Inspector",
       activo: true,
     },
   ]);
 
-  // Estado para el término de búsqueda
+  // Estado para el tÃ©rmino de bÃºsqueda
   const [searchTerm, setSearchTerm] = useState("");
 
   // Manejo de modales (ver detalle, editar, agregar)
@@ -77,7 +77,7 @@ export default function UserManagementPage() {
   // Usuario seleccionado (para ver detalle o editar)
   const [selectedUser, setSelectedUser] = useState<Usuario | null>(null);
 
-  // Estado para los campos de edición / agregado
+  // Estado para los campos de ediciÃ³n / agregado
   const [editData, setEditData] = useState<Usuario>({
     id: "",
     nombre: "",
@@ -86,10 +86,10 @@ export default function UserManagementPage() {
     activo: true,
   });
 
-  // 2. Búsqueda de usuarios por nombre o ID.
-  // COMENTARIO: En un escenario real, la búsqueda
-  //            podría llamar a la API en cada cambio de searchTerm.
-  //            Aquí filtramos localmente. 
+  // 2. BÃºsqueda de usuarios por nombre o ID.
+  // COMENTARIO: En un escenario real, la bÃºsqueda
+  //            podrÃ­a llamar a la API en cada cambio de searchTerm.
+  //            AquÃ­ filtramos localmente. 
   const filteredUsers = usuarios.filter((user) => {
     // busco coincidencia en nombre o ID
     const lowerSearch = searchTerm.toLowerCase();
@@ -102,13 +102,13 @@ export default function UserManagementPage() {
   // Columnas para la tabla
   const columns = [
     { key: "nombre", label: "Nombre" },
-    { key: "email", label: "Correo Electrónico" },
+    { key: "email", label: "Correo ElectrÃ³nico" },
     { key: "rol", label: "Rol" },
     { key: "acciones", label: "Acciones" },
   ];
 
   /**
-   * Función para manejar la apertura del modal de detalle
+   * FunciÃ³n para manejar la apertura del modal de detalle
    */
   const handleOpenDetail = (user: Usuario) => {
     setSelectedUser(user);
@@ -116,7 +116,7 @@ export default function UserManagementPage() {
   };
 
   /**
-   * Función para manejar la apertura del modal de edición
+   * FunciÃ³n para manejar la apertura del modal de ediciÃ³n
    */
   const handleOpenEdit = (user: Usuario) => {
     setSelectedUser(user);
@@ -126,13 +126,13 @@ export default function UserManagementPage() {
   };
 
   /**
-   * Función para manejar "desactivación" (soft delete)
+   * FunciÃ³n para manejar "desactivaciÃ³n" (soft delete)
    * de un usuario
    */
   const handleDeleteUser = (user: Usuario) => {
-    // COMENTARIO: En la vida real, harías una llamada a tu API, 
-    //            pasándole user.id para desactivarlo en DB (soft delete).
-    // Por ahora, simulamos poniéndolo inactivo en local:
+    // COMENTARIO: En la vida real, harÃ­as una llamada a tu API, 
+    //            pasÃ¡ndole user.id para desactivarlo en DB (soft delete).
+    // Por ahora, simulamos poniÃ©ndolo inactivo en local:
     const updatedUsers = usuarios.map((u) =>
       u.id === user.id ? { ...u, activo: false } : u
     );
@@ -141,7 +141,7 @@ export default function UserManagementPage() {
   };
 
   /**
-   * 3. Guardar cambios de edición en la tabla
+   * 3. Guardar cambios de ediciÃ³n en la tabla
    * (y en la API / base de datos)
    */
   const handleSaveEdit = () => {
@@ -155,7 +155,7 @@ export default function UserManagementPage() {
     );
     setUsuarios(updatedUsers);
 
-    // COMENTARIO: Aquí harías la llamada a la API,
+    // COMENTARIO: AquÃ­ harÃ­as la llamada a la API,
     //            e.g. axios.put(`/api/usuarios/${editData.id}`, editData)
 
     setIsEditModalOpen(false);
@@ -174,13 +174,13 @@ export default function UserManagementPage() {
   });
 
   const handleAddUser = () => {
-    // Validar campos mínimos
+    // Validar campos mÃ­nimos
     if (!newUserData.id || !newUserData.nombre || !newUserData.email) {
       alert("Complete todos los campos obligatorios.");
       return;
     }
 
-    // COMENTARIO: Aquí harías la llamada a la API,
+    // COMENTARIO: AquÃ­ harÃ­as la llamada a la API,
     //            e.g. axios.post("/api/usuarios", newUserData)
 
     // Agregamos localmente
@@ -206,7 +206,7 @@ export default function UserManagementPage() {
       case "acciones":
         return (
           <div className="flex gap-2">
-            {/* Botón del Ojo (ver detalle) */}
+            {/* BotÃ³n del Ojo (ver detalle) */}
             <Button
               isIconOnly
               variant="light"
@@ -216,7 +216,7 @@ export default function UserManagementPage() {
               <Eye className="h-4 w-4" />
             </Button>
 
-            {/* Botón del Lápiz (editar) */}
+            {/* BotÃ³n del LÃ¡piz (editar) */}
             <Button
               isIconOnly
               variant="light"
@@ -226,7 +226,7 @@ export default function UserManagementPage() {
               <Pencil className="h-4 w-4" />
             </Button>
 
-            {/* Botón de la Basura (desactivar usuario) */}
+            {/* BotÃ³n de la Basura (desactivar usuario) */}
             <Button
               isIconOnly
               variant="light"
@@ -239,7 +239,7 @@ export default function UserManagementPage() {
           </div>
         );
       default:
-        // Si el usuario está inactivo, podemos marcarlo en rojo, 
+        // Si el usuario estÃ¡ inactivo, podemos marcarlo en rojo, 
         // o mostrar un tag "Inactivo" en la UI. Como ejemplo:
         if (!user.activo && (columnKey === "nombre" || columnKey === "email")) {
           return (
@@ -255,12 +255,12 @@ export default function UserManagementPage() {
   return (
     <AdministradorLayout>
       <div>
-        {/* Título con acentos */}
+        {/* TÃ­tulo con acentos */}
         <h1 className="text-3xl font-semibold mb-6">
-          Gestión de Usuarios
+          GestiÃ³n de Usuarios
         </h1>
 
-        {/* Buscador y Botón de Agregar Usuario */}
+        {/* Buscador y BotÃ³n de Agregar Usuario */}
         <div className="flex justify-between items-center mb-4">
           <Input
             placeholder="Buscar usuarios..."
@@ -268,7 +268,7 @@ export default function UserManagementPage() {
             value={searchTerm}
             onValueChange={(value) => setSearchTerm(value)}
           />
-          <Button color="primary" size="lg" onPress={() => setIsAddModalOpen(true)}>
+          <Button className="bg-[#4E5BA6] text-white"  size="lg" onPress={() => setIsAddModalOpen(true)}>
             Agregar Usuario
           </Button>
         </div>
@@ -322,7 +322,7 @@ export default function UserManagementPage() {
         </ModalContent>
       </Modal>
 
-      {/* MODAL DE EDICIÓN (Pencil) */}
+      {/* MODAL DE EDICIÃ“N (Pencil) */}
       <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
         <ModalContent>
           <ModalHeader>
@@ -372,7 +372,7 @@ export default function UserManagementPage() {
         </ModalContent>
       </Modal>
 
-      {/* MODAL DE AGREGAR (Botón "Agregar Usuario") */}
+      {/* MODAL DE AGREGAR (BotÃ³n "Agregar Usuario") */}
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
         <ModalContent>
           <ModalHeader>
@@ -411,12 +411,12 @@ export default function UserManagementPage() {
             </div>
             <div className="mt-4 flex justify-end gap-2">
               <Button
-                variant="bordered"
+               className="bg-[#EF4444] text-white"
                 onPress={() => setIsAddModalOpen(false)}
               >
                 Cancelar
               </Button>
-              <Button color="primary" onPress={handleAddUser}>
+              <Button className="bg-[#4E5BA6] text-white"  onPress={handleAddUser}>
                 Agregar
               </Button>
             </div>

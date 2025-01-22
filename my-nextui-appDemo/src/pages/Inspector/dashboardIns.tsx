@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardBody } from "@nextui-org/card";
+import { Card, CardBody, Badge } from "@nextui-org/react";
 import {
   Table,
   TableHeader,
@@ -8,8 +8,21 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-} from "@nextui-org/table";
+} from "@nextui-org/react";
 import EvaluadorLayout from "../../layouts/EvaluadorLayout";
+
+function getBadgeColorByStatus(status) {
+  switch (status.toLowerCase()) {
+    case "pendiente":
+      return { color: "warning", variant: "solid" }; // Amarillo
+    case "completada":
+      return { color: "success", variant: "solid" }; // Verde
+    case "cancelada":
+      return { color: "danger", variant: "solid" }; // Rojo
+    default:
+      return { color: "default", variant: "flat" }; // Por defecto
+  }
+}
 
 function InspectionsTable() {
   const navigate = useNavigate();
@@ -34,8 +47,8 @@ function InspectionsTable() {
     <div className="space-y-6">
       {/* Inspecciones Pendientes */}
       <div>
-        <h3 className="text-xl font-bold mb-4">Inspecciones Pendientes</h3>
-        <Card>
+        <h3 className="text-xl font-bold text-gray-700 mb-4">Inspecciones Pendientes</h3>
+        <Card className="bg-[#F8F9FC]">
           <CardBody>
             <Table aria-label="Inspecciones Pendientes" className="w-full">
               <TableHeader>
@@ -50,11 +63,15 @@ function InspectionsTable() {
                   <TableRow key={inspection.id}>
                     <TableCell>{inspection.id}</TableCell>
                     <TableCell>{inspection.date}</TableCell>
-                    <TableCell>{inspection.status}</TableCell>
+                    <TableCell>
+                      <Badge {...getBadgeColorByStatus(inspection.status)}>
+                        {inspection.status}
+                      </Badge>
+                    </TableCell>
                     <TableCell>{inspection.pharmacyName}</TableCell>
                     <TableCell>
                       <button
-                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        className="px-4 py-2 bg-[#4E5BA6] text-white rounded hover:bg-[#3A4786] transition-all"
                         onClick={() => navigate(`/inspector/farmacia/${inspection.id}`)}
                       >
                         Ver
@@ -70,8 +87,8 @@ function InspectionsTable() {
 
       {/* Otras Inspecciones */}
       <div>
-        <h3 className="text-xl font-bold mb-4">Otras Inspecciones</h3>
-        <Card>
+        <h3 className="text-xl font-bold text-gray-700 mb-4">Otras Inspecciones</h3>
+        <Card className="bg-[#F8F9FC]">
           <CardBody>
             <Table aria-label="Otras Inspecciones" className="w-full">
               <TableHeader>
@@ -86,11 +103,15 @@ function InspectionsTable() {
                   <TableRow key={inspection.id}>
                     <TableCell>{inspection.id}</TableCell>
                     <TableCell>{inspection.date}</TableCell>
-                    <TableCell>{inspection.status}</TableCell>
+                    <TableCell>
+                      <Badge {...getBadgeColorByStatus(inspection.status)}>
+                        {inspection.status}
+                      </Badge>
+                    </TableCell>
                     <TableCell>{inspection.pharmacyName}</TableCell>
                     <TableCell>
                       <button
-                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        className="px-4 py-2 bg-[#4E5BA6] text-white rounded hover:bg-[#3A4786] transition-all"
                         onClick={() => navigate(`/inspector/farmacia/${inspection.id}`)}
                       >
                         Ver
@@ -110,8 +131,8 @@ function InspectionsTable() {
 const DashboardInspector = () => {
   return (
     <EvaluadorLayout>
-      <div className="space-y-6 p-6">
-        <h1 className="text-2xl font-bold">Dashboard del Inspector</h1>
+      <div className="space-y-6 p-6 bg-[#F8F9FC]">
+        <h1 className="text-2xl font-bold text-gray-700">Dashboard del Inspector</h1>
         <InspectionsTable />
       </div>
     </EvaluadorLayout>

@@ -178,7 +178,8 @@ const AdminDashboardPage: React.FC = () => {
       case "acciones":
         // Botón para abrir el detalle
         return (
-          <Button
+          <Button 
+            className="bg-[#4E5BA6]"
             size="sm"
             color="primary"
             onPress={() => {
@@ -289,8 +290,8 @@ const AdminDashboardPage: React.FC = () => {
 
         {/* TARJETAS DE ARRIBA */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card>
-            <CardHeader className="flex items-center justify-between">
+          <Card className="bg-[#EAECF5]">
+            <CardHeader className="flex items-center justify-between ">
               <div className="text-sm font-medium">Total Usuarios</div>
               <Users size={24} className="text-gray-500" />
             </CardHeader>
@@ -298,7 +299,7 @@ const AdminDashboardPage: React.FC = () => {
               <div className="text-2xl font-bold">1,234</div>
             </CardBody>
           </Card>
-          <Card>
+          <Card className="bg-[#EAECF5]">
             <CardHeader className="flex items-center justify-between">
               <div className="text-sm font-medium">Total Farmacias</div>
               <Building2 size={24} className="text-gray-500" />
@@ -307,7 +308,7 @@ const AdminDashboardPage: React.FC = () => {
               <div className="text-2xl font-bold">567</div>
             </CardBody>
           </Card>
-          <Card>
+          <Card className="bg-[#EAECF5]">
             <CardHeader className="flex items-center justify-between">
               <div className="text-sm font-medium">Inspecciones Pendientes</div>
               <ClipboardCheck size={24} className="text-gray-500" />
@@ -316,7 +317,7 @@ const AdminDashboardPage: React.FC = () => {
               <div className="text-2xl font-bold">89</div>
             </CardBody>
           </Card>
-          <Card>
+          <Card className="bg-[#EAECF5]">
             <CardHeader className="flex items-center justify-between">
               <div className="text-sm font-medium">Certificados Emitidos</div>
               <Award size={24} className="text-gray-500" />
@@ -328,26 +329,27 @@ const AdminDashboardPage: React.FC = () => {
         </div>
 
         {/* TABLA DE SOLICITUDES */}
-        <div className="mt-10">
+        <div className="mt-10 " >
           <h2 className="text-2xl font-semibold mb-4">Solicitudes Pendientes</h2>
-          <Table
+          <Table 
             aria-label="Tabla de Solicitudes Pendientes"
             css={{ height: "auto", minWidth: "100%" }}
+
           >
-            <TableHeader>
+            <TableHeader >
               {columns.map((col) => (
                 <TableColumn key={col.key}>{col.label}</TableColumn>
               ))}
             </TableHeader>
-            <TableBody>
+            <TableBody >
               {solicitudes.map((sol) => (
-                <TableRow key={sol.idSolicitud}>
+                <TableRow key={sol.idSolicitud} >
                   {columns.map((col) => (
                     <TableCell key={`${sol.idSolicitud}-${col.key}`}>
                       {renderCell(sol, col.key)}
                     </TableCell>
                   ))}
-                </TableRow>
+                </TableRow >
               ))}
             </TableBody>
           </Table>
@@ -410,6 +412,7 @@ const AdminDashboardPage: React.FC = () => {
                     {obtenerAccionesPorTipo(selectedSolicitud.tipoSolicitud).map(
                       (accion) => (
                         <Button
+                          className="bg-[#4E5BA6] text-white"
                           key={accion.label}
                           color={accion.color as any}
                           onPress={() => handleAction(accion.label)}
@@ -431,7 +434,7 @@ const AdminDashboardPage: React.FC = () => {
                     {/* Dropdown para seleccionar Inspectores */}
                     <Dropdown>
                       <DropdownTrigger>
-                        <Button variant="bordered">
+                        <Button variant="bordered" className="border-[#4E5BA6] text-[#4E5BA6]">
                           {selectedInspectors.length
                             ? `Elegidos: ${selectedInspectors
                                 .map((i) => i.nombre)
@@ -464,10 +467,11 @@ const AdminDashboardPage: React.FC = () => {
                     </div>
 
                     <div className="flex gap-2">
-                      <Button color="success" onPress={handleAsignarInspector}>
+                      <Button color="success" onPress={handleAsignarInspector} 
+                      className="bg-[#4E5BA6] text-white ">
                         Confirmar
                       </Button>
-                      <Button
+                      <Button className="bg-[#EF4444] text-white"
                         variant="bordered"
                         color="default"
                         onPress={() => {

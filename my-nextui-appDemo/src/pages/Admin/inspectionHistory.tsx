@@ -21,7 +21,7 @@ import {
 } from "@nextui-org/react";
 import { Eye } from "lucide-react";
 
-/** Interfaz para cada Inspección en la tabla */
+/** Interfaz para cada InspecciÃ³n en la tabla */
 interface Inspeccion {
   key: string;            
   pharmacyName: string;   
@@ -42,7 +42,7 @@ interface FarmaciaSimulada {
   // Puedes agregar un "risk" u otro campo extra si lo deseas
 }
 
-/** Interfaz para la nueva inspección */
+/** Interfaz para la nueva inspecciÃ³n */
 interface NuevaInspeccion {
   pharmacyName: string;
   location: string;
@@ -62,7 +62,7 @@ export default function InspectionHistoryPage() {
       key: "1",
       pharmacyName: "Farmacia Central",
       location: "Calle Principal 123",
-      ownerName: "Juan Pérez",
+      ownerName: "Juan PÃ©rez",
       status: "Pendiente",
       submissionDate: "2023-05-01",
       inspectionDate: "2023-05-10",
@@ -72,27 +72,27 @@ export default function InspectionHistoryPage() {
       key: "2",
       pharmacyName: "Farmacia del Hospital",
       location: "Av. Salud 456",
-      ownerName: "María García",
+      ownerName: "MarÃ­a GarcÃ­a",
       status: "Aprobada",
       submissionDate: "2023-05-02",
       inspectionDate: "2023-05-07",
-      inspectors: ["Inspector Lucy", "Inspector Ramírez"],
+      inspectors: ["Inspector Lucy", "Inspector RamÃ­rez"],
     },
     {
       key: "3",
       pharmacyName: "Farmacia Norte",
       location: "Calle Norte 789",
-      ownerName: "Pedro Sánchez",
-      status: "En Inspección",
+      ownerName: "Pedro SÃ¡nchez",
+      status: "En InspecciÃ³n",
       submissionDate: "2023-05-03",
       inspectionDate: "2023-05-08",
-      inspectors: ["Inspector Ramírez"],
+      inspectors: ["Inspector RamÃ­rez"],
     },
     {
       key: "4",
       pharmacyName: "Farmacia Sur",
       location: "Calle Sur 101",
-      ownerName: "Ana López",
+      ownerName: "Ana LÃ³pez",
       status: "Rechazada",
       submissionDate: "2023-05-04",
       inspectionDate: "2023-05-09",
@@ -100,11 +100,11 @@ export default function InspectionHistoryPage() {
     },
   ]);
 
-  // Simulación de farmacias (para el dropdown)
+  // SimulaciÃ³n de farmacias (para el dropdown)
   const [farmaciasSimuladas] = useState<FarmaciaSimulada[]>([
-    { id: "f001", name: "Farmacia Alpha", owner: "Carlos Rodríguez", location: "Calle Alpha 123" },
-    { id: "f002", name: "Farmacia Beta", owner: "Ana Martínez", location: "Calle Beta 456" },
-    { id: "f003", name: "Farmacia Gamma", owner: "Luis Fernández", location: "Calle Gamma 789" },
+    { id: "f001", name: "Farmacia Alpha", owner: "Carlos RodrÃ­guez", location: "Calle Alpha 123" },
+    { id: "f002", name: "Farmacia Beta", owner: "Ana MartÃ­nez", location: "Calle Beta 456" },
+    { id: "f003", name: "Farmacia Gamma", owner: "Luis FernÃ¡ndez", location: "Calle Gamma 789" },
   ]);
 
   // Filtro de inspecciones por nombre/key
@@ -119,11 +119,11 @@ export default function InspectionHistoryPage() {
   // Columnas de la tabla
   const columns = [
     { key: "pharmacyName", label: "Nombre" },
-    { key: "location", label: "Ubicación" },
+    { key: "location", label: "UbicaciÃ³n" },
     { key: "ownerName", label: "Propietario" },
     { key: "status", label: "Estado" },
     { key: "submissionDate", label: "Fecha de Solicitud" },
-    { key: "inspectionDate", label: "Fecha de Inspección" },
+    { key: "inspectionDate", label: "Fecha de InspecciÃ³n" },
     { key: "inspectors", label: "Inspectores Asignados" },
     { key: "actions", label: "Acciones" },
   ];
@@ -134,21 +134,21 @@ export default function InspectionHistoryPage() {
     null
   );
 
-  // Modal de "Agendar Inspección"
+  // Modal de "Agendar InspecciÃ³n"
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Inspectores disponibles
   const [allInspectors] = useState<string[]>([
     "Inspector Thomas",
     "Inspector Lucy",
-    "Inspector Ramírez",
+    "Inspector RamÃ­rez",
     "Inspector Smith",
   ]);
 
-  // Inspectores asignados al agendar (mínimo 2)
+  // Inspectores asignados al agendar (mÃ­nimo 2)
   const [tempAssignedInspectors, setTempAssignedInspectors] = useState<string[]>([]);
 
-  // Nueva inspección (sin key). Status siempre "Pendiente".
+  // Nueva inspecciÃ³n (sin key). Status siempre "Pendiente".
   const [newInspectionData, setNewInspectionData] = useState<NuevaInspeccion>({
     pharmacyName: "",
     location: "",
@@ -168,7 +168,7 @@ export default function InspectionHistoryPage() {
   /** Asignar/deseleccionar Inspectores al hacer click */
   const handleSelectInspector = (inspector: string) => {
     // NUEVO: si el inspector YA existe, lo quitamos (deseleccionar).
-    // Si no está, lo agregamos.
+    // Si no estÃ¡, lo agregamos.
     setTempAssignedInspectors((prev) => {
       if (prev.includes(inspector)) {
         // lo removemos
@@ -179,7 +179,7 @@ export default function InspectionHistoryPage() {
     });
   };
 
-  /** Selección de Farmacia del dropdown (simulación) */
+  /** SelecciÃ³n de Farmacia del dropdown (simulaciÃ³n) */
   const handleSelectFarmacia = (farmaciaId: string) => {
     const found = farmaciasSimuladas.find((f) => f.id === farmaciaId);
     if (found) {
@@ -192,7 +192,7 @@ export default function InspectionHistoryPage() {
     }
   };
 
-  /** Agregar Nueva Inspección */
+  /** Agregar Nueva InspecciÃ³n */
   const handleAddInspection = () => {
     // Validar: al menos una farmacia seleccionada
     if (!newInspectionData.pharmacyName) {
@@ -207,12 +207,12 @@ export default function InspectionHistoryPage() {
     // Fecha de Solicitud (momento actual)
     const today = new Date().toISOString().split("T")[0];
     const submissionDate = today;
-    // Validar que la fecha de inspección sea > submissionDate
+    // Validar que la fecha de inspecciÃ³n sea > submissionDate
     if (
       newInspectionData.inspectionDate &&
       new Date(newInspectionData.inspectionDate) <= new Date(submissionDate)
     ) {
-      alert("La fecha de inspección debe ser posterior a la fecha de solicitud.");
+      alert("La fecha de inspecciÃ³n debe ser posterior a la fecha de solicitud.");
       return;
     }
 
@@ -246,7 +246,7 @@ export default function InspectionHistoryPage() {
     });
     setTempAssignedInspectors([]);
 
-    alert(`Inspección agendada para "${newEntry.pharmacyName}".`);
+    alert(`InspecciÃ³n agendada para "${newEntry.pharmacyName}".`);
   };
 
   /** Renderiza celdas de la tabla */
@@ -260,7 +260,7 @@ export default function InspectionHistoryPage() {
                 ? "text-green-500"
                 : insp.status === "Pendiente"
                 ? "text-yellow-500"
-                : insp.status === "En Inspección"
+                : insp.status === "En InspecciÃ³n"
                 ? "text-blue-500"
                 : "text-red-500"
             }`}
@@ -273,7 +273,7 @@ export default function InspectionHistoryPage() {
           <span className="text-sm">
             {insp.inspectors.length > 0
               ? insp.inspectors.join(", ")
-              : "—"}
+              : "â€”"}
           </span>
         );
       case "actions":
@@ -281,7 +281,7 @@ export default function InspectionHistoryPage() {
           <Button
             isIconOnly
             variant="light"
-            aria-label="Ver detalles de la inspección"
+            aria-label="Ver detalles de la inspecciÃ³n"
             onPress={() => handleOpenDetail(insp)}
           >
             <Eye className="h-4 w-4" />
@@ -306,8 +306,8 @@ export default function InspectionHistoryPage() {
             value={searchTerm}
             onValueChange={(val) => setSearchTerm(val)}
           />
-          <Button color="primary" size="lg" onPress={() => setIsAddModalOpen(true)}>
-            Agendar Inspección
+          <Button className="bg-[#4E5BA6] text-white border-[#4E5BA6]"  size="lg" onPress={() => setIsAddModalOpen(true)}>
+            Agendar InspecciÃ³n
           </Button>
         </div>
 
@@ -335,14 +335,14 @@ export default function InspectionHistoryPage() {
         </Table>
       </div>
 
-      {/* MODAL DETALLE DE INSPECCIÓN */}
+      {/* MODAL DETALLE DE INSPECCIÃ“N */}
       <Modal
         isOpen={isDetailModalOpen}
         onClose={() => setIsDetailModalOpen(false)}
       >
         <ModalContent>
           <ModalHeader>
-            <h2>Detalles de la Inspección</h2>
+            <h2>Detalles de la InspecciÃ³n</h2>
           </ModalHeader>
           <ModalBody>
             {selectedInspection && (
@@ -354,7 +354,7 @@ export default function InspectionHistoryPage() {
                   <strong>Farmacia:</strong> {selectedInspection.pharmacyName}
                 </p>
                 <p>
-                  <strong>Ubicación:</strong> {selectedInspection.location}
+                  <strong>UbicaciÃ³n:</strong> {selectedInspection.location}
                 </p>
                 <p>
                   <strong>Propietario:</strong> {selectedInspection.ownerName}
@@ -367,7 +367,7 @@ export default function InspectionHistoryPage() {
                   {selectedInspection.submissionDate}
                 </p>
                 <p>
-                  <strong>Fecha de Inspección:</strong>{" "}
+                  <strong>Fecha de InspecciÃ³n:</strong>{" "}
                   {selectedInspection.inspectionDate || "No asignada"}
                 </p>
                 <p>
@@ -385,14 +385,14 @@ export default function InspectionHistoryPage() {
         </ModalContent>
       </Modal>
 
-      {/* MODAL AGENDAR INSPECCIÓN */}
+      {/* MODAL AGENDAR INSPECCIÃ“N */}
       <Modal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
       >
         <ModalContent>
           <ModalHeader>
-            <h2>Agendar Nueva Inspección</h2>
+            <h2>Agendar Nueva InspecciÃ³n</h2>
           </ModalHeader>
           <ModalBody>
             <div className="mb-4">
@@ -414,7 +414,7 @@ export default function InspectionHistoryPage() {
                   {farmaciasSimuladas.map((f) => (
                     <DropdownItem key={f.id}>
                       {f.name}
-                      {/* Podrías mostrar un subtexto o riesgo */}
+                      {/* PodrÃ­as mostrar un subtexto o riesgo */}
                     </DropdownItem>
                   ))}
                 </DropdownMenu>
@@ -423,7 +423,7 @@ export default function InspectionHistoryPage() {
 
             {/* Ubicacion y Propietario en readOnly */}
             <Input
-              label="Ubicación"
+              label="UbicaciÃ³n"
               value={newInspectionData.location}
               isReadOnly
             />
@@ -438,9 +438,9 @@ export default function InspectionHistoryPage() {
               value={newInspectionData.status}
               isReadOnly
             />
-            {/* Fecha de Inspección */}
+            {/* Fecha de InspecciÃ³n */}
             <Input
-              label="Fecha de Inspección"
+              label="Fecha de InspecciÃ³n"
               type="date"
               value={newInspectionData.inspectionDate}
               onValueChange={(val) =>
@@ -471,7 +471,7 @@ export default function InspectionHistoryPage() {
                   {allInspectors.map((ins) => (
                     <DropdownItem
                       key={ins}
-                      // Indicamos si ya está seleccionado
+                      // Indicamos si ya estÃ¡ seleccionado
                       description={
                         tempAssignedInspectors.includes(ins)
                           ? "Actual: Seleccionado (vuelva a clickear para quitar)"
@@ -487,7 +487,8 @@ export default function InspectionHistoryPage() {
 
             <div className="mt-4 flex justify-end gap-2">
               <Button
-                variant="bordered"
+              className="bg-[#EF4444] text-white"
+                
                 onPress={() => {
                   setIsAddModalOpen(false);
                   setTempAssignedInspectors([]);
@@ -504,7 +505,7 @@ export default function InspectionHistoryPage() {
               >
                 Cancelar
               </Button>
-              <Button color="primary" onPress={handleAddInspection}>
+              <Button className="bg-[#4E5BA6]" color="primary" onPress={handleAddInspection}>
                 Agendar
               </Button>
             </div>

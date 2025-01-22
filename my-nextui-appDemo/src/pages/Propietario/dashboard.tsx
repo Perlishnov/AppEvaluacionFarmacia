@@ -15,30 +15,34 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/table";
-import { Button, Dropdown, Input, Tabs, Tab, DropdownItem, DropdownTrigger, DropdownMenu, Select, SelectItem } from "@nextui-org/react";
+import { Button, Dropdown, Input, Tabs, Tab, DropdownItem, DropdownTrigger, DropdownMenu, Select, SelectItem, Avatar } from "@nextui-org/react";
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
 } from "@nextui-org/modal";
+import { jwtDecode } from "jwt-decode";
+const provinces = ["Provincia 1", "Provincia 2", "Provincia 3"];
+const municipalities = ["Municipio 1", "Municipio 2", "Municipio 3"];
 
-
-const provinces = ["Provincia 1", "Provincia 2", "Provincia 3"]; // Lista de provincias
-const municipalities = ["Municipio 1", "Municipio 2", "Municipio 3"]; // Lista de municipios
-const userPharmacies = ["Farmacia 1", "Farmacia 2", "Farmacia 3"]; // Farmacias del usuario
-
-function RequestFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+function RequestFormModal({
+  isOpen,
+  onClose,
+  userPharmacies,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  userPharmacies: string[];
+}) {
   const [operation, setOperation] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    // Propietario
     ownerName: "",
     ownerDocument: "",
     ownerAddress: "",
     ownerPhone: "",
     ownerEmail: "",
     ownerMobile: "",
-    // Director Técnico
     directorName: "",
     directorLastName: "",
     directorDocument: "",
@@ -48,7 +52,6 @@ function RequestFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     directorProfession: "",
     directorExequatur: "",
     issueDate: "",
-    // Establecimiento
     pharmacyType: "",
     activityType: "",
     pharmacyName: "",
@@ -59,68 +62,12 @@ function RequestFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     pharmacyCity: "",
     pharmacyMunicipality: "",
     pharmacyProvince: "",
+    selectedPharmacy: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const renderTabsContent = () => {
-    switch (operation) {
-      case "Apertura":
-        return (
-          <>
-            {renderOwnerSection()}
-            {renderDirectorSection()}
-            {renderEstablishmentSection()}
-          </>
-        );
-      case "Renovación de Registro":
-        return renderEstablishmentSection();
-      case "Cambio de Director Técnico":
-        return renderDirectorSection();
-      case "Cambio de Nombre":
-        return (
-          <Tab title="Nuevo Nombre">
-            <Input
-              label="Nuevo Nombre"
-              name="newPharmacyName"
-              value={formData.newPharmacyName}
-              onChange={handleInputChange}
-              required
-            />
-          </Tab>
-        );
-      case "Cambio de Propietario":
-        return renderOwnerSection();
-      case "Cambio de Dirección":
-        return (
-          <Tab title="Nueva Dirección">
-            <Input
-              label="Nueva Dirección"
-              name="pharmacyAddress"
-              value={formData.pharmacyAddress}
-              onChange={handleInputChange}
-              required
-            />
-          </Tab>
-        );
-      case "Cambio de Razón Social":
-        return (
-          <Tab title="Tipo de Actividad">
-            <Input
-              label="Tipo de Actividad"
-              name="activityType"
-              value={formData.activityType}
-              onChange={handleInputChange}
-              required
-            />
-          </Tab>
-        );
-      default:
-        return null;
-    }
   };
 
   const renderOwnerSection = () => (
@@ -267,6 +214,109 @@ function RequestFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     </Tab>
   );
 
+  const renderPharmacySelection = () => (
+    <Tab title="Seleccionar Farmacia">
+      <Select
+        label="Farmacia"
+        value={formData.selectedPharmacy}
+        onValueChange={(value) =>
+          setFormData((prev) => ({ ...prev, selectedPharmacy: value }))
+        }
+        required
+      >
+        {userPharmacies.map((pharmacy) => (
+          <SelectItem key={pharmacy} value={pharmacy}>
+            {pharmacy}
+          </SelectItem>
+        ))}
+      </Select>
+    </Tab>
+  );
+
+  const renderTabsContent = () => {
+    const pharmacySelection =
+      operation && operation !== "Apertura" ? renderPharmacySelection() : null;
+
+    switch (operation) {
+      case "Apertura":
+        return (
+          <>
+            {renderOwnerSection()}
+            {renderDirectorSection()}
+            {renderEstablishmentSection()}
+          </>
+        );
+      case "Renovación de Registro":
+        return (
+          <>
+            {pharmacySelection}
+            {renderEstablishmentSection()}
+          </>
+        );
+      case "Cambio de Director Técnico":
+        return (
+          <>
+            {pharmacySelection}
+            {renderDirectorSection()}
+          </>
+        );
+      case "Cambio de Nombre":
+        return (
+          <>
+            {pharmacySelection}
+            <Tab title="Nuevo Nombre">
+              <Input
+                label="Nuevo Nombre"
+                name="newPharmacyName"
+                value={formData.newPharmacyName}
+                onChange={handleInputChange}
+                required
+              />
+            </Tab>
+          </>
+        );
+      case "Cambio de Propietario":
+        return (
+          <>
+            {pharmacySelection}
+            {renderOwnerSection()}
+          </>
+        );
+      case "Cambio de Dirección":
+        return (
+          <>
+            {pharmacySelection}
+            <Tab title="Nueva Dirección">
+              <Input
+                label="Nueva Dirección"
+                name="pharmacyAddress"
+                value={formData.pharmacyAddress}
+                onChange={handleInputChange}
+                required
+              />
+            </Tab>
+          </>
+        );
+      case "Cambio de Razón Social":
+        return (
+          <>
+            {pharmacySelection}
+            <Tab title="Tipo de Actividad">
+              <Input
+                label="Tipo de Actividad"
+                name="activityType"
+                value={formData.activityType}
+                onChange={handleInputChange}
+                required
+              />
+            </Tab>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent>
@@ -278,7 +328,7 @@ function RequestFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
             <Tab title="Seleccionar Operación">
               <Dropdown>
                 <DropdownTrigger>
-                  <Button variant="bordered">
+                  <Button className="border-[#4E5BA6]" variant="bordered">
                     {operation || "Selecciona la operación"}
                   </Button>
                 </DropdownTrigger>
@@ -299,7 +349,7 @@ function RequestFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
             </Tab>
             {operation && renderTabsContent()}
           </Tabs>
-          <Button type="submit" className="mt-4" color="primary">
+          <Button type="submit" className="mt-4 bg-[#4E5BA6] text-white" color="primary">
             Enviar
           </Button>
         </ModalBody>
@@ -308,7 +358,6 @@ function RequestFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
   );
 }
 
-// Tabla de Peticiones
 function PetitionsTable() {
   const [selectedPetition, setSelectedPetition] = useState<null | {
     id: number;
@@ -342,12 +391,12 @@ function PetitionsTable() {
               <TableRow key={petition.id}>
                 <TableCell>{petition.id}</TableCell>
                 <TableCell>{petition.date}</TableCell>
-                <TableCell>{petition.status}</TableCell>
                 <TableCell>{petition.drugStoreId}</TableCell>
+                <TableCell>{petition.status}</TableCell>
                 <TableCell>
                   <Button
                     size="sm"
-                    color="primary"
+                    className="bg-[#4E5BA6] text-white"
                     onClick={() => setSelectedPetition(petition)}
                   >
                     Ver
@@ -387,26 +436,56 @@ function PetitionsTable() {
   );
 }
 
-// Dashboard Principal
 export default function PropietarioDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [usuario, setUsuario] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-    // Objeto con datos simulados del usuario
-    const usuarioSimulado = {
-      nameOwner: "Juan",
-      lastNameOwner: "Pérez",
-      emailOwner: "juan.perez@email.com",
-      phoneOwner: "809-123-4567",
+  // Function to decode JWT and extract userId
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No JWT token found in localStorage.");
+      return null;
+    }
+
+    try {
+      const decodedToken: { userId: string } = jwtDecode(token);
+      return decodedToken.userId;
+    } catch (error) {
+      console.error("Error decoding JWT:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      setLoading(true);
+      const userId = getUserIdFromToken();
+
+      if (!userId) {
+        setUsuario(null);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:5041/api/UserAccounts/${userId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+        setUsuario(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setUsuario(null);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // Simula el proceso de carga de datos
-    setTimeout(() => {
-      setUsuario(usuarioSimulado);
-      setLoading(false);
-    }, 500); // Simula un retraso de 500ms
+    fetchUserData();
   }, []);
 
   if (loading) {
@@ -417,55 +496,67 @@ export default function PropietarioDashboard() {
     return <div className="p-6 text-red-600">No se encontraron datos del usuario.</div>;
   }
 
+  // Function to get initials from the user's name
+  const getInitials = (name: string, lastName: string) => {
+    const firstInitial = name.charAt(0).toUpperCase();
+    const lastInitial = lastName.charAt(0).toUpperCase();
+    return `${firstInitial}${lastInitial}`;
+  };
+
   return (
     <PropietarioLayout>
       <div className="space-y-6 p-6">
         <h1 className="text-2xl font-bold">Dashboard del Propietario</h1>
-        {/* Datos del Usuario */}
         <div className="bg-gray-50 p-6 rounded-lg border flex items-center gap-4">
-          {/* Información del Usuario */}
+          {/* User Avatar */}
+          <Avatar
+          isBordered
+          className="w-20 h-20 text-large"
+            size="lg"
+            color="primary"
+            name={getInitials(usuario.nameUser, usuario.lastNameUser)}
+          />
           <div>
             <h3 className="text-lg font-bold mb-2">Datos del Usuario</h3>
             <p>
-              <strong>Nombre:</strong> {usuario.nameOwner} {usuario.lastNameOwner}
+              <strong>Nombre:</strong> {usuario.nameUser} {usuario.lastNameUser}
             </p>
             <p>
-              <strong>Correo:</strong> {usuario.emailOwner}
+              <strong>Correo:</strong> {usuario.emailUser}
             </p>
             <p>
-              <strong>Teléfono:</strong> {usuario.phoneOwner}
+              <strong>Teléfono:</strong> {usuario.phoneUser || "No disponible"}
             </p>
           </div>
-          </div>
-        {/* Botón para Registrar Nueva Farmacia */}
+        </div>
+
+        {/* New Request Button */}
         <div className="flex">
-          <Button onPress={() => setIsModalOpen(true)} color="primary">
+          <Button className="bg-[#4E5BA6] text-white" onPress={() => setIsModalOpen(true)} color="primary">
             Nueva solicitud
             <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="ml-2 h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
+              xmlns="http://www.w3.org/2000/svg"
+              className="ml-2 h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
           </Button>
-        
         </div>
-        {/* Tabla de Peticiones */}
         <div>
           <PetitionsTable />
         </div>
-        {/* Modal para Registrar Nueva Farmacia */}
         <RequestFormModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+          userPharmacies={["Farmacia 1", "Farmacia 2", "Farmacia 3"]}
         />
       </div>
     </PropietarioLayout>
