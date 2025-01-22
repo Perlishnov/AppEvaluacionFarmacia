@@ -3,5 +3,6 @@
 ################################################################################
 
 /.vs/WebFarmacia/FileContentIndex/35385110-ed62-4817-915e-cbf3c8a01d3c.vsidx
-/EvaluacionFarmaciaAPI
+/EvaluacionFarmaciaAPI/bin
+/EvaluacionFarmaciaAPI/obj/Debug
 /.vs
