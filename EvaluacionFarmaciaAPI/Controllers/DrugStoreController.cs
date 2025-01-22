@@ -44,7 +44,7 @@ namespace EvaluacionFarmaciaAPI.Controllers
             // Ejecutar consulta con JOIN para obtener un solo DrugStoreDetailsDto
             var drugStore = await _context.DrugStoreDetailsDto
                 .FromSqlInterpolated($"EXEC sp_GetDrugstoreById @DrugStoreId = {id}")
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
             if (drugStore == null)
             {
