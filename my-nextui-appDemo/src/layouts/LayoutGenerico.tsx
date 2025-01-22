@@ -2,7 +2,8 @@ import React from "react";
 
 type MenuItem = {
   title: string;
-  path: string;
+  path?: string; // Optional path for navigation
+  action?: () => void; // Optional action for items like logout
 };
 
 type LayoutGenericoProps = {
@@ -19,13 +20,23 @@ export default function LayoutGenerico({ children, role, menuItems }: LayoutGene
         <h2 className="text-xl font-bold mb-4">{role}</h2>
         <nav>
           {menuItems.map((item, index) => (
-            <a
-              key={index}
-              href={item.path}
-              className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded"
-            >
-              {item.title}
-            </a>
+            item.path ? (
+              <a
+                key={index}
+                href={item.path}
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded"
+              >
+                {item.title}
+              </a>
+            ) : (
+              <button
+                key={index}
+                onClick={item.action}
+                className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-200 rounded"
+              >
+                {item.title}
+              </button>
+            )
           ))}
         </nav>
       </aside>

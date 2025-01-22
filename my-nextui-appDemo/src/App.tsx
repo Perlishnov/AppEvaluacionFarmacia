@@ -109,7 +109,7 @@ function App() {
         }
       />
       <Route
-        path="/propietario/farmacias"
+        path="/propietario/cuenta"
         element={
           <ProtectedRoute allowedRoles={["3"]}>
             <PropietarioMyAccount />

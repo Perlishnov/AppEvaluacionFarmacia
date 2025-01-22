@@ -15,14 +15,14 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/table";
-import { Button, Dropdown, Input, Tabs, Tab, DropdownItem, DropdownTrigger, DropdownMenu, Select, SelectItem } from "@nextui-org/react";
+import { Button, Dropdown, Input, Tabs, Tab, DropdownItem, DropdownTrigger, DropdownMenu, Select, SelectItem, Avatar } from "@nextui-org/react";
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
 } from "@nextui-org/modal";
-
+import { jwtDecode } from "jwt-decode";
 const provinces = ["Provincia 1", "Provincia 2", "Provincia 3"];
 const municipalities = ["Municipio 1", "Municipio 2", "Municipio 3"];
 
@@ -440,23 +440,52 @@ export default function PropietarioDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [usuario, setUsuario] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [userPharmacies, setUserPharmacies] = useState<string[]>([]);
+
+  // Function to decode JWT and extract userId
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No JWT token found in localStorage.");
+      return null;
+    }
+
+    try {
+      const decodedToken: { userId: string } = jwtDecode(token);
+      return decodedToken.userId;
+    } catch (error) {
+      console.error("Error decoding JWT:", error);
+      return null;
+    }
+  };
 
   useEffect(() => {
-    // Datos de usuario simulados con farmacias
-    const usuarioSimulado = {
-      nameOwner: "Juan",
-      lastNameOwner: "Pérez",
-      emailOwner: "juan.perez@email.com",
-      phoneOwner: "809-123-4567",
-      pharmacies: ["Farmacia El Sol", "Farmacia San Juan"]
+    const fetchUserData = async () => {
+      setLoading(true);
+      const userId = getUserIdFromToken();
+
+      if (!userId) {
+        setUsuario(null);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:5041/api/UserAccounts/${userId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+        setUsuario(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setUsuario(null);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    setTimeout(() => {
-      setUsuario(usuarioSimulado);
-      setUserPharmacies(usuarioSimulado.pharmacies);
-      setLoading(false);
-    }, 500);
+    fetchUserData();
   }, []);
 
   if (loading) {
@@ -467,24 +496,41 @@ export default function PropietarioDashboard() {
     return <div className="p-6 text-red-600">No se encontraron datos del usuario.</div>;
   }
 
+  // Function to get initials from the user's name
+  const getInitials = (name: string, lastName: string) => {
+    const firstInitial = name.charAt(0).toUpperCase();
+    const lastInitial = lastName.charAt(0).toUpperCase();
+    return `${firstInitial}${lastInitial}`;
+  };
+
   return (
     <PropietarioLayout>
       <div className="space-y-6 p-6">
         <h1 className="text-2xl font-bold">Dashboard del Propietario</h1>
         <div className="bg-gray-50 p-6 rounded-lg border flex items-center gap-4">
+          {/* User Avatar */}
+          <Avatar
+          isBordered
+          className="w-20 h-20 text-large"
+            size="lg"
+            color="primary"
+            name={getInitials(usuario.nameUser, usuario.lastNameUser)}
+          />
           <div>
             <h3 className="text-lg font-bold mb-2">Datos del Usuario</h3>
             <p>
-              <strong>Nombre:</strong> {usuario.nameOwner} {usuario.lastNameOwner}
+              <strong>Nombre:</strong> {usuario.nameUser} {usuario.lastNameUser}
             </p>
             <p>
-              <strong>Correo:</strong> {usuario.emailOwner}
+              <strong>Correo:</strong> {usuario.emailUser}
             </p>
             <p>
-              <strong>Teléfono:</strong> {usuario.phoneOwner}
+              <strong>Teléfono:</strong> {usuario.phoneUser || "No disponible"}
             </p>
           </div>
         </div>
+
+        {/* New Request Button */}
         <div className="flex">
           <Button onPress={() => setIsModalOpen(true)} color="primary">
             Nueva solicitud
@@ -510,7 +556,7 @@ export default function PropietarioDashboard() {
         <RequestFormModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          userPharmacies={userPharmacies}
+          userPharmacies={["Farmacia 1", "Farmacia 2", "Farmacia 3"]}
         />
       </div>
     </PropietarioLayout>
