@@ -110,6 +110,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
 //Middleware para jwt
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EvaluacionFarmaciaAPI.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace EvaluacionFarmaciaAPI.Models;
@@ -13,6 +14,11 @@ public partial class FarmaciaDesarrolloWebContext : DbContext
     {
         _configuration = configuration;
     }
+
+    //DTOs
+    public DbSet<DrugStoreDetailsDto> DrugStoreDetailsDto { get; set; }
+
+    //Entidades
 
     public virtual DbSet<DocumentType> DocumentTypes { get; set; }
 
@@ -50,6 +56,7 @@ public partial class FarmaciaDesarrolloWebContext : DbContext
 
     public virtual DbSet<UserInspection> UserInspections { get; set; }
 
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -58,9 +65,13 @@ public partial class FarmaciaDesarrolloWebContext : DbContext
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
+        //DTOs
+        modelBuilder.Entity<DrugStoreDetailsDto>().HasNoKey(); 
 
         modelBuilder.Entity<DocumentType>(entity =>
         {

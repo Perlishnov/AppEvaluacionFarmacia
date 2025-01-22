@@ -22,36 +22,74 @@ namespace EvaluacionFarmaciaAPI.Controllers
 
         // GET: api/DrugStores
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DrugStoreDTO>>> GetDrugStores()
+        public async Task<ActionResult<IEnumerable<DrugStoreDetailsDto>>> GetDrugStores()
         {
-            var drugStores = await _context.DrugStores.ToListAsync();
+            // Ejecuta sp_GetDrugStores
+            var drugStores = await _context.DrugStoreDetailsDto
+                .FromSqlInterpolated($"EXEC sp_GetDrugStores")
+                .ToListAsync();
 
-            // Mapear a DTO
-            var drugStoreDtos = _mapper.Map<IEnumerable<DrugStoreDTO>>(drugStores);
+            if (!drugStores.Any())
+            {
+                return NotFound(new { Message = "No se encontraron farmacias." });
+            }
 
-            return Ok(drugStoreDtos);
+            return Ok(drugStores);
         }
 
-        // GET: api/DrugStore/5
+        // GET: api/DrugStores/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<DrugStoreDTO>> GetDrugStore(int id)
+        public async Task<ActionResult<DrugStoreDetailsDto>> GetDrugStore(int id)
         {
-            var drugStore = await _context.DrugStores
-                .Where(ds => ds.DrugStoreId == id)
+            // Ejecutar consulta con JOIN para obtener un solo DrugStoreDetailsDto
+            var drugStore = await _context.DrugStoreDetailsDto
+                .FromSqlInterpolated($"EXEC GetDrugStoresWithDetailsByOwnerId @DrugStoreId = {id}")
                 .FirstOrDefaultAsync();
 
             if (drugStore == null)
             {
-                return NotFound();
+                return NotFound(new { Message = $"No se encontró la farmacia con ID {id}." });
             }
 
-            // Mapear a DTO
-            var drugStoreDto = _mapper.Map<DrugStoreDTO>(drugStore);
-
-            return Ok(drugStoreDto);
+            return Ok(drugStore);
         }
 
-        
+        // Endpoint para obtener el total de farmacias
+        //GET: api/DrugStores/total
+        [HttpGet("total")]
+        public async Task<IActionResult> GetTotalDrugStores()
+        {
+            // Obtiene el total de farmacias
+            int total = await _context.DrugStores.CountAsync();
+            return Ok(total);
+        }
+
+        // Obtener farmacias por OwnerId
+        //GET: api/DrugStores/by-owner/{ownerId}
+        [HttpGet("details/by-owner/{ownerId}")]
+        public async Task<IActionResult> GetDrugStoresWithDetailsByOwnerId(int ownerId)
+        {
+            try
+            {
+                var drugStores = await _context.DrugStoreDetailsDto
+                    .FromSqlInterpolated($"EXEC sp_GetDrugStoresByOwnerId @OwnerId = {ownerId}")
+                    .ToListAsync();
+
+                if (!drugStores.Any())
+                {
+                    return NotFound(new { Message = "No se encontraron farmacias para el propietario especificado." });
+                }
+
+                return Ok(drugStores);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(500, new { Message = "Error interno del servidor." });
+            }
+        }
+
+
         // POST: api/DrugStores
         [HttpPost]
         public async Task<ActionResult> PostDrugStore([FromBody] DrugStoreDTO drugStoreDto)
@@ -79,7 +117,7 @@ namespace EvaluacionFarmaciaAPI.Controllers
         }
 
 
-        // PUT: api/DrugStore/5
+        // PUT: api/DrugStores/5
         [HttpPut("{id}")]
         public async Task<ActionResult> PutDrugStore(int id, [FromBody] DrugStoreDTO drugStoreDto)
         {
@@ -111,7 +149,7 @@ namespace EvaluacionFarmaciaAPI.Controllers
         }
 
 
-        //DELETE: api/DrugStore/5
+        //DELETE: api/DrugStores/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteDrugStore(int id)
         {
