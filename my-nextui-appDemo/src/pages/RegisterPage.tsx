@@ -1,4 +1,3 @@
-import { Tab, Tabs } from "@nextui-org/react";
 import { Input, Button } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default";
 import {
@@ -7,8 +6,8 @@ import {
   DropdownTrigger,
   DropdownItem,
 } from "@nextui-org/react";
-
 import { useState } from "react";
+import { UserCircle2 } from "lucide-react";
 
 export default function DocsPage() {
   const [formData, setFormData] = useState({
@@ -18,7 +17,7 @@ export default function DocsPage() {
     emailUser: "",
     passwordUser: "",
     documentTypeID: "",
-    personTypeID: 3, // Default value for PersonTypeID
+    personTypeID: 3,
   });
 
   const [loading, setLoading] = useState(false);
@@ -43,19 +42,15 @@ export default function DocsPage() {
     try {
       const response = await fetch("http://localhost:5041/api/Auth/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           documentTypeID: parseInt(formData.documentTypeID),
         }),
       });
-
       if (!response.ok) {
         throw new Error("Error al registrar el usuario");
       }
-
       const data = await response.json();
       setSuccessMessage("Usuario registrado correctamente.");
       console.log("API Response:", data);
@@ -71,112 +66,81 @@ export default function DocsPage() {
 
   return (
     <DefaultLayout>
-      <div
-        className="max-w-3xl mx-auto p-6 rounded-lg shadow-lg"
-        style={{ backgroundColor: "#F8F9FC" }} // Fondo azul claro
-      >
-        <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">
-          Formulario de Usuario
-        </h1>
+      <div className="max-w-3xl mx-auto p-6">
+        <UserCircle2 size={48} className="mx-auto mb-4" />
+        <h1 className="text-2xl font-bold mb-4 text-center">Formulario de Usuario</h1>
         <form onSubmit={handleSubmit}>
-          <Tabs aria-label="Formulario de usuario" className="w-full">
-            {/* Pestaña 1: Información Personal */}
-            <Tab key="personal" title="Información Personal">
-              <div className="flex flex-col gap-4">
-                <Input
-                  label="Nombre"
-                  placeholder="Ingresa tu nombre"
-                  name="nameUser"
-                  value={formData.nameUser}
-                  onChange={handleChange}
-                  required
-                />
-                <Input
-                  label="Apellido"
-                  placeholder="Ingresa tu apellido"
-                  name="lastNameUser"
-                  value={formData.lastNameUser}
-                  onChange={handleChange}
-                  required
-                />
-                <Input
-                  label="Correo Electrónico"
-                  placeholder="Ingresa tu correo"
-                  name="emailUser"
-                  type="email"
-                  value={formData.emailUser}
-                  onChange={handleChange}
-                  required
-                />
-                <Input
-                  label="Contraseña"
-                  placeholder="Ingresa tu contraseña"
-                  name="passwordUser"
-                  type="password"
-                  value={formData.passwordUser}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </Tab>
-
-            {/* Pestaña 2: Documento */}
-            <Tab key="document" title="Documento">
-              <div className="flex flex-col gap-4">
-                <Input
-                  label="Número de Documento"
-                  placeholder="Ingresa tu documento"
-                  name="documentUser"
-                  value={formData.documentUser}
-                  onChange={handleChange}
-                  required
-                />
-
-                <Dropdown>
-                  <DropdownTrigger>
-                    <Button variant="bordered" color="primary" className="border-[#4E5BA6] text-[#4E5BA6] hover:bg-[#9EA5D1] hover:text-[#293056]">
-                      {formData.documentTypeID
-                        ? `Seleccionado: ${
-                            formData.documentTypeID === "1"
-                              ? "Cédula"
-                              : "Pasaporte"
-                          }`
-                        : "Selecciona el tipo de documento"}
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu
-                    aria-label="Tipo de Documento"
-                    selectionMode="single"
-                    selectedKeys={new Set([formData.documentTypeID])}
-                    onSelectionChange={(keys) => {
-                      const key = Array.from(keys)[0] as string;
-                      if (key) handleDropdownChange(key);
-                    }}
-                  >
-                    <DropdownItem key="1">Cédula</DropdownItem>
-                    <DropdownItem key="2">Pasaporte</DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-              </div>
-            </Tab>
-          </Tabs>
-
-          {/* Mensajes */}
-          {successMessage && (
-            <p className="text-green-600 mt-4">{successMessage}</p>
-          )}
-          {errorMessage && (
-            <p className="text-red-600 mt-4">{errorMessage}</p>
-          )}
-
-          {/* Botón de Submit */}
+          <div className="flex flex-col gap-4">
+            <Input
+              label="Número de Documento"
+              placeholder="Ingresa tu documento"
+              name="documentUser"
+              value={formData.documentUser}
+              onChange={handleChange}
+              required
+            />
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant="bordered">
+                  {formData.documentTypeID
+                    ? `Seleccionado: ${
+                        formData.documentTypeID === "1" ? "Cédula" : "Pasaporte"
+                      }`
+                    : "Selecciona el tipo de documento"}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Tipo de Documento"
+                selectionMode="single"
+                selectedKeys={new Set([formData.documentTypeID])}
+                onSelectionChange={(keys) => {
+                  const key = Array.from(keys)[0] as string;
+                  if (key) handleDropdownChange(key);
+                }}
+              >
+                <DropdownItem key="1">Cédula</DropdownItem>
+                <DropdownItem key="2">Pasaporte</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Input
+              label="Nombre"
+              placeholder="Ingresa tu nombre"
+              name="nameUser"
+              value={formData.nameUser}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              label="Apellido"
+              placeholder="Ingresa tu apellido"
+              name="lastNameUser"
+              value={formData.lastNameUser}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              label="Correo Electrónico"
+              placeholder="Ingresa tu correo"
+              name="emailUser"
+              type="email"
+              value={formData.emailUser}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              label="Contraseña"
+              placeholder="Ingresa tu contraseña"
+              name="passwordUser"
+              type="password"
+              value={formData.passwordUser}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          {successMessage && <p className="text-green-500 mt-4">{successMessage}</p>}
+          {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
           <div className="mt-6 flex justify-end">
-            <Button
-              type="submit"
-              color="primary"
-              isLoading={loading}
-              className="bg-[#4E5BA6] hover:bg-[#293056] text-white"
-            >
+            <Button className="bg-[#4E5BA6] hover:bg-[#293056] text-white" type="submit" color="primary" isLoading={loading}>
               Enviar
             </Button>
           </div>

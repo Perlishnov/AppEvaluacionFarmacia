@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dell\\Documents\\GitHub\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj": {}
+    "C:\\Users\\irvin\\OneDrive - INTEC\\Documentos\\ProyectoFinalWeb\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dell\\Documents\\GitHub\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj": {
+    "C:\\Users\\irvin\\OneDrive - INTEC\\Documentos\\ProyectoFinalWeb\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dell\\Documents\\GitHub\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj",
+        "projectUniqueName": "C:\\Users\\irvin\\OneDrive - INTEC\\Documentos\\ProyectoFinalWeb\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj",
         "projectName": "EvaluacionFarmaciaAPI",
-        "projectPath": "C:\\Users\\Dell\\Documents\\GitHub\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj",
-        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dell\\Documents\\GitHub\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\obj\\",
+        "projectPath": "C:\\Users\\irvin\\OneDrive - INTEC\\Documentos\\ProyectoFinalWeb\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\EvaluacionFarmaciaAPI.csproj",
+        "packagesPath": "C:\\Users\\irvin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\irvin\\OneDrive - INTEC\\Documentos\\ProyectoFinalWeb\\AppEvaluacionFarmacia\\EvaluacionFarmaciaAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\irvin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
