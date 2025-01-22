@@ -62,8 +62,28 @@ public class AuthController : ControllerBase
             PersonTypeId = userAccountDTO.PersonTypeId
         };
 
+        //Registra el nuevo usuario en UserAccount
         _context.UserAccounts.Add(newUser);
         await _context.SaveChangesAsync();
+
+
+        if (await _context.Owners.AnyAsync(u => u.DocumentOwner == userAccountDTO.DocumentUser)){
+            return StatusCode(201, new { message = "El usuario se ha registrado correctamente y ya existía como propietario" });
+        }
+        else{
+            //Registra el nuevo usuario en owner
+            var newOwner = new Owner
+            {
+                DocumentTypeId = userAccountDTO.DocumentTypeId,
+                DocumentOwner = userAccountDTO.DocumentUser,
+                NameOwner = userAccountDTO.NameUser,
+                LastNameOwner = userAccountDTO.LastNameUser,
+                EmailOwner = userAccountDTO.EmailUser,
+                PhoneOwner = "8095679076"
+            };
+            _context.Owners.Add(newOwner);
+            await _context.SaveChangesAsync();
+        }
 
         return StatusCode(201, new { message = "El usuario se ha registrado correctamente" });
     }
