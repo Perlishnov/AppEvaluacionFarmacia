@@ -11,14 +11,12 @@ export default function IndexPage() {
   return (
     <DefaultLayout>
       {/* Hero Section */}
-      
       <section
-      id="hero"
+        id="hero"
         className="absolute top-12 left-0 w-screen h-[70vh] flex items-center justify-start bg-cover bg-center"
         style={{
           backgroundImage:
             'url("https://www.pkf.com.au/uploads/Insights/Health-AdobeStock_527209943-Pharmacy-60-day-dispensing.jpg")',
-            
         }}
       >
         <div className="absolute inset-0 bg-black/50" />
@@ -34,10 +32,9 @@ export default function IndexPage() {
               <Button
                 as={Link}
                 to="/register"
-                color="primary"
                 size="lg"
                 radius="full"
-                className="bg-blue-600 text-white hover:bg-blue-100 hover:text-blue-600 transition-colors flex items-center justify-center space-x-2"
+                className="bg-[#4E5BA6] text-white hover:bg-[#3A4784] transition-colors flex items-center justify-center space-x-2"
               >
                 <span>Crear una Cuenta</span>
                 <ArrowRight className="w-5 h-5" />
@@ -45,11 +42,10 @@ export default function IndexPage() {
               <Button
                 as={Link}
                 to="/login"
-                color="secondary"
                 size="lg"
                 radius="full"
                 variant="bordered"
-                className="bg-white text-blue-600 hover:bg-blue-100 transition-colors flex items-center justify-center space-x-2"
+                className="border-[#4E5BA6] text-[#4E5BA6] bg-[#F8F9FC] hover:bg-[#F3F4F6] transition-colors flex items-center justify-center space-x-2"
               >
                 Iniciar sesión
               </Button>
@@ -58,67 +54,66 @@ export default function IndexPage() {
         </div>
       </section>
 
-{/* Features Section */}
-<section id="features" className="mt-[60vh] py-16">
-  <div className="container mx-auto max-w-7xl px-6">
-    <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-      ¿Qué puedes hacer con nuestra plataforma?
-    </h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {[
-        {
-          title: "Registro de Farmacias",
-          description: "Facilita el registro de farmacias y documentación.",
-          icon: "📋",
-        },
-        {
-          title: "Seguimiento de Solicitudes",
-          description: "Consulta el estado de tus solicitudes en tiempo real.",
-          icon: "🔍",
-        },
-        {
-          title: "Evaluaciones Rápidas",
-          description: "Acceso eficiente a los resultados de evaluaciones.",
-          icon: "📊",
-        },
-        {
-          title: "Gestión Centralizada",
-          description: "Administra todo desde un panel fácil de usar.",
-          icon: "🖥️",
-        },
-        {
-          title: "Notificaciones Inteligentes",
-          description:
-            "Recibe alertas sobre cambios en tus solicitudes o evaluaciones.",
-          icon: "🔔",
-        },
-        {
-          title: "Reportes Detallados",
-          description:
-            "Genera reportes personalizados para el análisis de datos de tus farmacias.",
-          icon: "📑",
-        },
-      ].map((feature, index) => (
-        <Card
-          key={index}
-          className="shadow-md hover:shadow-lg transition-shadow"
-        >
-          <CardHeader className="flex gap-3">
-            <div className="text-3xl">{feature.icon}</div>
-            <h3 className="text-xl font-bold">{feature.title}</h3>
-          </CardHeader>
-          <CardBody>
-            <p className="text-gray-600">{feature.description}</p>
-          </CardBody>
-        </Card>
-      ))}
-    </div>
-  </div>
-</section>
-
+      {/* Features Section */}
+      <section id="features" className="mt-[60vh] py-16 bg-[#F8F9FC]">
+        <div className="container mx-auto max-w-7xl px-6">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+            ¿Qué puedes hacer con nuestra plataforma?
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Registro de Farmacias",
+                description: "Facilita el registro de farmacias y documentación.",
+                icon: "📋",
+              },
+              {
+                title: "Seguimiento de Solicitudes",
+                description: "Consulta el estado de tus solicitudes en tiempo real.",
+                icon: "🔍",
+              },
+              {
+                title: "Evaluaciones Rápidas",
+                description: "Acceso eficiente a los resultados de evaluaciones.",
+                icon: "📊",
+              },
+              {
+                title: "Gestión Centralizada",
+                description: "Administra todo desde un panel fácil de usar.",
+                icon: "🖥️",
+              },
+              {
+                title: "Notificaciones Inteligentes",
+                description:
+                  "Recibe alertas sobre cambios en tus solicitudes o evaluaciones.",
+                icon: "🔔",
+              },
+              {
+                title: "Reportes Detallados",
+                description:
+                  "Genera reportes personalizados para el análisis de datos de tus farmacias.",
+                icon: "📑",
+              },
+            ].map((feature, index) => (
+              <Card
+                key={index}
+                className="shadow-md hover:shadow-lg transition-shadow bg-white"
+              >
+                <CardHeader className="flex gap-3">
+                  <div className="text-3xl">{feature.icon}</div>
+                  <h3 className="text-xl font-bold">{feature.title}</h3>
+                </CardHeader>
+                <CardBody>
+                  <p className="text-gray-600">{feature.description}</p>
+                </CardBody>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Benefits Section */}
-      <section id="benefits" className="py-16 bg-blue-50">
+      <section id="benefits" className="py-16 bg-[#EAECF5]">
         <div className="container mx-auto max-w-7xl px-6">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
             ¿Por qué elegirnos?
@@ -146,7 +141,7 @@ export default function IndexPage() {
             ].map((benefit, index) => (
               <Card
                 key={index}
-                className="shadow-md hover:shadow-lg transition-shadow"
+                className="shadow-md hover:shadow-lg transition-shadow bg-white"
               >
                 <CardHeader className="flex gap-3">
                   <div className="text-3xl">{benefit.icon}</div>
@@ -160,76 +155,56 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
+{/* Opinions Section */}
+<section id="opinions" className="bg-[#F8F9FC] py-16">
+  <div className="container mx-auto max-w-7xl px-6">
+    <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+      Lo que dicen nuestros usuarios
+    </h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[
+        {
+          name: "Ana López",
+          feedback:
+            "La plataforma simplificó enormemente la gestión de mi farmacia. ¡Altamente recomendada!",
+          avatar: "https://ui-avatars.com/api/?name=Ana+Lopez&background=0D8ABC&color=fff",
+        },
+        {
+          name: "Carlos Pérez",
+          feedback:
+            "Ahora puedo seguir mis evaluaciones y solicitudes sin problemas desde un solo lugar.",
+          avatar: "https://ui-avatars.com/api/?name=Carlos+Perez&background=0D8ABC&color=fff",
+        },
+        {
+          name: "María Rodríguez",
+          feedback:
+            "La interfaz es intuitiva y me ahorra mucho tiempo. Un excelente recurso para propietarios de farmacias.",
+          avatar: "https://ui-avatars.com/api/?name=Maria+Rodriguez&background=0D8ABC&color=fff",
+        },
+      ].map((opinion, index) => (
+        <Card
+          key={index}
+          className="shadow-md hover:shadow-lg transition-shadow bg-white rounded-lg"
+        >
+          <CardHeader className="flex items-center gap-4">
+            <img
+              src={opinion.avatar}
+              alt={opinion.name}
+              className="w-12 h-12 rounded-full"
+            />
+            <h3 className="text-lg font-bold">{opinion.name}</h3>
+          </CardHeader>
+          <CardBody>
+            <p className="text-gray-600 italic">"{opinion.feedback}"</p>
+          </CardBody>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
 
-      {/* Secondary Call to Action Section */}
-      <section className="py-16 bg-gray-800 text-white">
-        <div className="container mx-auto max-w-7xl px-6">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">¡Comienza ahora mismo!</h2>
-            <p className="text-lg mb-8">
-              Únete a cientos de farmacias que ya están simplificando sus
-              operaciones.
-            </p>
-            <Button
-              as={Link}
-              to="/register"
-              size="lg"
-              radius="full"
-              className="bg-blue-600 hover:bg-blue-700 transition-colors text-white"
-            >
-              Regístrate Gratis
-            </Button>
-          </div>
-        </div>
-      </section>
 
-      {/* Opinions Section */}
-      <section id="opinions" className="bg-gray-50 py-16">
-        <div className="container mx-auto max-w-7xl px-6">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-            Lo que dicen nuestros usuarios
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Ana López",
-                feedback:
-                  "La plataforma simplificó enormemente la gestión de mi farmacia. ¡Altamente recomendada!",
-                avatar: "/placeholder.svg?height=60&width=60",
-              },
-              {
-                name: "Carlos Pérez",
-                feedback:
-                  "Ahora puedo seguir mis evaluaciones y solicitudes sin problemas desde un solo lugar.",
-                avatar: "/placeholder.svg?height=60&width=60",
-              },
-              {
-                name: "María Rodríguez",
-                feedback:
-                  "La interfaz es intuitiva y me ahorra mucho tiempo. Un excelente recurso para propietarios de farmacias.",
-                avatar: "/placeholder.svg?height=60&width=60",
-              },
-            ].map((opinion, index) => (
-              <Card
-                key={index}
-                className="shadow-md hover:shadow-lg transition-shadow"
-              >
-                <CardHeader className="flex items-center gap-4">
-                  <img
-                    src={opinion.avatar || "/placeholder.svg"}
-                    alt={opinion.name}
-                    className="w-12 h-12 rounded-full"
-                  />
-                  <h3 className="text-lg font-bold">{opinion.name}</h3>
-                </CardHeader>
-                <CardBody>
-                  <p className="text-gray-600 italic">"{opinion.feedback}"</p>
-                </CardBody>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+
     </DefaultLayout>
   );
 }

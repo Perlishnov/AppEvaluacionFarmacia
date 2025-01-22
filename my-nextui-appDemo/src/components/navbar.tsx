@@ -14,6 +14,7 @@ const scrollToSection = (id) => {
     section.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 };
+
 export const Navbar = () => {
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -31,8 +32,6 @@ export const Navbar = () => {
               alt="Logo"
               className="h-8 w-auto" // Adjust the size here
             />
-            {/* Brand Text */}
-
           </Link>
         </NavbarBrand>
         {/* Navigation Links */}
@@ -41,7 +40,7 @@ export const Navbar = () => {
             <Link
               href="#hero"
               onClick={() => scrollToSection("hero")}
-              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              className="text-sm font-medium text-gray-700 hover:text-[#4E5BA6] transition-colors"
             >
               Home
             </Link>
@@ -50,24 +49,24 @@ export const Navbar = () => {
             <Link
               href="#features"
               onClick={() => scrollToSection("features")}
-              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              className="text-sm font-medium text-gray-700 hover:text-[#4E5BA6] transition-colors"
             >
               Funcionalidades
             </Link>
           </NavbarItem>
           <NavbarItem>
-          <button
-            onClick={() => scrollToSection("benefits")}
-            className="text-sm font-medium hover:text-blue-600"
-          >
-            Beneficios
-          </button>
-        </NavbarItem>
+            <button
+              onClick={() => scrollToSection("benefits")}
+              className="text-sm font-medium text-gray-700 hover:text-[#4E5BA6] transition-colors"
+            >
+              Beneficios
+            </button>
+          </NavbarItem>
           <NavbarItem>
             <Link
               href="#opinions"
               onClick={() => scrollToSection("opinions")}
-              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              className="text-sm font-medium text-gray-700 hover:text-[#4E5BA6] transition-colors"
             >
               Opiniones
             </Link>
@@ -94,8 +93,7 @@ export const Navbar = () => {
             as={Link}
             href="/register"
             size="sm"
-            color="primary"
-            className="px-6 py-2 text-sm font-semibold bg-blue-600 text-white rounded-full shadow-md transition-all duration-200 transform hover:scale-105 hover:bg-blue-700 hover:shadow-lg"
+            className="px-6 py-2 text-sm font-semibold bg-[#4E5BA6] text-white rounded-full shadow-md transition-all duration-200 transform hover:scale-105 hover:bg-[#3A4784] hover:shadow-lg"
           >
             Registrarse
           </Button>
@@ -105,10 +103,9 @@ export const Navbar = () => {
             as={Link}
             href="/login"
             size="sm"
-            color="secondary"
-            className="px-6 py-2 text-sm font-semibold bg-gray-600 text-white rounded-full shadow-md transition-all duration-200 transform hover:scale-105 hover:bg-gray-700 hover:shadow-lg"
+            className="px-6 py-2 text-sm font-semibold bg-[#C8CCE5] text-gray-700 hover:text-white rounded-full shadow-md transition-all duration-200 transform hover:scale-105 hover:bg-[#4E5BA6] hover:shadow-lg"
           >
-            Logearse
+            Iniciar Sesion
           </Button>
         </NavbarItem>
       </NavbarContent>

@@ -50,17 +50,29 @@ export default function LoginPage() {
     <div className="flex h-screen">
       {/* Left Column */}
       <div
-        className="w-1/2 flex flex-col justify-center items-center bg-cover bg-center bg-no-repeat px-10"
+        className="w-1/2 flex flex-col justify-center items-start px-10"
         style={{
-          backgroundImage: 'url("https://picsum.photos/800/600")',
+          backgroundImage: 'url("/Stock.jpg")', // Ruta de la imagen
+          backgroundSize: "cover", // Asegura que cubra todo el contenedor
+          backgroundPosition: "center", // Centra la imagen
+          backgroundRepeat: "no-repeat", // Evita repeticiones
         }}
       >
         <div className="bg-white/70 p-8 rounded-lg shadow-lg">
-          <h1 className="text-4xl font-bold text-primary">Bienvenido a Nuestra App</h1>
+          {/* Logo */}
+          <img
+            src="/Logo.png" // Cambia esta ruta si tu logo está en otro lugar
+            alt="Logo"
+            className="h-20 w-auto mb-6" // Ajusta el tamaño y margen inferior
+          />
+
+          <h1 className="text-4xl font-bold text-gray-800">
+            Bienvenido a Nuestra App
+          </h1>
           <h2 className="text-xl text-gray-600 mt-4">
             Tu plataforma de farmacia digital
           </h2>
-          <p className="text-gray-500 mt-2 text-center">
+          <p className="text-gray-500 mt-2">
             Administra tus compras, recetas y más en un solo lugar con facilidad y seguridad.
           </p>
         </div>
@@ -99,7 +111,7 @@ export default function LoginPage() {
               >
                 {isPasswordVisible ? (
                   <svg
-                    className="text-2xl text-default-400 pointer-events-none"
+                    className="text-2xl text-gray-500 pointer-events-none"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                   >
@@ -107,7 +119,7 @@ export default function LoginPage() {
                   </svg>
                 ) : (
                   <svg
-                    className="text-2xl text-default-400 pointer-events-none"
+                    className="text-2xl text-gray-500 pointer-events-none"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                   >
@@ -124,7 +136,12 @@ export default function LoginPage() {
 
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-          <Button type="submit" color="primary" className="w-full" isLoading={loading}>
+          <Button
+            type="submit"
+            color="primary"
+            className="w-full bg-[#4E5BA6] hover:bg-[#293056] text-white"
+            isLoading={loading}
+          >
             Iniciar Sesión
           </Button>
         </form>

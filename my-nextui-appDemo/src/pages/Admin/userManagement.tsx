@@ -268,7 +268,7 @@ export default function UserManagementPage() {
             value={searchTerm}
             onValueChange={(value) => setSearchTerm(value)}
           />
-          <Button color="primary" size="lg" onPress={() => setIsAddModalOpen(true)}>
+          <Button className="bg-[#4E5BA6] text-white"  size="lg" onPress={() => setIsAddModalOpen(true)}>
             Agregar Usuario
           </Button>
         </div>
@@ -411,12 +411,12 @@ export default function UserManagementPage() {
             </div>
             <div className="mt-4 flex justify-end gap-2">
               <Button
-                variant="bordered"
+               className="bg-[#EF4444] text-white"
                 onPress={() => setIsAddModalOpen(false)}
               >
                 Cancelar
               </Button>
-              <Button color="primary" onPress={handleAddUser}>
+              <Button className="bg-[#4E5BA6] text-white"  onPress={handleAddUser}>
                 Agregar
               </Button>
             </div>

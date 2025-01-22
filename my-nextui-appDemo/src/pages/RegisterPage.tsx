@@ -71,8 +71,11 @@ export default function DocsPage() {
 
   return (
     <DefaultLayout>
-      <div className="max-w-3xl mx-auto p-6">
-        <h1 className="text-2xl font-bold mb-4 text-center">
+      <div
+        className="max-w-3xl mx-auto p-6 rounded-lg shadow-lg"
+        style={{ backgroundColor: "#F8F9FC" }} // Fondo azul claro
+      >
+        <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">
           Formulario de Usuario
         </h1>
         <form onSubmit={handleSubmit}>
@@ -131,7 +134,7 @@ export default function DocsPage() {
 
                 <Dropdown>
                   <DropdownTrigger>
-                    <Button variant="bordered">
+                    <Button variant="bordered" color="primary" className="border-[#4E5BA6] text-[#4E5BA6] hover:bg-[#9EA5D1] hover:text-[#293056]">
                       {formData.documentTypeID
                         ? `Seleccionado: ${
                             formData.documentTypeID === "1"
@@ -160,15 +163,20 @@ export default function DocsPage() {
 
           {/* Mensajes */}
           {successMessage && (
-            <p className="text-green-500 mt-4">{successMessage}</p>
+            <p className="text-green-600 mt-4">{successMessage}</p>
           )}
           {errorMessage && (
-            <p className="text-red-500 mt-4">{errorMessage}</p>
+            <p className="text-red-600 mt-4">{errorMessage}</p>
           )}
 
           {/* Botón de Submit */}
           <div className="mt-6 flex justify-end">
-            <Button type="submit" color="primary" isLoading={loading}>
+            <Button
+              type="submit"
+              color="primary"
+              isLoading={loading}
+              className="bg-[#4E5BA6] hover:bg-[#293056] text-white"
+            >
               Enviar
             </Button>
           </div>

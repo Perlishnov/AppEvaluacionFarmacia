@@ -435,7 +435,7 @@ const PharmaciesManagementPage: React.FC = () => {
             value={searchTerm}
             onValueChange={(val) => setSearchTerm(val)}
           />
-          <Button color="primary" size="lg" onPress={() => setIsAddModalOpen(true)}>
+          <Button className="bg-[#4E5BA6]"  color="primary" size="lg" onPress={() => setIsAddModalOpen(true)}>
             Agregar Farmacia
           </Button>
         </div>
@@ -589,10 +589,10 @@ const PharmaciesManagementPage: React.FC = () => {
               </div>
             )}
             <div className="mt-4 flex justify-end gap-2">
-              <Button variant="bordered" onPress={() => setIsEditModalOpen(false)}>
+              <Button className="bg-[#EF4444] text-white"  onPress={() => setIsEditModalOpen(false)}>
                 Cancelar
               </Button>
-              <Button color="primary" onPress={handleSaveEdit}>
+              <Button className="bg-[#4E5BA6] text-white"  onPress={handleSaveEdit}>
                 Guardar
               </Button>
             </div>
@@ -838,12 +838,13 @@ const PharmaciesManagementPage: React.FC = () => {
 
             <div className="mt-4 flex justify-end gap-2">
               <Button
-                variant="bordered"
+              className="bg-[#EF4444] text-white"
+             
                 onPress={() => setIsAddModalOpen(false)}
               >
                 Cancelar
               </Button>
-              <Button color="primary" onPress={handleAddPharmacy}>
+              <Button className="bg-[#4E5BA6]"  color="primary" onPress={handleAddPharmacy}>
                 Agregar
               </Button>
             </div>
