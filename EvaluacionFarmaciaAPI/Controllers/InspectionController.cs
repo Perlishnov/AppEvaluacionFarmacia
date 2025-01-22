@@ -68,6 +68,21 @@ public class InspectionController : ControllerBase
         return Ok(InspectionDTO.FromModel(inspection));
     }
 
+    // Obtener inspecciones pendientes (estado "En Espera").
+    // GET: /inspections/pending
+    [HttpGet("pending")]
+    public async Task<IActionResult> GetPendingInspections()
+    {
+        var pendingInspections = await _context.Inspections
+            .Where(i => i.StatusInspId == 3)
+            .ToListAsync();
+
+        if (!pendingInspections.Any())
+            return NotFound("No se encontraron inspecciones pendientes.");
+
+        return Ok(pendingInspections);
+    }
+
     // PUT: /inspections/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateInspectionStatus(int id, [FromBody] UpdateStatusDTO statusDTO)
