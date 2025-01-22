@@ -130,27 +130,11 @@ export default function LoginPage() {
                 onClick={togglePasswordVisibility}
               >
                 {isPasswordVisible ? (
-<<<<<<< Diseño_CSS
-                  <svg
-                    className="text-2xl text-gray-500 pointer-events-none"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M12 5C7.5 5 3.7 8.2 2 12c1.7 3.8 5.5 7 10 7s8.3-3.2 10-7c-1.7-3.8-5.5-7-10-7zm0 12c-2.8 0-5.2-2.4-5.2-5.2S9.2 6.6 12 6.6s5.2 2.4 5.2 5.2S14.8 17 12 17z" />
-                  </svg>
-                ) : (
-                  <svg
-                    className="text-2xl text-gray-500 pointer-events-none"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-=======
                   <svg className="text-2xl text-default-400 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 5C7.5 5 3.7 8.2 2 12c1.7 3.8 5.5 7 10 7s8.3-3.2 10-7c-1.7-3.8-5.5-7-10-7zm0 12c-2.8 0-5.2-2.4-5.2-5.2S9.2 6.6 12 6.6s5.2 2.4 5.2 5.2S14.8 17 12 17z" />
                   </svg>
                 ) : (
                   <svg className="text-2xl text-default-400 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
->>>>>>> main
                     <path d="M12 5C7.5 5 3.7 8.2 2 12c1.7 3.8 5.5 7 10 7s8.3-3.2 10-7c-1.7-3.8-5.5-7-10-7zm0 12c-2.8 0-5.2-2.4-5.2-5.2S9.2 6.6 12 6.6s5.2 2.4 5.2 5.2S14.8 17 12 17z" />
                   </svg>
                 )}
