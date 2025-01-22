@@ -31,8 +31,8 @@ const InspectorCuenta = () => {
   return (
     <EvaluadorLayout>
       <div className="p-6 space-y-6">
-        <h1 className="text-2xl font-bold">Mi Cuenta</h1>
-        <div className="bg-gray-100 p-6 rounded-lg border shadow flex items-center gap-6">
+        <h1 className="text-2xl font-bold text-gray-700">Mi Cuenta</h1>
+        <div className="bg-[#F8F9FC] p-6 rounded-lg border shadow flex items-center gap-6">
           {/* Foto de Perfil */}
           <img
             alt="Foto de perfil"
@@ -41,7 +41,7 @@ const InspectorCuenta = () => {
           />
 
           {/* Datos del Usuario */}
-          <div className="space-y-4">
+          <div className="space-y-4 text-gray-700">
             <p>
               <strong>Nombre:</strong> {userData.firstName} {userData.lastName}
             </p>
@@ -54,7 +54,7 @@ const InspectorCuenta = () => {
           </div>
         </div>
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="px-4 py-2 bg-[#4E5BA6] text-white rounded hover:bg-[#3A4786] transition-all"
           onClick={togglePopup}
         >
           Editar Perfil
@@ -63,11 +63,11 @@ const InspectorCuenta = () => {
         {/* Popup para editar perfil */}
         {isPopupOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-1/2">
-              <h2 className="text-xl font-bold mb-4">Editar Perfil</h2>
+            <div className="bg-[#F8F9FC] p-8 rounded-lg shadow-lg w-1/2">
+              <h2 className="text-xl font-bold text-gray-700 mb-4">Editar Perfil</h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block font-bold mb-2">Nombre</label>
+                  <label className="block font-bold text-gray-700 mb-2">Nombre</label>
                   <input
                     type="text"
                     name="firstName"
@@ -78,7 +78,7 @@ const InspectorCuenta = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold mb-2">Apellido</label>
+                  <label className="block font-bold text-gray-700 mb-2">Apellido</label>
                   <input
                     type="text"
                     name="lastName"
@@ -89,7 +89,7 @@ const InspectorCuenta = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold mb-2">Correo</label>
+                  <label className="block font-bold text-gray-700 mb-2">Correo</label>
                   <input
                     type="email"
                     name="email"
@@ -100,7 +100,7 @@ const InspectorCuenta = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold mb-2">Teléfono</label>
+                  <label className="block font-bold text-gray-700 mb-2">Teléfono</label>
                   <input
                     type="text"
                     name="phone"
@@ -112,13 +112,13 @@ const InspectorCuenta = () => {
                 </div>
                 <div className="flex justify-end space-x-4">
                   <button
-                    className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                    className="px-4 py-2 bg-[#EF4444] text-white rounded hover:bg-[#374151] transition-all"
                     onClick={handleCancel}
                   >
                     Cancelar
                   </button>
                   <button
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    className="px-4 py-2 bg-[#4E5BA6] text-white rounded hover:bg-[#3A4786] transition-all"
                     onClick={handleSave}
                   >
                     Guardar
