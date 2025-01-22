@@ -61,7 +61,7 @@ public partial class FarmaciaDesarrolloWebContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+            string? connectionString = _configuration.GetConnectionString("DefaultConnection");
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
