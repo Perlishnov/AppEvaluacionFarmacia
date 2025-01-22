@@ -31,5 +31,9 @@ public class MappingProfile : Profile
         CreateMap<RequestType, RequestTypeDTO>();
         CreateMap<DrugStoreType, DrugStoreTypeDTO>();
 
+        //LicenseController
+        CreateMap<License, LicenseDTO>();
+        CreateMap<LicenseDTO, License>();
+
     }
 }

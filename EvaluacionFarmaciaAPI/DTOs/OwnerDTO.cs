@@ -10,15 +10,15 @@ namespace EvaluacionFarmaciaAPI.DTOs
 
         public int DocumentTypeId { get; set; }
 
-        public string DocumentOwner { get; set; }
+        public required string DocumentOwner { get; set; }
 
-        public string NameOwner { get; set; }
+        public required string NameOwner { get; set; }
 
-        public string LastNameOwner { get; set; }
+        public required string LastNameOwner { get; set; }
 
-        public string EmailOwner { get; set; }
+        public required string EmailOwner { get; set; }
 
-        public string PhoneOwner { get; set; }
+        public string? PhoneOwner { get; set; }
 
         public static OwnerDTO FromModel (Owner owner)
         {
