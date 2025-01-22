@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdministradorLayout from "../../layouts/AdministradorLayout";
 
 import {
@@ -118,7 +118,7 @@ const AdminDashboardPage: React.FC = () => {
   ]);
 
   // Datos simulados de solicitudes
-  const [solicitudes] = useState<Solicitud[]>([
+  const [solicitudes, setSolicitudes] = useState<Solicitud[]>([
     {
       idSolicitud: 101,
       idFarmacia: 1,
@@ -147,6 +147,95 @@ const AdminDashboardPage: React.FC = () => {
       fechaSolicitud: "2025-01-13",
     },
   ]);
+  const [stats, setStats] = useState({
+    totalUsuarios: 0,
+    totalFarmacias: 0,
+    inspeccionesPendientes: 0,
+    certificadosEmitidos: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      let totalUsuarios = 0;
+      let totalFarmacias = 0;
+      let inspeccionesPendientes = 0;
+      let certificadosEmitidos = 0;
+      let consultaspendientes = 0;
+
+      const token = localStorage.getItem("token");
+
+      try {
+        const userResponse = await fetch("http://localhost:5041/api/UserAccounts", {
+          headers: {
+            Accept: "application/json",
+          },
+        });
+        const userData = await userResponse.json();
+        console.log(userData);
+        totalUsuarios = userData.length || 0;
+      } catch (error) {
+        console.error("Error fetching /api/UserAccounts", error);
+      }
+
+      try {
+        const farmResponse = await fetch("http://localhost:5041/api/DrugStores/total", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        });
+        const farmData = await farmResponse.json();
+        totalFarmacias = parseInt(farmData) || 0;
+      } catch (error) {
+        console.error("Error fetching /api/DrugStores/total", error);
+      }
+
+      try {
+        const inspectionResponse = await fetch("http://localhost:5041/api/Inspection/pending", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        });
+
+        if (inspectionResponse.ok) {
+          const inspectionData = await inspectionResponse.json();
+          inspeccionesPendientes = inspectionData.length || 0;
+        } else if (inspectionResponse.status === 404) {
+          inspeccionesPendientes = 0; // Sin inspecciones pendientes
+        }
+      } catch (error) {
+        console.error("Error fetching /api/Inspection/pending", error);
+      }
+
+      try {
+        const licenseResponse = await fetch("http://localhost:5041/api/License", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        });
+
+        if (licenseResponse.ok) {
+          const licenseData = await licenseResponse.json();
+          certificadosEmitidos = licenseData.length || 0;
+        }
+      } catch (error) {
+        console.error("Error fetching /api/License", error);
+      }
+
+      setStats({
+        totalUsuarios,
+        totalFarmacias,
+        inspeccionesPendientes,
+        certificadosEmitidos,
+      });
+    };
+
+    fetchStats();
+  }, []);
+
+  
 
   // Definimos las columnas de la tabla
   const columns = [
@@ -296,7 +385,7 @@ const AdminDashboardPage: React.FC = () => {
               <Users size={24} className="text-gray-500" />
             </CardHeader>
             <CardBody>
-              <div className="text-2xl font-bold">1,234</div>
+              <div className="text-2xl font-bold">{stats.totalUsuarios}</div>
             </CardBody>
           </Card>
           <Card className="bg-[#EAECF5]">
@@ -305,7 +394,7 @@ const AdminDashboardPage: React.FC = () => {
               <Building2 size={24} className="text-gray-500" />
             </CardHeader>
             <CardBody>
-              <div className="text-2xl font-bold">567</div>
+              <div className="text-2xl font-bold">{stats.totalFarmacias}</div>
             </CardBody>
           </Card>
           <Card className="bg-[#EAECF5]">
@@ -314,7 +403,7 @@ const AdminDashboardPage: React.FC = () => {
               <ClipboardCheck size={24} className="text-gray-500" />
             </CardHeader>
             <CardBody>
-              <div className="text-2xl font-bold">89</div>
+              <div className="text-2xl font-bold">{stats.inspeccionesPendientes}</div>
             </CardBody>
           </Card>
           <Card className="bg-[#EAECF5]">
@@ -323,10 +412,11 @@ const AdminDashboardPage: React.FC = () => {
               <Award size={24} className="text-gray-500" />
             </CardHeader>
             <CardBody>
-              <div className="text-2xl font-bold">456</div>
+              <div className="text-2xl font-bold">{stats.certificadosEmitidos}</div>
             </CardBody>
           </Card>
         </div>
+        
 
         {/* TABLA DE SOLICITUDES */}
         <div className="mt-10 " >

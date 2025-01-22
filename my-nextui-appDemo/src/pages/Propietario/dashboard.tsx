@@ -138,7 +138,7 @@ export default function PropietarioDashboard() {
       }
 
       try {
-        const response = await fetch(`http://localhost:5041/api/UserAccounts/${userId}`);
+        const response = await fetch(`http://localhost:5041/api/UserAccounts/${parseInt(userId)}`);
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
