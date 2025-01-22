@@ -328,7 +328,7 @@ function RequestFormModal({
             <Tab title="Seleccionar Operación">
               <Dropdown>
                 <DropdownTrigger>
-                  <Button variant="bordered">
+                  <Button className="border-[#4E5BA6]" variant="bordered">
                     {operation || "Selecciona la operación"}
                   </Button>
                 </DropdownTrigger>
@@ -349,7 +349,7 @@ function RequestFormModal({
             </Tab>
             {operation && renderTabsContent()}
           </Tabs>
-          <Button type="submit" className="mt-4" color="primary">
+          <Button type="submit" className="mt-4 bg-[#4E5BA6] text-white" color="primary">
             Enviar
           </Button>
         </ModalBody>
@@ -396,7 +396,7 @@ function PetitionsTable() {
                 <TableCell>
                   <Button
                     size="sm"
-                    color="primary"
+                    className="bg-[#4E5BA6] text-white"
                     onClick={() => setSelectedPetition(petition)}
                   >
                     Ver
@@ -532,7 +532,7 @@ export default function PropietarioDashboard() {
 
         {/* New Request Button */}
         <div className="flex">
-          <Button onPress={() => setIsModalOpen(true)} color="primary">
+          <Button className="bg-[#4E5BA6] text-white" onPress={() => setIsModalOpen(true)} color="primary">
             Nueva solicitud
             <svg
               xmlns="http://www.w3.org/2000/svg"

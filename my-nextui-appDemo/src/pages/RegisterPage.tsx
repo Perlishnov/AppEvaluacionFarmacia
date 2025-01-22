@@ -140,7 +140,7 @@ export default function DocsPage() {
           {successMessage && <p className="text-green-500 mt-4">{successMessage}</p>}
           {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
           <div className="mt-6 flex justify-end">
-            <Button type="submit" color="primary" isLoading={loading}>
+            <Button className="bg-[#4E5BA6] hover:bg-[#293056] text-white" type="submit" color="primary" isLoading={loading}>
               Enviar
             </Button>
           </div>
@@ -149,5 +149,3 @@ export default function DocsPage() {
     </DefaultLayout>
   );
 }
-
-

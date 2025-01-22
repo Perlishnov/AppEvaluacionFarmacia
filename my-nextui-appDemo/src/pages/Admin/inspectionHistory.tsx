@@ -306,7 +306,7 @@ export default function InspectionHistoryPage() {
             value={searchTerm}
             onValueChange={(val) => setSearchTerm(val)}
           />
-          <Button color="primary" size="lg" onPress={() => setIsAddModalOpen(true)}>
+          <Button className="bg-[#4E5BA6] text-white border-[#4E5BA6]"  size="lg" onPress={() => setIsAddModalOpen(true)}>
             Agendar Inspección
           </Button>
         </div>
@@ -487,7 +487,8 @@ export default function InspectionHistoryPage() {
 
             <div className="mt-4 flex justify-end gap-2">
               <Button
-                variant="bordered"
+              className="bg-[#EF4444] text-white"
+                
                 onPress={() => {
                   setIsAddModalOpen(false);
                   setTempAssignedInspectors([]);
@@ -504,7 +505,7 @@ export default function InspectionHistoryPage() {
               >
                 Cancelar
               </Button>
-              <Button color="primary" onPress={handleAddInspection}>
+              <Button className="bg-[#4E5BA6]" color="primary" onPress={handleAddInspection}>
                 Agendar
               </Button>
             </div>
