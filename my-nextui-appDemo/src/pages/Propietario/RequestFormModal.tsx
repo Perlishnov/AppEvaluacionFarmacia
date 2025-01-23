@@ -77,22 +77,6 @@ export default function RequestFormModal({
     fetchProvinces();
   }, []); // Empty dependency array means this runs once when the component mounts
 
-    // Fetch municipalities whenever the selected province changes
-    const fetchMunicipalities = async () => {
-      if (!formData.pharmacyProvince) return; // No province selected, skip fetch
-
-      try {
-        const response = await fetch(`http://localhost:5041/api/Filter/municipios/${parseInt(formData.pharmacyProvince)}`);
-        if (!response.ok) throw new Error("Error fetching municipalities");
-        const data = await response.json();
-        setMunicipalitiesList(data);
-        console.log("Municipalities fetched:", data);
-      } catch (error) {
-        console.error("Error fetching municipalities:", error);
-        setMunicipalitiesList([]); // Clear municipalities if there's an error
-      }
-    };
-
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -100,6 +84,66 @@ export default function RequestFormModal({
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+      const handleSubmit = async () => {
+      if (operation !== "Cambio de Director Técnico") return;
+      if (!validateForm()) return;
+
+      const requestBody = {
+        drugStoreID: parseInt(formData.selectedPharmacy), // Asegúrate de que el ID de la farmacia sea numérico
+        newDirectorName: formData.directorName,
+        newDirectorLastName: formData.directorLastName,
+        newDirectorDocument: formData.directorDocument,
+        newDirectorEmail: formData.directorEmail,
+        newDirectorPhone: formData.directorPhone,
+        newDirectorProfession: formData.directorProfession,
+        newDirectorExequatur: formData.directorExequatur,
+        issueDate: formData.issueDate,
+      };
+
+      try {
+        const response = await fetch("/api/Request/technical-director-change", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error en la solicitud: ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+        console.log("Cambio de director técnico exitoso:", responseData);
+        alert("Solicitud realizada con éxito");
+        onClose(); // Cierra el modal al finalizar
+      } catch (error) {
+        console.error("Error al realizar la solicitud:", error);
+        alert("Ocurrió un error. Por favor, intenta de nuevo.");
+      }
+    };
+    const validateForm = () => {
+      const requiredFields = [
+        "directorName",
+        "directorLastName",
+        "directorDocument",
+        "directorEmail",
+        "directorPhone",
+        "directorProfession",
+        "directorExequatur",
+        "issueDate",
+        "selectedPharmacy",
+      ];
+
+      for (const field of requiredFields) {
+        if (!formData[field]) {
+          alert(`Por favor completa el campo: ${field}`);
+          return false;
+        }
+      }
+
+      return true;
+    };
 
 
   const renderOwnerSection = () => (
@@ -165,6 +209,18 @@ export default function RequestFormModal({
         label="No. Cédula"
         name="directorDocument"
         value={formData.directorDocument}
+        onChange={handleInputChange}
+      />
+      <Input
+        label="Email"
+        name="directorEmail" // Nombre correcto
+        value={formData.directorEmail}
+        onChange={handleInputChange}
+      />
+      <Input
+        label="Phone"
+        name="directorPhone" // Nombre correcto
+        value={formData.directorPhone}
         onChange={handleInputChange}
       />
       <Input
@@ -246,14 +302,15 @@ export default function RequestFormModal({
     <Tab title="Seleccionar Farmacia">
       <Select
         label="Farmacia"
-        value={formData.selectedPharmacy}
-        onValueChange={(value) =>
-          setFormData((prev) => ({ ...prev, selectedPharmacy: value }))
-        }
+        value={formData.selectedPharmacy.toString()} // Asegúrate de que sea una cadena
+        onValueChange={(value) => {
+          console.log("Nuevo valor seleccionado:", value);
+          setFormData((prev) => ({ ...prev, selectedPharmacy: parseInt(value, 10) }));
+        }}
         required
       >
         {userPharmacies.map((pharmacy) => (
-          <SelectItem key={pharmacy.id} value={pharmacy.name}>
+          <SelectItem key={pharmacy.id} value={pharmacy.id.toString()}>
             {pharmacy.name}
           </SelectItem>
         ))}
@@ -354,7 +411,7 @@ export default function RequestFormModal({
           <Button
             type="submit"
             className="mt-4 bg-[#4E5BA6] text-white"
-            onClick={() => console.log("Submitted form:", formData)}
+            onClick={handleSubmit}
           >
             Enviar
           </Button>
