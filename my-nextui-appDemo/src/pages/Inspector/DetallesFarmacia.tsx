@@ -1,146 +1,138 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Card, Button } from "@nextui-org/react";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
+import  EvaluadorLayout  from "../../layouts/EvaluadorLayout";
 
-// Layout del Inspector reutilizado
-const EvaluadorLayout = ({
-  children,
-  menuItems,
-  role,
-}: {
-  children: React.ReactNode;
-  menuItems: { title: string; path: string }[];
-  role: string;
-}) => {
-  return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <aside className="w-64 bg-[#F8F9FC] p-4 border-r">
-        <h2 className="text-xl font-bold text-gray-700 mb-4">{role}</h2>
-        <nav>
-          {menuItems.map((item, index) => (
-            <a
-              key={index}
-              href={item.path}
-              className="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded"
-            >
-              {item.title}
-            </a>
-          ))}
-        </nav>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 p-6 bg-[#F8F9FC]">{children}</main>
-    </div>
-  );
-};
+interface Inspection {
+  inspectionId: number;
+  scheduledDate: string;
+  drugStoreName: string;
+  status: string;
+  modifiedDate?: string;
+  observations?: string;
+}
 
 const DetallesFarmacia = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const togglePopup = () => setIsPopupOpen(!isPopupOpen);
-
   const { farmaciaId } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [inspection, setInspection] = useState<Inspection | null>(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [resultObservations, setResultObservations] = useState("");
+  const [resultDescription, setResultDescription] = useState("");
 
-  const farmaciasData = [
-    {
-      id: 1,
-      name: "Farmacia Central",
-      address: "Calle 123",
-      owner: "Juan Pérez",
-      ownerPhone: "809-555-1234",
-      ownerEmail: "juan.perez@farmaciacentral.com",
-      director: "Ana Gómez",
-      directorPhone: "809-555-6789",
-      directorEmail: "ana.gomez@farmaciacentral.com",
-      pharmacyPhone: "809-555-5678",
-      inspectionDate: "2023-05-15",
-      status: "Pendiente",
-    },
-  ];
+  // Fetch inspection details
+  useEffect(() => {
+    const fetchInspectionDetails = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-  const farmacia = farmaciasData.find((f) => f.id.toString() === farmaciaId);
+        const response = await fetch(
+          `http://localhost:5041/api/Inspection/${farmaciaId}`
+        );
 
-  if (!farmacia) {
-    return (
-      <EvaluadorLayout
-        menuItems={[
-          { title: "Dashboard", path: "/inspector/dashboard" },
-          { title: "Mi Cuenta", path: "/inspector/account" },
-        ]}
-        role="Inspector"
-      >
-        <div className="text-gray-700">Farmacia no encontrada.</div>
-      </EvaluadorLayout>
-    );
+        if (!response.ok) {
+          throw new Error("Error al obtener los detalles de la inspección.");
+        }
+
+        const data: Inspection = await response.json();
+        setInspection(data);
+      } catch (err: any) {
+        console.error(err);
+        setError("No se pudieron cargar los detalles de la inspección.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInspectionDetails();
+  }, [farmaciaId]);
+
+  // Handle result submission
+  const handleSubmitResults = async () => {
+    try {
+      const payload = {
+        observations: resultObservations,
+        description: resultDescription,
+      };
+
+      const response = await fetch(
+        `http://localhost:5041/api/Inspection/Results/${inspection?.inspectionId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al guardar los resultados.");
+      }
+
+      alert("Resultados guardados correctamente.");
+      setIsPopupOpen(false);
+      setResultObservations("");
+      setResultDescription("");
+    } catch (error) {
+      console.error(error);
+      alert("Ocurrió un error al guardar los resultados.");
+    }
+  };
+
+  if (loading) {
+    return <p>Cargando detalles...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
+  }
+
+  if (!inspection) {
+    return <p>No se encontraron detalles para esta inspección.</p>;
   }
 
   return (
-    <EvaluadorLayout
-      menuItems={[
-        { title: "Dashboard", path: "/inspector/dashboard" },
-        { title: "Mi Cuenta", path: "/inspector/account" },
-      ]}
-      role="Inspector"
-    >
-      <div className="p-6 relative">
-        <div className="bg-[#F8F9FC] p-6 rounded-lg border shadow">
-          <h1 className="text-2xl font-bold text-gray-700 mb-4">
-            Detalles de la Farmacia
-          </h1>
-          <div className="space-y-4 text-gray-700">
+    <EvaluadorLayout>
+      <div className="p-6">
+        <Card className="p-6">
+          <h1 className="text-2xl font-bold mb-4">Detalles de la Inspección</h1>
+          <div className="space-y-4">
             <p>
-              <strong>Nombre:</strong> {farmacia.name}
+              <strong>Nombre de la Farmacia:</strong> {inspection.drugStoreName}
             </p>
             <p>
-              <strong>Dirección:</strong> {farmacia.address}
+              <strong>Fecha Programada:</strong> {inspection.scheduledDate}
             </p>
             <p>
-              <strong>Teléfono de la Farmacia:</strong> {farmacia.pharmacyPhone}
+              <strong>Estado:</strong> {inspection.status}
             </p>
-            <p>
-              <strong>Propietario:</strong> {farmacia.owner}
-            </p>
-            <p>
-              <strong>Teléfono del Propietario:</strong> {farmacia.ownerPhone}
-            </p>
-            <p>
-              <strong>Correo del Propietario:</strong> {farmacia.ownerEmail}
-            </p>
-            <p>
-              <strong>Director Técnico:</strong> {farmacia.director}
-            </p>
-            <p>
-              <strong>Teléfono del Director Técnico:</strong>{" "}
-              {farmacia.directorPhone}
-            </p>
-            <p>
-              <strong>Correo del Director Técnico:</strong>{" "}
-              {farmacia.directorEmail}
-            </p>
-            <p>
-              <strong>Fecha Pautada para la Inspección:</strong>{" "}
-              {farmacia.inspectionDate}
-            </p>
-            <p>
-              <strong>Estado:</strong> {farmacia.status}
-            </p>
+            {inspection.modifiedDate && (
+              <p>
+                <strong>Última Modificación:</strong> {inspection.modifiedDate}
+              </p>
+            )}
           </div>
+        </Card>
+        <div className="mt-4">
+          <Button
+            color="primary"
+            onClick={() => setIsPopupOpen(true)}
+            className="bg-[#4E5BA6] text-white"
+          >
+            Añadir Resultados
+          </Button>
         </div>
-
-        <button
-          className="mt-4 px-4 py-2 bg-[#4E5BA6] text-white rounded hover:bg-[#3A4786] transition-all"
-          onClick={togglePopup}
-        >
-          Añadir Resultados
-        </button>
-
+        {/* Modal for Adding Results */}
         {isPopupOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-[#F8F9FC] p-8 rounded-lg shadow-lg w-1/2">
-              <h2 className="text-xl font-bold text-gray-700 mb-4">
-                Agregar Resultados
-              </h2>
+          <Modal isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+            <ModalHeader>
+              <h2>Agregar Resultados</h2>
+            </ModalHeader>
+            <ModalBody>
               <div className="space-y-4">
                 <div>
                   <label className="block font-bold text-gray-700 mb-2">
@@ -150,6 +142,8 @@ const DetallesFarmacia = () => {
                     className="w-full p-3 border rounded"
                     rows={4}
                     placeholder="Ingrese la descripción de los resultados..."
+                    value={resultDescription}
+                    onChange={(e) => setResultDescription(e.target.value)}
                   />
                 </div>
                 <div>
@@ -160,31 +154,29 @@ const DetallesFarmacia = () => {
                     className="w-full p-3 border rounded"
                     rows={4}
                     placeholder="Ingrese las observaciones..."
+                    value={resultObservations}
+                    onChange={(e) => setResultObservations(e.target.value)}
                   />
                 </div>
-                <div className="flex justify-end space-x-4">
-                  <button
-                    className="px-4 py-2 bg-[#DC2626] text-white rounded hover:bg-[#B91C1C] transition-all"
-                    onClick={() => {
-                      togglePopup();
-                      alert("¿Seguro que quiere salir?");
-                    }}
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    className="px-4 py-2 bg-[#4E5BA6] text-white rounded hover:bg-[#3A4786] transition-all"
-                    onClick={() => {
-                      togglePopup();
-                      alert("Resultados guardados correctamente.");
-                    }}
-                  >
-                    Guardar
-                  </button>
-                </div>
               </div>
-            </div>
-          </div>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                color="danger"
+                onClick={() => setIsPopupOpen(false)}
+                className="bg-red-500"
+              >
+                Cancelar
+              </Button>
+              <Button
+                color="primary"
+                onClick={handleSubmitResults}
+                className="bg-[#4E5BA6]"
+              >
+                Guardar
+              </Button>
+            </ModalFooter>
+          </Modal>
         )}
       </div>
     </EvaluadorLayout>

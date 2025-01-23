@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardBody, Badge } from "@nextui-org/react";
 import {
@@ -10,42 +10,99 @@ import {
   TableCell,
 } from "@nextui-org/react";
 import EvaluadorLayout from "../../layouts/EvaluadorLayout";
+import {jwtDecode} from "jwt-decode";
 
-function getBadgeColorByStatus(status) {
+function getBadgeColorByStatus(status: string) {
   switch (status.toLowerCase()) {
     case "pendiente":
-      return { color: "warning", variant: "solid" }; // Amarillo
-    case "completada":
-      return { color: "success", variant: "solid" }; // Verde
-    case "cancelada":
-      return { color: "danger", variant: "solid" }; // Rojo
+      return { color: "warning", variant: "solid" }; // Yellow
+    case "aprobado":
+      return { color: "success", variant: "solid" }; // Green
+    case "rechazado":
+      return { color: "danger", variant: "solid" }; // Red
     default:
-      return { color: "default", variant: "flat" }; // Por defecto
+      return { color: "default", variant: "flat" }; // Default
   }
+}
+
+interface Inspection {
+  inspectionId: number;
+  scheduledDate: string;
+  modifiedDate: string;
+  drugStoreId: number;
+  drugStoreName: string;
+  statusInspId: number;
+  status: string;
 }
 
 function InspectionsTable() {
   const navigate = useNavigate();
+  const [inspections, setInspections] = useState<Inspection[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const inspectionsData = [
-    { id: 1, date: "2023-05-01", status: "Pendiente", pharmacyName: "Farmacia Central" },
-    { id: 2, date: "2023-05-02", status: "Completada", pharmacyName: "Farmacia del Pueblo" },
-    { id: 3, date: "2023-05-03", status: "Cancelada", pharmacyName: "Farmacia Salud Total" },
-    { id: 4, date: "2023-05-04", status: "Pendiente", pharmacyName: "Farmacia Moderna" },
-    { id: 5, date: "2023-05-05", status: "Completada", pharmacyName: "Farmacia del Este" },
-  ];
+  useEffect(() => {
+    const fetchInspections = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-  // Dividir las inspecciones según el estado
-  const pendingInspections = inspectionsData.filter(
-    (inspection) => inspection.status === "Pendiente"
+        // Retrieve the token from localStorage
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token not found.");
+        }
+
+        // Decode the token to extract inspectorId
+        const decodedToken: any = jwtDecode(token);
+        const inspectorId = decodedToken.userId;
+
+        // Fetch from API
+        const response = await fetch(
+          `http://localhost:5041/api/Inspector/inspections?inspectorId=${inspectorId}`,
+          {
+            method: "GET",
+            headers: {
+              "Accept": "text/plain", // Ensures correct response format
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Error fetching inspections.");
+        }
+
+        const data: Inspection[] = await response.json(); // Parse the JSON response
+        setInspections(data);
+      } catch (err: any) {
+        console.error(err);
+        setError("Failed to load inspections.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInspections();
+  }, []);
+
+  if (loading) {
+    return <p>Cargando inspecciones...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
+  }
+
+  const pendingInspections = inspections.filter(
+    (inspection) => inspection.status.toLowerCase() === "en espera"
   );
-  const otherInspections = inspectionsData.filter(
-    (inspection) => inspection.status !== "Pendiente"
+  const otherInspections = inspections.filter(
+    (inspection) => inspection.status.toLowerCase() !== "en espera"
   );
 
   return (
     <div className="space-y-6">
-      {/* Inspecciones Pendientes */}
+      {/* Pending Inspections */}
       <div>
         <h3 className="text-xl font-bold text-gray-700 mb-4">Inspecciones Pendientes</h3>
         <Card className="bg-[#F8F9FC]">
@@ -60,19 +117,21 @@ function InspectionsTable() {
               </TableHeader>
               <TableBody>
                 {pendingInspections.map((inspection) => (
-                  <TableRow key={inspection.id}>
-                    <TableCell>{inspection.id}</TableCell>
-                    <TableCell>{inspection.date}</TableCell>
+                  <TableRow key={inspection.inspectionId}>
+                    <TableCell>{inspection.inspectionId}</TableCell>
+                    <TableCell>{inspection.scheduledDate}</TableCell>
                     <TableCell>
                       <Badge {...getBadgeColorByStatus(inspection.status)}>
                         {inspection.status}
                       </Badge>
                     </TableCell>
-                    <TableCell>{inspection.pharmacyName}</TableCell>
+                    <TableCell>{inspection.drugStoreName}</TableCell>
                     <TableCell>
                       <button
                         className="px-4 py-2 bg-[#4E5BA6] text-white rounded hover:bg-[#3A4786] transition-all"
-                        onClick={() => navigate(`/inspector/farmacia/${inspection.id}`)}
+                        onClick={() =>
+                          navigate(`/inspector/farmacia/${inspection.drugStoreId}`)
+                        }
                       >
                         Ver
                       </button>
@@ -85,7 +144,7 @@ function InspectionsTable() {
         </Card>
       </div>
 
-      {/* Otras Inspecciones */}
+      {/* Other Inspections */}
       <div>
         <h3 className="text-xl font-bold text-gray-700 mb-4">Otras Inspecciones</h3>
         <Card className="bg-[#F8F9FC]">
@@ -100,19 +159,21 @@ function InspectionsTable() {
               </TableHeader>
               <TableBody>
                 {otherInspections.map((inspection) => (
-                  <TableRow key={inspection.id}>
-                    <TableCell>{inspection.id}</TableCell>
-                    <TableCell>{inspection.date}</TableCell>
+                  <TableRow key={inspection.inspectionId}>
+                    <TableCell>{inspection.inspectionId}</TableCell>
+                    <TableCell>{inspection.scheduledDate}</TableCell>
                     <TableCell>
                       <Badge {...getBadgeColorByStatus(inspection.status)}>
                         {inspection.status}
                       </Badge>
                     </TableCell>
-                    <TableCell>{inspection.pharmacyName}</TableCell>
+                    <TableCell>{inspection.drugStoreName}</TableCell>
                     <TableCell>
                       <button
                         className="px-4 py-2 bg-[#4E5BA6] text-white rounded hover:bg-[#3A4786] transition-all"
-                        onClick={() => navigate(`/inspector/farmacia/${inspection.id}`)}
+                        onClick={() =>
+                          navigate(`/inspector/farmacia/${inspection.drugStoreId}`)
+                        }
                       >
                         Ver
                       </button>
