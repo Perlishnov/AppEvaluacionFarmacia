@@ -31,7 +31,7 @@ public class AuthController : ControllerBase
         var user = await _context.UserAccounts
             .FirstOrDefaultAsync(u => u.EmailUser == loginDto.Email);
 
-        if ( loginDto.Password!=  user.PasswordUser )
+        if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordUser))
         {
             return Unauthorized(new { message = "Credenciales invalidas" });
         }
@@ -51,7 +51,8 @@ public class AuthController : ControllerBase
         }
 
         // Mapea el DTO a la entidad
-        var newUser  = new UserAccount
+        var newUser = _mapper.Map<UserAccount>(userAccountDTO);
+        /* var newUser  = new UserAccount
         {
             DocumentUser = userAccountDTO.DocumentUser,
             NameUser = userAccountDTO.NameUser,
@@ -60,7 +61,7 @@ public class AuthController : ControllerBase
             PasswordUser = userAccountDTO.PasswordUser,
             DocumentTypeId = userAccountDTO.DocumentTypeId,
             PersonTypeId = userAccountDTO.PersonTypeId
-        };
+        }; */
 
         //Registra el nuevo usuario en UserAccount
         _context.UserAccounts.Add(newUser);
