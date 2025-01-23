@@ -1,6 +1,7 @@
 using EvaluacionFarmaciaAPI.DTOs;
 using EvaluacionFarmaciaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 [Route("api/[controller]")]
@@ -53,6 +54,22 @@ public class InspectionController : ControllerBase
 
         return Ok(inspectionDTOs);
     }
+
+    // GET: api/inspections/details
+        [HttpGet("inspections/details")]
+        public async Task<ActionResult<IEnumerable<InspectionDTO>>> GetAssignedInspections()
+        {
+            var inspections = await _context.InspectionGetDto
+                .FromSqlRaw("EXEC sp_GetInspections")
+                .ToListAsync();
+
+            if (!inspections.Any())
+            {
+                return NotFound("No se encontraron inspecciones");
+            }
+
+            return Ok(inspections);
+        }
 
     // GET: /inspections/{id}
     [HttpGet("{id}")]
