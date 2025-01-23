@@ -6,6 +6,16 @@ export default function AdministradorLayout({ children }: { children: React.Reac
         { title: "Usuarios", path: "/admin/users" },
         { title: "Farmacias", path: "/admin/pharmacies" },
         { title: "Inspecciones", path: "/admin/inspectionshistory" },
+        { 
+            title: "Cerrar sesión", 
+            path: "/", 
+            onClick: () => {
+                // Eliminar el token del localStorage
+                localStorage.removeItem("token");
+                // Redirigir al usuario a la página principal
+                window.location.href = "/";
+            } 
+        },
     ];
 
     return (
