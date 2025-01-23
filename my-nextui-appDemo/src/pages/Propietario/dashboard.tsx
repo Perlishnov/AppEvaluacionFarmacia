@@ -21,61 +21,133 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
+  ModalFooter
 } from "@nextui-org/modal";
 import { jwtDecode } from "jwt-decode";
 import RequestFormModal from "./RequestFormModal";
+import { Eye } from "lucide-react";
+
+interface Petition {
+  requestId: number;
+  sendDate: string;
+  details: string;
+  userId: number;
+  drugStoreId: number;
+  requestTypeId: number;
+  statusReqId: number;
+  drugStore: string | null;
+  requestType: string | null;
+  statusReq: string | null;
+  user: string | null;
+}
 
 
 function PetitionsTable() {
-  const [selectedPetition, setSelectedPetition] = useState<null | {
-    id: number;
-    date: string;
-    status: string;
-    drugStoreId: number;
-  }>(null);
+const [petitionsData, setPetitionsData] = useState<Petition[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPetition, setSelectedPetition] = useState<Petition | null>(null);
+  const token = localStorage.getItem("token"); // Obtén el token JWT del almacenamiento local
 
-  const petitionsData = [
-    { id: 1, date: "2023-05-01", status: "Pendiente", drugStoreId: 101 },
-    { id: 2, date: "2023-05-02", status: "Aprobada", drugStoreId: 102 },
-    { id: 3, date: "2023-05-03", status: "Rechazada", drugStoreId: 103 },
-  ];
+  useEffect(() => {
+    const fetchPetitions = async () => {
+      if (!token) {
+        console.error("Token no encontrado");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        // Decodificar el token para obtener el userId
+        const decodedToken: { userId: number } = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        if (!userId) {
+          console.error("El token no contiene un userId");
+          setLoading(false);
+          return;
+        }
+
+        // Llamada a la API para obtener las solicitudes del usuario
+        const response = await fetch(`http://localhost:5041/api/Request/user/${userId}`, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data: Petition[] = await response.json();
+          setPetitionsData(data);
+        } else {
+          console.error("Error fetching petitions data:", response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error("Error decodificando el token o haciendo la petición:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPetitions();
+  }, [token]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center">
+        <p>Cargando datos...</p>
+      </div>
+    );
+  }
 
   return (
-    <Card>
-      <CardHeader>
-        <h3>Mis Peticiones</h3>
-      </CardHeader>
-      <CardBody>
-        <Table aria-label="Mis Peticiones" className="w-full">
-          <TableHeader>
-            <TableColumn>ID</TableColumn>
-            <TableColumn>Fecha</TableColumn>
-            <TableColumn>Estado</TableColumn>
-            <TableColumn>ID de Farmacia</TableColumn>
-            <TableColumn>Acciones</TableColumn>
-          </TableHeader>
-          <TableBody>
-            {petitionsData.map((petition) => (
-              <TableRow key={petition.id}>
-                <TableCell>{petition.id}</TableCell>
-                <TableCell>{petition.date}</TableCell>
-                <TableCell>{petition.drugStoreId}</TableCell>
-                <TableCell>{petition.status}</TableCell>
-                <TableCell>
-                  <Button
-                    size="sm"
-                    className="bg-[#4E5BA6] text-white"
-                    onClick={() => setSelectedPetition(petition)}
-                  >
-                    Ver
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardBody>
-      <Modal isOpen={!!selectedPetition} onClose={() => setSelectedPetition(null)}>
+    <div>
+      <h3 className="py-3">Solicitudes del Usuario</h3>
+      <Table
+        aria-label="Tabla de solicitudes"
+        className="max-w-full"
+        onRowClick={(row) => setSelectedPetition(row)}
+      >
+        <TableHeader>
+          <TableColumn>ID</TableColumn>
+          <TableColumn>Fecha de Envío</TableColumn>
+          <TableColumn>Detalles</TableColumn>
+          <TableColumn>Farmacia ID</TableColumn>
+          <TableColumn>Tipo de Solicitud</TableColumn>
+          <TableColumn>Estado</TableColumn>
+          <TableColumn>Acciones</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {petitionsData.map((petition) => (
+            <TableRow
+              key={petition.requestId}
+              onClick={() => setSelectedPetition(petition)}
+            >
+              <TableCell>{petition.requestId}</TableCell>
+              <TableCell>{new Date(petition.sendDate).toLocaleDateString()}</TableCell>
+              <TableCell>{petition.details}</TableCell>
+              <TableCell>{petition.drugStoreId}</TableCell>
+              <TableCell>{petition.requestType || "No especificado"}</TableCell>
+              <TableCell>{petition.statusReq || "No especificado"}</TableCell>
+              <TableCell>
+                <Button
+                  isIconOnly
+                  variant="light"
+                  color="primary"
+                  onPress={() => setSelectedPetition(petition)}
+                >
+                  <Eye />
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      {/* Modal para mostrar los detalles de la petición */}
+      <Modal
+        isOpen={!!selectedPetition}
+        onClose={() => setSelectedPetition(null)}
+      >
         <ModalContent>
           <ModalHeader>
             <h2>Detalles de la Petición</h2>
@@ -84,23 +156,40 @@ function PetitionsTable() {
             {selectedPetition && (
               <div>
                 <p>
-                  <strong>ID:</strong> {selectedPetition.id}
+                  <strong>ID:</strong> {selectedPetition.requestId}
                 </p>
                 <p>
-                  <strong>Fecha:</strong> {selectedPetition.date}
+                  <strong>Fecha:</strong>{" "}
+                  {new Date(selectedPetition.sendDate).toLocaleDateString()}
                 </p>
                 <p>
-                  <strong>Estado:</strong> {selectedPetition.status}
+                  <strong>Detalles:</strong> {selectedPetition.details}
                 </p>
                 <p>
                   <strong>ID de Farmacia:</strong> {selectedPetition.drugStoreId}
                 </p>
+                <p>
+                  <strong>Tipo de Solicitud:</strong>{" "}
+                  {selectedPetition.requestType || "No especificado"}
+                </p>
+                <p>
+                  <strong>Estado:</strong>{" "}
+                  {selectedPetition.statusReq || "No especificado"}
+                </p>
               </div>
             )}
           </ModalBody>
+          <ModalFooter>
+            <Button
+              color="primary"
+              onPress={() => setSelectedPetition(null)}
+            >
+              Cerrar
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
-    </Card>
+    </div>
   );
 }
 
@@ -108,6 +197,7 @@ export default function PropietarioDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [usuario, setUsuario] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [userPharmacies, setUserPharmacies] = useState<{ id: number, name: string }[]>([]); // Cambié el estado para contener ID y nombre
 
   // Function to decode JWT and extract userId
   const getUserIdFromToken = () => {
@@ -126,6 +216,7 @@ export default function PropietarioDashboard() {
     }
   };
 
+  // Fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
@@ -138,7 +229,9 @@ export default function PropietarioDashboard() {
       }
 
       try {
-        const response = await fetch(`http://localhost:5041/api/UserAccounts/${parseInt(userId)}`);
+        const response = await fetch(
+          `http://localhost:5041/api/UserAccounts/${parseInt(userId)}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
@@ -154,6 +247,40 @@ export default function PropietarioDashboard() {
     };
 
     fetchUserData();
+  }, []);
+
+  // Fetch user pharmacies
+  useEffect(() => {
+    const fetchUserPharmacies = async () => {
+      const userId = getUserIdFromToken();
+
+      if (!userId) {
+        setUserPharmacies([]);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `http://localhost:5041/api/DrugStores/details/by-owner/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch pharmacies");
+        }
+
+        const data = await response.json();
+        // Mapeamos los datos para obtener tanto el ID como el nombre
+        const pharmacies = data.map((pharmacy: any) => ({
+          id: pharmacy.drugStoreID, // ID de la farmacia
+          name: pharmacy.nameDS,    // Nombre de la farmacia
+        }));
+        setUserPharmacies(pharmacies);
+      } catch (error) {
+        console.error("Error fetching pharmacies:", error);
+        setUserPharmacies([]);
+      }
+    };
+
+    fetchUserPharmacies();
   }, []);
 
   if (loading) {
@@ -178,8 +305,8 @@ export default function PropietarioDashboard() {
         <div className="bg-gray-50 p-6 rounded-lg border flex items-center gap-4">
           {/* User Avatar */}
           <Avatar
-          isBordered
-          className="w-20 h-20 text-large"
+            isBordered
+            className="w-20 h-20 text-large"
             size="lg"
             color="primary"
             name={getInitials(usuario.nameUser, usuario.lastNameUser)}
@@ -192,15 +319,16 @@ export default function PropietarioDashboard() {
             <p>
               <strong>Correo:</strong> {usuario.emailUser}
             </p>
-            <p>
-              <strong>Teléfono:</strong> {usuario.phoneUser || "No disponible"}
-            </p>
           </div>
         </div>
 
         {/* New Request Button */}
         <div className="flex">
-          <Button className="bg-[#4E5BA6] text-white" onPress={() => setIsModalOpen(true)} color="primary">
+          <Button
+            className="bg-[#4E5BA6] text-white"
+            onPress={() => setIsModalOpen(true)}
+            color="primary"
+          >
             Nueva solicitud
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +352,7 @@ export default function PropietarioDashboard() {
         <RequestFormModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          userPharmacies={["Farmacia 1", "Farmacia 2", "Farmacia 3"]}
+          userPharmacies={userPharmacies} // Ahora pasamos el arreglo de objetos con ID y nombre
         />
       </div>
     </PropietarioLayout>
