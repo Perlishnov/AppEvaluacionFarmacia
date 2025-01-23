@@ -9,7 +9,7 @@ namespace EvaluacionFarmaciaAPI.DTOs
         public int ResultsId { get; set; }
         public int InspectionId { get; set; }
         public string? Observations { get; set; }
-        public string DescriptionsResults { get; set; }
+        public string? DescriptionsResults { get; set; }
         
         public static ResultDTO FromModel (Result result)
         {

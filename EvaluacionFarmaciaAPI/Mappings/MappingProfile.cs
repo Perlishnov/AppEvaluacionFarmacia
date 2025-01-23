@@ -12,12 +12,6 @@ public class MappingProfile : Profile
         CreateMap<UserAccount, UserAccountDTO>().ReverseMap();
         CreateMap<Owner, OwnerDTO>().ReverseMap();
         CreateMap<TechnicalDirector, TechnicalDirectorDTO>();
-        //Mapeo Inspecciones de un inspector
-        //TODO Solucionar InspectionGetDTO
-        /* CreateMap<Inspection, InspectionGetDTO>()
-            .ForMember(dest => dest.DrugStoreName, opt => opt.MapFrom(src => src.DrugStore.NameDs))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.StatusInsp.StatusInsp)); */
-        //CreateMap<InspectionDTO, Inspection>();
         
         //Mapeo para el registro de usuario
         CreateMap<UserAccountDTO, UserAccount>()

@@ -25,7 +25,7 @@ namespace EvaluacionFarmaciaAPI.Controllers
         public async Task<ActionResult<IEnumerable<InspectionDTO>>> GetAssignedInspections([FromQuery] int inspectorId)
         {
             var parameters = new[] { new SqlParameter("@InspectorId", inspectorId) };
-            var inspections = await _context.Inspections
+            var inspections = await _context.InspectionGetDto
                 .FromSqlRaw("EXEC sp_GetAssignedInspections @InspectorId", parameters)
                 .ToListAsync();
 
@@ -33,15 +33,14 @@ namespace EvaluacionFarmaciaAPI.Controllers
             {
                 return NotFound($"No se encontraron inspecciones asignadas para el inspector con ID {inspectorId}.");
             }
-            //Mapeo no funciona porque c# es case sensitive y tenemos StatuSInspection en db
-            var inspectionDtos = _mapper.Map<IEnumerable<InspectionDTO>>(inspections);
-            return Ok(inspectionDtos);
+
+            return Ok(inspections);
         }
 
         //Actualiza el estado de una inspeccion
         // PUT: api/inspectors/inspections/{id}
-        [HttpPut("inspections")]
-        public async Task<IActionResult> UpdateInspectionStatus(int id, [FromBody] int statusId)
+        [HttpPut("inspections/{id}/status/{statusId}")]
+        public async Task<IActionResult> UpdateInspectionStatus(int id, int statusId)
         {
             var parameters = new[]
             {
@@ -49,7 +48,7 @@ namespace EvaluacionFarmaciaAPI.Controllers
                 new SqlParameter("@StatusId", statusId)
             };
 
-            await _context.Database.ExecuteSqlRawAsync("EXEC UpdateInspectionStatus @InspectionId, @StatusId", parameters);
+            await _context.Database.ExecuteSqlRawAsync("EXEC sp_UpdateInspectionStatus @InspectionId, @StatusId", parameters);
             return NoContent();
         }
 

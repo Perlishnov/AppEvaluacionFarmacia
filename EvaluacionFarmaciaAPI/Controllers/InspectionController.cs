@@ -106,13 +106,24 @@ public class InspectionController : ControllerBase
     [HttpPost("{id}/results")]
     public async Task<ActionResult<EvaluacionFarmaciaAPI.Models.Result>> AddInspectionResults(int id, [FromBody] ResultsDTO resultsDTO)
     {
+        // Verificar si la inspección existe
         var inspection = await _context.Inspections.FindAsync(id);
 
         if (inspection == null)
         {
-            return NotFound();
+            return NotFound("La inspección no existe.");
         }
 
+        // Verificar si ya existen resultados para esta inspección
+        var existingResult = await _context.Results
+            .FirstOrDefaultAsync(r => r.InspectionId == id);
+
+        if (existingResult != null)
+        {
+            return BadRequest("Ya existen resultados asociados a esta inspección.");
+        }
+
+        // Crear los resultados
         var results = new EvaluacionFarmaciaAPI.Models.Result
         {
             InspectionId = id,
@@ -120,9 +131,11 @@ public class InspectionController : ControllerBase
             DescriptionsResults = resultsDTO.DescriptionsResults
         };
 
+        // Agregar y guardar cambios
         _context.Results.Add(results);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetInspectionById), new { id = id }, results);
     }
+
 }
