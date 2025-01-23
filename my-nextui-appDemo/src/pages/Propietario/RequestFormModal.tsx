@@ -6,6 +6,7 @@ import {
   ModalHeader,
   ModalBody,
 } from "@nextui-org/modal";
+import {municipios} from "./municipios";
 
 interface RequestFormModalProps {
   isOpen: boolean;
@@ -49,7 +50,6 @@ const operationsList = [
   "Cambio de Nombre",
   "Cambio de Propietario",
   "Cambio de Dirección",
-  "Cambio de Razón Social",
 ];
 
 export default function RequestFormModal({
@@ -92,6 +92,8 @@ export default function RequestFormModal({
         setMunicipalitiesList([]); // Clear municipalities if there's an error
       }
     };
+
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -222,26 +224,21 @@ export default function RequestFormModal({
       )}
     </Select>
 
-    <Select
-      label="Municipio"
-      value={formData.pharmacyMunicipality}
-      onValueChange={(value) =>{
-        setFormData((prev) => ({ ...prev, pharmacyMunicipality: value }))
-      }}
-      required
+   <Select
+  label="Municipio"
+  value={formData.pharmacyMunicipality}
+  onValueChange={(value) =>
+    setFormData((prev) => ({ ...prev, pharmacyMunicipality: value }))
+  }
+  required
     >
-      {municipalitiesList.length === 0 ? (
-        <SelectItem value="" disabled>
-          No hay municipios disponibles
+      {municipios.map((municipio) => (
+        <SelectItem key={municipio.municipioId} value={municipio.municipioId.toString()}>
+          {municipio.name}
         </SelectItem>
-      ) : (
-        municipalitiesList.map((municipality) => (
-          <SelectItem key={municipality.municipioId} value={municipality.municipioId}>
-            {municipality.nameMun}
-          </SelectItem>
-        ))
-      )}
+      ))}
     </Select>
+
     </Tab>
   );
 
@@ -319,21 +316,6 @@ export default function RequestFormModal({
                 label="Nueva Dirección"
                 name="pharmacyAddress"
                 value={formData.pharmacyAddress}
-                onChange={handleInputChange}
-                required
-              />
-            </Tab>
-          </>
-        );
-      case "Cambio de Razón Social":
-        return (
-          <>
-            {renderPharmacySelection()}
-            <Tab title="Tipo de Actividad">
-              <Input
-                label="Tipo de Actividad"
-                name="activityType"
-                value={formData.activityType}
                 onChange={handleInputChange}
                 required
               />
