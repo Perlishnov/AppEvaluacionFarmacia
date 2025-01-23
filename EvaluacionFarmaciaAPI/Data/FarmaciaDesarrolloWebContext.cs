@@ -17,6 +17,7 @@ public partial class FarmaciaDesarrolloWebContext : DbContext
 
     //DTOs
     public DbSet<DrugStoreDetailsDto> DrugStoreDetailsDto { get; set; }
+    public DbSet<InspectionGetDTO> InspectionGetDto { get; set; }
 
     //Entidades
 
@@ -72,6 +73,7 @@ public partial class FarmaciaDesarrolloWebContext : DbContext
 
         //DTOs
         modelBuilder.Entity<DrugStoreDetailsDto>().HasNoKey(); 
+        modelBuilder.Entity<InspectionGetDTO>().HasNoKey();
 
         modelBuilder.Entity<DocumentType>(entity =>
         {
