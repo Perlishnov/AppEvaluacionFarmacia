@@ -6,80 +6,104 @@ import {
   ModalHeader,
   ModalBody,
 } from "@nextui-org/modal";
+import {municipios} from "./municipios";
+
+interface RequestFormModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  userPharmacies: { id: string; name: string }[];
+}
+
+const initialFormData = {
+  ownerName: "",
+  ownerDocument: "",
+  ownerAddress: "",
+  ownerPhone: "",
+  ownerEmail: "",
+  ownerMobile: "",
+  directorName: "",
+  directorLastName: "",
+  directorDocument: "",
+  directorAddress: "",
+  directorPhone: "",
+  directorEmail: "",
+  directorProfession: "",
+  directorExequatur: "",
+  issueDate: "",
+  pharmacyType: "",
+  activityType: "",
+  pharmacyName: "",
+  newPharmacyName: "",
+  pharmacyAddress: "",
+  pharmacyStreet: "",
+  pharmacySector: "",
+  pharmacyCity: "",
+  pharmacyMunicipality: "",
+  pharmacyProvince: "",
+  selectedPharmacy: "",
+};
+
+const operationsList = [
+  "Apertura",
+  "Renovación de Registro",
+  "Cambio de Director Técnico",
+  "Cambio de Nombre",
+  "Cambio de Propietario",
+  "Cambio de Dirección",
+];
 
 export default function RequestFormModal({
   isOpen,
   onClose,
   userPharmacies,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  userPharmacies: string[];
-}) {
-  const [provincesList, setProvincesList] = useState<string[]>([]);
-const [municipalitiesList, setMunicipalitiesList] = useState<string[]>([]);
-
-useEffect(() => {
-  const fetchProvinces = async () => {
-    try {
-      const res = await fetch("/api/Filter/provincias");
-      if (!res.ok) throw new Error("Failed to fetch provinces");
-      const data = await res.json();
-      setProvincesList(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  fetchProvinces();
-}, []);
-
+}: RequestFormModalProps) {
+  const [provincesList, setProvincesList] = useState<{ provinciaId: number, nameProv: string }[]>([]);
+  const [municipalitiesList, setMunicipalitiesList] = useState<{ municipioId: number, nameMun: string }[]>([]);
   const [operation, setOperation] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    ownerName: "",
-    ownerDocument: "",
-    ownerAddress: "",
-    ownerPhone: "",
-    ownerEmail: "",
-    ownerMobile: "",
-    directorName: "",
-    directorLastName: "",
-    directorDocument: "",
-    directorAddress: "",
-    directorPhone: "",
-    directorEmail: "",
-    directorProfession: "",
-    directorExequatur: "",
-    issueDate: "",
-    pharmacyType: "",
-    activityType: "",
-    pharmacyName: "",
-    newPharmacyName: "",
-    pharmacyAddress: "",
-    pharmacyStreet: "",
-    pharmacySector: "",
-    pharmacyCity: "",
-    pharmacyMunicipality: "",
-    pharmacyProvince: "",
-    selectedPharmacy: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+  // Fetch provinces on component mount
+    const fetchProvinces = async () => {
+      try {
+        const response = await fetch("http://localhost:5041/api/Filter/provincias");
+        if (!response.ok) throw new Error("Error fetching provinces");
+        const data = await response.json();
+        setProvincesList(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProvinces();
+  }, []); // Empty dependency array means this runs once when the component mounts
+
+    // Fetch municipalities whenever the selected province changes
+    const fetchMunicipalities = async () => {
+      if (!formData.pharmacyProvince) return; // No province selected, skip fetch
+
+      try {
+        const response = await fetch(`http://localhost:5041/api/Filter/municipios/${parseInt(formData.pharmacyProvince)}`);
+        if (!response.ok) throw new Error("Error fetching municipalities");
+        const data = await response.json();
+        setMunicipalitiesList(data);
+        console.log("Municipalities fetched:", data);
+      } catch (error) {
+        console.error("Error fetching municipalities:", error);
+        setMunicipalitiesList([]); // Clear municipalities if there's an error
+      }
+    };
+
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleMunicipalitiesFetch = async (provinceId: string) => {
-  try {
-    const res = await fetch(`/api/Filter/municipios/${provinceId}`);
-    if (!res.ok) throw new Error("Failed to fetch municipalities");
-    const data = await res.json();
-    setMunicipalitiesList(data);
-  } catch (err) {
-    console.error(err);
-  }
-};
+
 
   const renderOwnerSection = () => (
-    <Tab title="Datos del Propietario" className="flex-col">
+    <Tab title="Datos del Propietario">
       <Input
         label="Nombre o Razón Social"
         name="ownerName"
@@ -179,47 +203,42 @@ useEffect(() => {
         value={formData.activityType}
         onChange={handleInputChange}
       />
-      <Input
-        label="Nombre Actual"
-        name="pharmacyName"
-        value={formData.pharmacyName}
-        onChange={handleInputChange}
-      />
-      <Input
-        label="Dirección completa"
-        name="pharmacyAddress"
-        value={formData.pharmacyAddress}
-        onChange={handleInputChange}
-      />
       <Select
-        label="Provincia"
-        value={formData.pharmacyProvince}
-        onValueChange={(value) => {
-          setFormData((prev) => ({ ...prev, pharmacyProvince: value }));
-          handleMunicipalitiesFetch(value);
-        }}
-        required
-      >
-        {provincesList.map((province) => (
-          <SelectItem key={province} value={province}>
-            {province}
+      label="Provincia"
+      value={formData.pharmacyProvince}
+      onValueChange={ (value) =>{
+        setFormData((prev) => ({ ...prev, pharmacyProvince: value })) // Update the province
+      }}
+      required
+    >
+      {provincesList.length === 0 ? (
+        <SelectItem value="" disabled>
+          No hay provincias disponibles
+        </SelectItem>
+      ) : (
+        provincesList.map((province) => (
+          <SelectItem key={province.provinciaId} value={province.provinciaId.toString()}>
+            {province.nameProv}
           </SelectItem>
-        ))}
-      </Select>
-      <Select
-        label="Municipio"
-        value={formData.pharmacyMunicipality}
-        onValueChange={(value) =>
-          setFormData((prev) => ({ ...prev, pharmacyMunicipality: value }))
-        }
-        required
-      >
-        {municipalitiesList.map((municipality) => (
-          <SelectItem key={municipality} value={municipality}>
-            {municipality}
-          </SelectItem>
-        ))}
-      </Select>
+        ))
+      )}
+    </Select>
+
+   <Select
+  label="Municipio"
+  value={formData.pharmacyMunicipality}
+  onValueChange={(value) =>
+    setFormData((prev) => ({ ...prev, pharmacyMunicipality: value }))
+  }
+  required
+    >
+      {municipios.map((municipio) => (
+        <SelectItem key={municipio.municipioId} value={municipio.municipioId.toString()}>
+          {municipio.name}
+        </SelectItem>
+      ))}
+    </Select>
+
     </Tab>
   );
 
@@ -234,8 +253,8 @@ useEffect(() => {
         required
       >
         {userPharmacies.map((pharmacy) => (
-          <SelectItem key={pharmacy} value={pharmacy}>
-            {pharmacy}
+          <SelectItem key={pharmacy.id} value={pharmacy.name}>
+            {pharmacy.name}
           </SelectItem>
         ))}
       </Select>
@@ -243,9 +262,6 @@ useEffect(() => {
   );
 
   const renderTabsContent = () => {
-    const pharmacySelection =
-      operation && operation !== "Apertura" ? renderPharmacySelection() : null;
-
     switch (operation) {
       case "Apertura":
         return (
@@ -258,21 +274,21 @@ useEffect(() => {
       case "Renovación de Registro":
         return (
           <>
-            {pharmacySelection}
+            {renderPharmacySelection()}
             {renderEstablishmentSection()}
           </>
         );
       case "Cambio de Director Técnico":
         return (
           <>
-            {pharmacySelection}
+            {renderPharmacySelection()}
             {renderDirectorSection()}
           </>
         );
       case "Cambio de Nombre":
         return (
           <>
-            {pharmacySelection}
+            {renderPharmacySelection()}
             <Tab title="Nuevo Nombre">
               <Input
                 label="Nuevo Nombre"
@@ -287,34 +303,19 @@ useEffect(() => {
       case "Cambio de Propietario":
         return (
           <>
-            {pharmacySelection}
+            {renderPharmacySelection()}
             {renderOwnerSection()}
           </>
         );
       case "Cambio de Dirección":
         return (
           <>
-            {pharmacySelection}
+            {renderPharmacySelection()}
             <Tab title="Nueva Dirección">
               <Input
                 label="Nueva Dirección"
                 name="pharmacyAddress"
                 value={formData.pharmacyAddress}
-                onChange={handleInputChange}
-                required
-              />
-            </Tab>
-          </>
-        );
-      case "Cambio de Razón Social":
-        return (
-          <>
-            {pharmacySelection}
-            <Tab title="Tipo de Actividad">
-              <Input
-                label="Tipo de Actividad"
-                name="activityType"
-                value={formData.activityType}
                 onChange={handleInputChange}
                 required
               />
@@ -327,7 +328,7 @@ useEffect(() => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="2xl">
       <ModalContent>
         <ModalHeader>
           <h2>Solicitud de Registro</h2>
@@ -342,15 +343,7 @@ useEffect(() => {
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu onAction={(value) => setOperation(value.toString())}>
-                  {[
-                    "Apertura",
-                    "Renovación de Registro",
-                    "Cambio de Director Técnico",
-                    "Cambio de Nombre",
-                    "Cambio de Propietario",
-                    "Cambio de Dirección",
-                    "Cambio de Razón Social",
-                  ].map((option) => (
+                  {operationsList.map((option) => (
                     <DropdownItem key={option}>{option}</DropdownItem>
                   ))}
                 </DropdownMenu>
@@ -358,7 +351,11 @@ useEffect(() => {
             </Tab>
             {operation && renderTabsContent()}
           </Tabs>
-          <Button type="submit" className="mt-4 bg-[#4E5BA6] text-white" color="primary">
+          <Button
+            type="submit"
+            className="mt-4 bg-[#4E5BA6] text-white"
+            onClick={() => console.log("Submitted form:", formData)}
+          >
             Enviar
           </Button>
         </ModalBody>
