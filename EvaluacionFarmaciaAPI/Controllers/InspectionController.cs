@@ -56,7 +56,7 @@ public class InspectionController : ControllerBase
     }
 
     // GET: api/inspections/details
-        [HttpGet("inspections/details")]
+        [HttpGet("details")]
         public async Task<ActionResult<IEnumerable<InspectionDTO>>> GetAssignedInspections()
         {
             var inspections = await _context.InspectionGetDto
@@ -84,6 +84,24 @@ public class InspectionController : ControllerBase
 
         return Ok(InspectionDTO.FromModel(inspection));
     }
+
+    // GET: api/inspections/details
+    [HttpGet("{id}/details")]
+    public async Task<ActionResult<IEnumerable<InspectionDTO>>> GetInspectionDetailedById(int id)
+    {
+        //var parameters = new[] { new SqlParameter("@InspectionId", id) };
+        var inspections = await _context.InspectionGetDto
+            .FromSqlInterpolated($"EXEC sp_GetInspectionById @InspectionId = {id}")
+            .ToListAsync();
+
+        if (!inspections.Any())
+        {
+            return NotFound($"No se encontraron inspecciones con el id {id}");
+        }
+
+        return Ok(inspections);
+    }
+
 
     // Obtener inspecciones pendientes (estado "En Espera").
     // GET: /inspections/pending
