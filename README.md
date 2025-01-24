@@ -1,93 +1,84 @@
-# AppEvaluacionFarmacia
+# Sistema de Inspección de Farmacias (SIF)
 
-Grupo 4
+Grupo 4: Sistema de Inspección de Farmacias (SIF)
 
-Aqui ponemos la documentación detallando las características del proyecto
+Cosas que faltaron en el proyecto (hasta ahora)
+Frontend:
+- Admin:
+  -La tabla de inspectores y de solicitudes no le están llegando los datos necesarios del backend para consumar la funcionalidad (es decir hay datos del backend que faltan por conectar, el procedure se hizo hoy)
+  -Falta eliminar del modal el campo de ID a la hora de crear el Usuario
+- Propietario:
+  - El usuario puede visualizar las solicitudes, pero no puede realizarlas.
+- Inspector:
+  - La aplicacion puede visualizar las inspecciones que le corresponden, pero no puede hacer las correspondientes observaciones.
 
+Backend:
+  - Falta de RequestController: Cambio de Nombre, Cambio de Propietario, y Cambio de Dirección
 ----- 
 
-Requisitos Funcionales
+# Requerimientos
 
-1.	Gestión de Usuarios:
+# Gestión de Usuarios
 
-o	Registro de Propietarios de Farmacias:
--Proporcionar un formulario para que los propietarios registren sus datos personales y profesionales, incluyendo información legal requerida.
+## Registro de Propietarios de Farmacias
+- Proporcionar un formulario para que los propietarios registren sus datos personales y profesionales, incluyendo información legal requerida.
 
-o	Registro de Inspectores Estatales:
--Habilitar el registro de inspectores con credenciales verificadas para acceder a las funcionalidades de evaluación.
+## Registro de Inspectores Estatales
+- Habilitar el registro de inspectores con credenciales verificadas para acceder a las funcionalidades de evaluación.
 
-o	Autenticación y Autorización:
--Implementar mecanismos de inicio de sesión seguros y asignación de roles para controlar el acceso a diferentes módulos de la plataforma.
+## Autenticación y Autorización
+- Implementar mecanismos de inicio de sesión seguros y asignación de roles para controlar el acceso a diferentes módulos de la plataforma.
 
-2.	Gestión de Farmacias:
+# Gestión de Farmacias
 
-o	Registro de Información:
--Permitir a los propietarios ingresar detalles de la farmacia, como ubicación, tipo de establecimiento (retail, hospitalario), responsables técnicos, licencias y permisos.
+## Registro de Información
+- Permitir a los propietarios ingresar detalles de la farmacia, como ubicación, tipo de establecimiento (retail, hospitalario), responsables técnicos, licencias y permisos.
 
-o	Clasificación de Establecimientos:
--Clasificar las farmacias según criterios como nivel de riesgo, tamaño y tipo de productos manejados (medicamentos controlados, biológicos, etc.).
+# Historial de Operaciones
+- Mantener un registro de inspecciones, sanciones y renovaciones de licencias asociadas a cada farmacia.
 
-o	Historial de Operaciones:
--Mantener un registro de inspecciones, sanciones y renovaciones de licencias asociadas a cada farmacia.
+# Gestión de Documentación
 
-3.	Planificación y Ejecución de Inspecciones:
+## Estado de Documentación
+- Registrar y gestionar el estado de la evaluación documental, asegurando que los documentos enviados por las farmacias sean verificados y marcados como conformes o no conformes.
 
-o	Programación Basada en Riesgo:
--Priorizar inspecciones en farmacias con mayor riesgo, considerando factores como historial de incumplimientos, ubicación geográfica y tipo de medicamentos dispensados.
+## Historial de Documentación
+- Mantener un historial de las revisiones documentales realizadas para cada farmacia, incluyendo fechas, evaluador y observaciones.
 
-o	Gestión de Inspecciones en Campo:
--Facilitar a los inspectores el uso de dispositivos móviles para registrar hallazgos en tiempo real, incluyendo observaciones, fotografías y firmas electrónicas.
+# Gestión de Inspecciones
 
-o	Listas de Verificación Personalizadas:
--Proporcionar checklists adaptadas a normativas específicas para evaluar condiciones de almacenamiento, manejo de medicamentos controlados, trazabilidad y dispensación.
+## Estatus de Inspecciones
+- Integrar un módulo para registrar los resultados de inspecciones (cumple/no cumple) y observaciones relevantes.
 
-4.	Monitoreo y Control de Medicamentos:
+## Notificación de Seguimiento
+- Implementar notificaciones automáticas para recordar inspecciones pendientes o vencidas.
 
-o	Trazabilidad de Medicamentos:
-- Registrar detalladamente la cadena de suministro de cada medicamento, desde su producción hasta la dispensación.
-- Verificar lotes, fechas de vencimiento y generar reportes de medicamentos caducados o retirados del mercado.
+## Reinspecciones Automáticas
+- Programar automáticamente reinspecciones en caso de incumplimientos detectados.
 
-o	Control de Medicamentos Controlados:
-- Realizar un seguimiento estricto del inventario de sustancias sujetas a control especial.
-- Generar reportes automáticos sobre movimientos y dispensación de estos medicamentos.
+# Certificación
 
-5.	Evaluación y Decisión Operativa:
+## Generación Automática de Certificados
+- Crear certificados electrónicos basados en la evaluación documental y de inspección.
 
-o	Métricas de Evaluación:
-- Implementar un sistema de evaluación basado en métricas predefinidas para determinar si una farmacia cumple con los estándares para operar.
+## Control de Vencimientos
+- Registrar las fechas de emisión y vencimiento de los certificados.
 
-o	Notificaciones:
-- Enviar notificaciones automáticas a propietarios y evaluadores sobre inspecciones programadas, resultados y decisiones operativas.
+# Auditoría y Seguimiento
 
-________________________________________
+## Seguimiento Centralizado
+- Proveer una vista consolidada del estado de las farmacias, incluyendo trámites en curso, vencimientos y resultados de inspecciones.
 
-Requisitos No Funcionales
-1.	Rendimiento:
-- La plataforma debe manejar múltiples usuarios concurrentes sin degradar el desempeño, especialmente durante periodos de alta demanda.
+## Registro de Actividades
+- Mantener un registro de todas las actividades relacionadas con cada farmacia, incluyendo actualizaciones en la documentación, inspecciones y certificaciones.
 
-2.	Seguridad:
-- Implementar protocolos de seguridad para proteger la información sensible, incluyendo encriptación de datos y medidas contra accesos no autorizados.
-- Cumplir con las normativas de protección de datos aplicables, como el GDPR o leyes locales pertinentes.
+# Interfaz para Evaluadores
 
-3.	Usabilidad:
-- Diseñar una interfaz intuitiva y accesible para usuarios con distintos niveles de habilidad tecnológica.
-- Asegurar compatibilidad con navegadores modernos y dispositivos móviles, garantizando una experiencia de usuario consistente.
+## Manejo de Observaciones
+- Incluir un campo para que los evaluadores registren observaciones específicas durante las inspecciones o evaluaciones documentales.
 
-4.	Escalabilidad:
-- La arquitectura del sistema debe permitir la incorporación de nuevas funcionalidades y el aumento en el número de usuarios y farmacias registradas sin afectar el rendimiento.
-
-5.	Mantenibilidad:
-- Utilizar estándares de codificación y documentación que faciliten el mantenimiento y actualización del sistema.
-- Implementar pruebas automatizadas para asegurar la calidad del software en futuras iteraciones.
-
-6.	Disponibilidad:
-- Garantizar una disponibilidad del sistema de al menos el 99.9%, con tiempos de inactividad programados para mantenimiento mínimo.
-
-7.	Trazabilidad y Auditoría:
-- Mantener registros detallados de todas las acciones realizadas en el sistema, permitiendo auditorías y seguimiento de actividades.
-
-8.	Interoperabilidad:
-- Diseñar la plataforma para que pueda integrarse con otros sistemas de información sanitaria y bases de datos externas, facilitando el intercambio de información.
+## Validación de Datos
+- Asegurar que los evaluadores puedan validar automáticamente las fechas ingresadas para evitar errores.
 
 
 # Base de datos
