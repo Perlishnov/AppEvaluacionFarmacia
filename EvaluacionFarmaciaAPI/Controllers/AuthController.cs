@@ -51,8 +51,9 @@ public class AuthController : ControllerBase
         }
 
         // Mapea el DTO a la entidad
-        var newUser = _mapper.Map<UserAccount>(userAccountDTO);
-        /* var newUser  = new UserAccount
+        //var newUser = _mapper.Map<UserAccount>(userAccountDTO);
+        //La linea comentada com mapper es lo mismo pero utiliza bcrypt para el registro
+        var newUser  = new UserAccount
         {
             DocumentUser = userAccountDTO.DocumentUser,
             NameUser = userAccountDTO.NameUser,
@@ -61,7 +62,7 @@ public class AuthController : ControllerBase
             PasswordUser = userAccountDTO.PasswordUser,
             DocumentTypeId = userAccountDTO.DocumentTypeId,
             PersonTypeId = userAccountDTO.PersonTypeId
-        }; */
+        };
 
         //Registra el nuevo usuario en UserAccount
         _context.UserAccounts.Add(newUser);
