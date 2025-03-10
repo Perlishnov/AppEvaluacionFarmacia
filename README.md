@@ -2,7 +2,7 @@
 
 Grupo 4: Sistema de Inspección de Farmacias (SIF)
 
-Cosas que faltaron en el proyecto (hasta ahora)
+Por Implementar:
 Frontend:
 - Admin:
   -La tabla de inspectores y de solicitudes no le están llegando los datos necesarios del backend para consumar la funcionalidad (es decir hay datos del backend que faltan por conectar, el procedure se hizo hoy)
