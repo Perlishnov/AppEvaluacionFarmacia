@@ -81,10 +81,6 @@ Backend:
 - Asegurar que los evaluadores puedan validar automáticamente las fechas ingresadas para evitar errores.
 
 
-# Base de datos
-
-![Diseño DB](https://github.com/user-attachments/assets/143968c3-d04d-45bd-a93f-25f65b8e88a2)
-
 
 
 
